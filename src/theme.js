@@ -32,6 +32,13 @@ const theme = createTheme({
       styleOverrides: { root: { height: "41px", textTransform: "uppercase" } },
       defaultProps: { variant: "contained" },
     },
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          "&:hover": { backgroundColor: "rgba(0, 155, 0, 0.10)" },
+        },
+      },
+    },
     MuiLink: {
       styleOverrides: {
         root: {
