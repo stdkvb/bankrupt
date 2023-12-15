@@ -76,20 +76,18 @@ const Reg = () => {
         autoFocus
         sx={{ mb: 2 }}
       />
-      <InputMask mask="+7 (999) 999 99 99" disabled={false} maskChar=" ">
-        {() => (
-          <TextField
-            label="Телефон"
-            variant="standard"
-            size="medium"
-            required
-            fullWidth
-            id="phone"
-            name="phone"
-            autoFocus
-            sx={{ mb: 2 }}
-          />
-        )}
+      <InputMask mask="+7 (999) 999 99 99">
+        <TextField
+          label="Телефон"
+          variant="standard"
+          size="medium"
+          required
+          fullWidth
+          id="phone"
+          name="phone"
+          autoFocus
+          sx={{ mb: 2 }}
+        />
       </InputMask>
       <TextField
         label="Email"

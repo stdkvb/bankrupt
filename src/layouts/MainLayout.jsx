@@ -15,6 +15,10 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -28,8 +32,16 @@ import HelpIcon from "@mui/icons-material/Help";
 import MapIcon from "@mui/icons-material/Map";
 import CloseIcon from "@mui/icons-material/Close";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import PersonIcon from "@mui/icons-material/Person";
+import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
+import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
+import AddIcon from "@mui/icons-material/Add";
+import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import logo from "../assets/images/logo.svg";
+
+import folders from "../data/folders.json";
 
 //check window width
 let mobile;
@@ -102,19 +114,29 @@ export default function MainLayout({ children }) {
   }
 
   //profile menu
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const openMenu = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = React.useState(null);
+  const openProfileMenu = Boolean(isProfileMenuOpen);
+  const handleProfileMenuClick = (event) => {
+    setIsProfileMenuOpen(event.currentTarget);
   };
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleProfileMenuClose = () => {
+    setIsProfileMenuOpen(null);
+  };
+
+  //folder menu
+  const [isFolderMenuOpen, setIsFolderMenuOpen] = React.useState(null);
+  const openFolderMenu = Boolean(isFolderMenuOpen);
+  const handleFolderMenuClick = (event) => {
+    setIsFolderMenuOpen(event.currentTarget);
+  };
+  const handleFolderMenuClose = () => {
+    setIsFolderMenuOpen(null);
   };
 
   return (
     <Box sx={{ display: "flex" }}>
       <AppBar
-        position="absolute"
+        position="fixed"
         open={open}
         sx={{
           backgroundColor: "white",
@@ -186,7 +208,7 @@ export default function MainLayout({ children }) {
             <HelpOutlineOutlinedIcon />
           </IconButton>
           <IconButton
-            onClick={handleClick}
+            onClick={handleProfileMenuClick}
             size="small"
             sx={{ ml: [2], display: { xs: "none", md: "block" } }}
             aria-controls={open ? "account-menu" : undefined}
@@ -195,68 +217,68 @@ export default function MainLayout({ children }) {
           >
             <Avatar {...stringAvatar("Kent Dodds")} />
           </IconButton>
+          <Menu
+            anchorEl={isProfileMenuOpen}
+            id="account-menu"
+            open={openProfileMenu}
+            onClose={handleProfileMenuClose}
+            onClick={handleProfileMenuClose}
+            PaperProps={{
+              elevation: 0,
+              sx: {
+                minWidth: "220px",
+                overflow: "visible",
+                filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                mt: 1.5,
+                "& .MuiAvatar-root": {
+                  width: 32,
+                  height: 32,
+                  ml: -0.5,
+                  mr: 1,
+                },
+                "&:before": {
+                  content: '""',
+                  display: "block",
+                  position: "absolute",
+                  top: 0,
+                  right: 20,
+                  width: 10,
+                  height: 10,
+                  bgcolor: "background.paper",
+                  transform: "translateY(-50%) rotate(45deg)",
+                  zIndex: 0,
+                },
+              },
+            }}
+            transformOrigin={{ horizontal: "right", vertical: "top" }}
+            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+          >
+            <MenuItem sx={{ pointerEvents: "none", cursor: "default" }}>
+              <Stack>
+                <ListItemText primary="Name" sx={{ m: 0 }} />
+                <ListItemText
+                  primary="Company"
+                  sx={{ m: 0, color: "text.secondary" }}
+                />
+                <ListItemText
+                  primary="Email"
+                  sx={{ m: 0, color: "text.secondary" }}
+                />
+              </Stack>
+            </MenuItem>
+            <Divider />
+            <MenuItem onClick={handleProfileMenuClose}>
+              <PersonIcon /> Профиль
+            </MenuItem>
+            <Divider />
+            <MenuItem onClick={handleProfileMenuClose}>
+              <ListItemIcon>
+                <LogoutOutlinedIcon />
+              </ListItemIcon>
+              Выйти
+            </MenuItem>
+          </Menu>
         </Toolbar>
-        <Menu
-          anchorEl={anchorEl}
-          id="account-menu"
-          open={openMenu}
-          onClose={handleClose}
-          onClick={handleClose}
-          PaperProps={{
-            elevation: 0,
-            sx: {
-              minWidth: "220px",
-              overflow: "visible",
-              filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-              mt: 1.5,
-              "& .MuiAvatar-root": {
-                width: 32,
-                height: 32,
-                ml: -0.5,
-                mr: 1,
-              },
-              "&:before": {
-                content: '""',
-                display: "block",
-                position: "absolute",
-                top: 0,
-                right: 20,
-                width: 10,
-                height: 10,
-                bgcolor: "background.paper",
-                transform: "translateY(-50%) rotate(45deg)",
-                zIndex: 0,
-              },
-            },
-          }}
-          transformOrigin={{ horizontal: "right", vertical: "top" }}
-          anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-        >
-          <MenuItem sx={{ pointerEvents: "none", cursor: "default" }}>
-            <Stack>
-              <ListItemText primary="Name" sx={{ m: 0 }} />
-              <ListItemText
-                primary="Company"
-                sx={{ m: 0, color: "text.secondary" }}
-              />
-              <ListItemText
-                primary="Email"
-                sx={{ m: 0, color: "text.secondary" }}
-              />
-            </Stack>
-          </MenuItem>
-          <Divider />
-          <MenuItem onClick={handleClose}>
-            <Avatar /> Профиль
-          </MenuItem>
-          <Divider />
-          <MenuItem onClick={handleClose}>
-            <ListItemIcon>
-              <LogoutOutlinedIcon />
-            </ListItemIcon>
-            Выйти
-          </MenuItem>
-        </Menu>
       </AppBar>
       <Drawer
         variant="permanent"
@@ -290,18 +312,152 @@ export default function MainLayout({ children }) {
             </ListItemIcon>
             <ListItemText primary="Каталог" />
           </ListItemButton>
-          <ListItemButton sx={{ px: [4] }}>
-            <ListItemIcon>
-              <FolderIcon />
-            </ListItemIcon>
-            <ListItemText primary="База знаний" />
-          </ListItemButton>
-          <ListItemButton sx={{ px: [4] }}>
-            <ListItemIcon>
-              <BookmarkIcon />
-            </ListItemIcon>
-            <ListItemText primary="Избранное" />
-          </ListItemButton>
+          <Accordion sx={{ boxShadow: "none", m: "0 !important" }}>
+            <ListItemButton sx={{ px: [4], maxHeight: "48px" }}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreOutlinedIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+                sx={{
+                  p: 0,
+                  width: "100%",
+                }}
+              >
+                <ListItemIcon sx={{ height: "24px" }}>
+                  <FolderIcon />
+                </ListItemIcon>
+                <ListItemText primary="База знаний" sx={{ m: 0 }} />
+              </AccordionSummary>
+            </ListItemButton>
+            <AccordionDetails sx={{ p: 0 }}>
+              <ListItemButton sx={{ px: [4] }}>
+                <ListItemIcon>
+                  <DescriptionOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Купленные документы" />
+              </ListItemButton>
+              <ListItemButton sx={{ px: [4] }}>
+                <ListItemIcon>
+                  <DescriptionOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Обзор практики ВС РФ" />
+              </ListItemButton>
+              <ListItemButton sx={{ px: [4] }}>
+                <ListItemIcon>
+                  <DescriptionOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Обзор НКС округов" />
+              </ListItemButton>
+              <ListItemButton sx={{ px: [4] }}>
+                <ListItemIcon>
+                  <DescriptionOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Обучение" />
+              </ListItemButton>
+              <ListItemButton sx={{ px: [4] }}>
+                <ListItemIcon>
+                  <DescriptionOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Полезные документы" />
+              </ListItemButton>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion sx={{ boxShadow: "none", m: "0 !important" }}>
+            <ListItemButton sx={{ px: [4], maxHeight: "48px" }}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreOutlinedIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+                sx={{
+                  p: 0,
+                  width: "100%",
+                }}
+              >
+                <ListItemIcon sx={{ height: "24px" }}>
+                  <BookmarkIcon />
+                </ListItemIcon>
+                <ListItemText primary="Избранное" sx={{ m: 0 }} />
+              </AccordionSummary>
+            </ListItemButton>
+            <AccordionDetails sx={{ p: 0 }}>
+              <ListItemButton sx={{ px: [4] }}>
+                <ListItemIcon>
+                  <AddIcon />
+                </ListItemIcon>
+                <ListItemText primary="Создать папку" />
+              </ListItemButton>
+              <Stack sx={{ maxHeight: "265px", overflowY: "scroll" }}>
+                {folders.map(({ folder }, i) => {
+                  return (
+                    <ListItemButton
+                      key={i}
+                      sx={{ pl: [4], pr: [1], gap: "10px" }}
+                    >
+                      <ListItemIcon sx={{ minWidth: "40px" }}>
+                        <FolderOutlinedIcon />
+                      </ListItemIcon>
+                      <ListItemText primary={folder} />
+                      <IconButton
+                        onClick={handleFolderMenuClick}
+                        sx={{
+                          display: {
+                            xs: "none",
+                            md: "block",
+                            height: "40px",
+                          },
+                        }}
+                      >
+                        <MoreVertIcon />
+                      </IconButton>
+
+                      <Menu
+                        anchorEl={isFolderMenuOpen}
+                        id="folder-menu"
+                        open={openFolderMenu}
+                        onClose={handleFolderMenuClose}
+                        onClick={handleFolderMenuClose}
+                        PaperProps={{
+                          elevation: 0,
+                          sx: {
+                            minWidth: "220px",
+                            overflow: "visible",
+                            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                            mt: 1.5,
+                            "& .MuiAvatar-root": {
+                              width: 32,
+                              height: 32,
+                              ml: -0.5,
+                              mr: 1,
+                            },
+                          },
+                        }}
+                        transformOrigin={{
+                          horizontal: "right",
+                          vertical: "top",
+                        }}
+                        anchorOrigin={{
+                          horizontal: "right",
+                          vertical: "bottom",
+                        }}
+                      >
+                        <Divider />
+                        <MenuItem onClick={handleFolderMenuClose}>
+                          <PersonIcon /> Профиль
+                        </MenuItem>
+                        <Divider />
+                        <MenuItem onClick={handleFolderMenuClose}>
+                          <ListItemIcon>
+                            <LogoutOutlinedIcon />
+                          </ListItemIcon>
+                          Выйти
+                        </MenuItem>
+                      </Menu>
+                    </ListItemButton>
+                  );
+                })}
+              </Stack>
+            </AccordionDetails>
+          </Accordion>
           <ListItemButton sx={{ px: [4] }}>
             <ListItemIcon>
               <DescriptionIcon />

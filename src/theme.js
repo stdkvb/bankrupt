@@ -50,7 +50,13 @@ const theme = createTheme({
         },
       },
     },
-
+    MuiAccordion: {
+      styleOverrides: {
+        root: {
+          "&:before": { content: "none" },
+        },
+      },
+    },
     MuiTab: {
       styleOverrides: {
         root: {
