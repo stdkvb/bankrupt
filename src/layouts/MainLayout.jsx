@@ -9,7 +9,6 @@ import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Container from "@mui/material/Container";
-import Paper from "@mui/material/Paper";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
@@ -18,7 +17,6 @@ import MenuItem from "@mui/material/MenuItem";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -313,21 +311,23 @@ export default function MainLayout({ children }) {
             <ListItemText primary="Каталог" />
           </ListItemButton>
           <Accordion sx={{ boxShadow: "none", m: "0 !important" }}>
-            <ListItemButton sx={{ px: [4], maxHeight: "48px" }}>
+            <ListItemButton sx={{ px: [4], pr: [1], maxHeight: "48px" }}>
+              <ListItemIcon sx={{ height: "24px" }}>
+                <FolderIcon />
+              </ListItemIcon>
+              <ListItemText primary="База знаний" sx={{ m: 0 }} />
               <AccordionSummary
-                expandIcon={<ExpandMoreOutlinedIcon />}
+                expandIcon={
+                  <IconButton>
+                    <ExpandMoreOutlinedIcon />
+                  </IconButton>
+                }
                 aria-controls="panel1a-content"
                 id="panel1a-header"
                 sx={{
                   p: 0,
-                  width: "100%",
                 }}
-              >
-                <ListItemIcon sx={{ height: "24px" }}>
-                  <FolderIcon />
-                </ListItemIcon>
-                <ListItemText primary="База знаний" sx={{ m: 0 }} />
-              </AccordionSummary>
+              ></AccordionSummary>
             </ListItemButton>
             <AccordionDetails sx={{ p: 0 }}>
               <ListItemButton sx={{ px: [4] }}>
@@ -336,48 +336,26 @@ export default function MainLayout({ children }) {
                 </ListItemIcon>
                 <ListItemText primary="Купленные документы" />
               </ListItemButton>
-              <ListItemButton sx={{ px: [4] }}>
-                <ListItemIcon>
-                  <DescriptionOutlinedIcon />
-                </ListItemIcon>
-                <ListItemText primary="Обзор практики ВС РФ" />
-              </ListItemButton>
-              <ListItemButton sx={{ px: [4] }}>
-                <ListItemIcon>
-                  <DescriptionOutlinedIcon />
-                </ListItemIcon>
-                <ListItemText primary="Обзор НКС округов" />
-              </ListItemButton>
-              <ListItemButton sx={{ px: [4] }}>
-                <ListItemIcon>
-                  <DescriptionOutlinedIcon />
-                </ListItemIcon>
-                <ListItemText primary="Обучение" />
-              </ListItemButton>
-              <ListItemButton sx={{ px: [4] }}>
-                <ListItemIcon>
-                  <DescriptionOutlinedIcon />
-                </ListItemIcon>
-                <ListItemText primary="Полезные документы" />
-              </ListItemButton>
             </AccordionDetails>
           </Accordion>
           <Accordion sx={{ boxShadow: "none", m: "0 !important" }}>
-            <ListItemButton sx={{ px: [4], maxHeight: "48px" }}>
+            <ListItemButton sx={{ px: [4], pr: [1], maxHeight: "48px" }}>
+              <ListItemIcon sx={{ height: "24px" }}>
+                <BookmarkIcon />
+              </ListItemIcon>
+              <ListItemText primary="Избранное" sx={{ m: 0 }} />
               <AccordionSummary
-                expandIcon={<ExpandMoreOutlinedIcon />}
+                expandIcon={
+                  <IconButton>
+                    <ExpandMoreOutlinedIcon />
+                  </IconButton>
+                }
                 aria-controls="panel1a-content"
                 id="panel1a-header"
                 sx={{
                   p: 0,
-                  width: "100%",
                 }}
-              >
-                <ListItemIcon sx={{ height: "24px" }}>
-                  <BookmarkIcon />
-                </ListItemIcon>
-                <ListItemText primary="Избранное" sx={{ m: 0 }} />
-              </AccordionSummary>
+              ></AccordionSummary>
             </ListItemButton>
             <AccordionDetails sx={{ p: 0 }}>
               <ListItemButton sx={{ px: [4] }}>
@@ -389,10 +367,7 @@ export default function MainLayout({ children }) {
               <Stack sx={{ maxHeight: "265px", overflowY: "scroll" }}>
                 {folders.map(({ folder }, i) => {
                   return (
-                    <ListItemButton
-                      key={i}
-                      sx={{ pl: [4], pr: [1], gap: "10px" }}
-                    >
+                    <ListItemButton key={i} sx={{ pl: [4], pr: [1], gap: [1] }}>
                       <ListItemIcon sx={{ minWidth: "40px" }}>
                         <FolderOutlinedIcon />
                       </ListItemIcon>
@@ -409,52 +384,55 @@ export default function MainLayout({ children }) {
                       >
                         <MoreVertIcon />
                       </IconButton>
-
-                      <Menu
-                        anchorEl={isFolderMenuOpen}
-                        id="folder-menu"
-                        open={openFolderMenu}
-                        onClose={handleFolderMenuClose}
-                        onClick={handleFolderMenuClose}
-                        PaperProps={{
-                          elevation: 0,
-                          sx: {
-                            minWidth: "220px",
-                            overflow: "visible",
-                            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                            mt: 1.5,
-                            "& .MuiAvatar-root": {
-                              width: 32,
-                              height: 32,
-                              ml: -0.5,
-                              mr: 1,
-                            },
-                          },
-                        }}
-                        transformOrigin={{
-                          horizontal: "right",
-                          vertical: "top",
-                        }}
-                        anchorOrigin={{
-                          horizontal: "right",
-                          vertical: "bottom",
-                        }}
-                      >
-                        <Divider />
-                        <MenuItem onClick={handleFolderMenuClose}>
-                          <PersonIcon /> Профиль
-                        </MenuItem>
-                        <Divider />
-                        <MenuItem onClick={handleFolderMenuClose}>
-                          <ListItemIcon>
-                            <LogoutOutlinedIcon />
-                          </ListItemIcon>
-                          Выйти
-                        </MenuItem>
-                      </Menu>
                     </ListItemButton>
                   );
                 })}
+                <Menu
+                  anchorEl={isFolderMenuOpen}
+                  id="folder-menu"
+                  open={openFolderMenu}
+                  onClose={handleFolderMenuClose}
+                  onClick={handleFolderMenuClose}
+                  PaperProps={{
+                    elevation: 0,
+                    sx: {
+                      minWidth: "220px",
+                      overflow: "visible",
+                      boxShadow:
+                        "0px 5px 5px -3px rgba(0, 0, 0, 0.20), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12)",
+                      mt: 1.5,
+
+                      "& .MuiAvatar-root": {
+                        width: 32,
+                        height: 32,
+                        ml: -0.5,
+                        mr: 1,
+                      },
+                    },
+                  }}
+                  transformOrigin={{
+                    horizontal: "right",
+                    vertical: "top",
+                  }}
+                  anchorOrigin={{
+                    horizontal: "right",
+                    vertical: "bottom",
+                  }}
+                >
+                  <MenuItem onClick={handleFolderMenuClose}>
+                    Переместить вверх
+                  </MenuItem>
+                  <MenuItem onClick={handleFolderMenuClose}>
+                    Переместить вниз
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem onClick={handleFolderMenuClose}>
+                    Переименовать папку
+                  </MenuItem>
+                  <MenuItem onClick={handleFolderMenuClose}>
+                    Удалить папку
+                  </MenuItem>
+                </Menu>
               </Stack>
             </AccordionDetails>
           </Accordion>
