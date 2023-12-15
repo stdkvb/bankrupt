@@ -5,6 +5,7 @@ import TextField from "@mui/material/TextField";
 import { Button, Link } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import InputMask from "react-input-mask";
 
 const Reg = () => {
   //form submit
@@ -75,17 +76,21 @@ const Reg = () => {
         autoFocus
         sx={{ mb: 2 }}
       />
-      <TextField
-        label="Телефон"
-        variant="standard"
-        size="medium"
-        required
-        fullWidth
-        id="phone"
-        name="phone"
-        autoFocus
-        sx={{ mb: 2 }}
-      />
+      <InputMask mask="+7 (999) 999 99 99" disabled={false} maskChar=" ">
+        {() => (
+          <TextField
+            label="Телефон"
+            variant="standard"
+            size="medium"
+            required
+            fullWidth
+            id="phone"
+            name="phone"
+            autoFocus
+            sx={{ mb: 2 }}
+          />
+        )}
+      </InputMask>
       <TextField
         label="Email"
         variant="standard"
