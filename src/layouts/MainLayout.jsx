@@ -8,7 +8,6 @@ import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Container from "@mui/material/Container";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
@@ -400,7 +399,6 @@ export default function MainLayout({ children }) {
                       overflow: "visible",
                       boxShadow:
                         "0px 5px 5px -3px rgba(0, 0, 0, 0.20), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12)",
-                      mt: 1.5,
 
                       "& .MuiAvatar-root": {
                         width: 32,
@@ -411,11 +409,11 @@ export default function MainLayout({ children }) {
                     },
                   }}
                   transformOrigin={{
-                    horizontal: "right",
+                    horizontal: "left",
                     vertical: "top",
                   }}
                   anchorOrigin={{
-                    horizontal: "right",
+                    horizontal: "left",
                     vertical: "bottom",
                   }}
                 >
@@ -478,17 +476,7 @@ export default function MainLayout({ children }) {
           overflow: "auto",
         }}
       >
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-          {children}
-          {/* <Paper
-            sx={{
-              p: 2,
-              display: "flex",
-              flexDirection: "column",
-              height: 240,
-            }}
-          ></Paper> */}
-        </Container>
+        {children}
       </Box>
     </Box>
   );

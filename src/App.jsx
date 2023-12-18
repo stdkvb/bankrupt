@@ -6,7 +6,8 @@ import Auth from "./pages/Auth";
 import Reg from "./pages/Reg";
 import PasswordRecovery from "./pages/PasswordRecovery";
 import NewPassword from "./pages/NewPassword";
+import Profile from "./pages/Profile";
 
 export default function App() {
-  return <MainLayout children={<NewPassword />} />;
+  return <MainLayout children={<Profile />} />;
 }
