@@ -3,7 +3,7 @@ import { createBreakpoints } from "@mui/system";
 const breakpoints = createBreakpoints({});
 
 // Create a theme instance.
-const theme = createTheme({
+let theme = createTheme({
   palette: {
     primary: {
       main: "#009B00",
@@ -57,19 +57,9 @@ const theme = createTheme({
         },
       },
     },
-    MuiTab: {
-      styleOverrides: {
-        root: {
-          textTransform: "none",
-          fontWeight: 600,
-          alignItems: "flex-start",
-          "&.Mui-selected": {
-            backgroundColor: "#E6F7FF",
-          },
-        },
-      },
-    },
   },
 });
 
-export default responsiveFontSizes(theme);
+theme = responsiveFontSizes(theme);
+
+export default theme;

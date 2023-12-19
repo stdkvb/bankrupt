@@ -38,7 +38,6 @@ const NewPassword = () => {
         fullWidth
         id="password"
         name="password"
-        autoFocus
         sx={{ mb: 2 }}
       />
       <TextField
@@ -49,7 +48,6 @@ const NewPassword = () => {
         fullWidth
         id="repeatpassword"
         name="repeatpassword"
-        autoFocus
         sx={{ mb: 2 }}
       />
       <Button type="submit" fullWidth variant="contained" sx={{ mt: 3 }}>

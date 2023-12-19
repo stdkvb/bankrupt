@@ -52,7 +52,6 @@ const Auth = () => {
         fullWidth
         id="login"
         name="login"
-        autoFocus
         sx={{ mb: 2 }}
       />
       <TextField
@@ -63,7 +62,6 @@ const Auth = () => {
         fullWidth
         id="password"
         name="password"
-        autoFocus
         sx={{ mb: 1 }}
       />
       <Link href="#" color="primary.main">

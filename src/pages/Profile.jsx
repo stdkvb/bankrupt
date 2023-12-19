@@ -7,7 +7,12 @@ import InputMask from "react-input-mask";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
+import Requisites from "../components/Requisites";
+import Questions from "../components/Questions";
+
 const Profile = () => {
+  const [isCorporate, setIsCorporate] = React.useState(false);
+
   return (
     <Container
       maxWidth="lg"
@@ -31,7 +36,7 @@ const Profile = () => {
           gap: { xs: [3], md: [4] },
         }}
       >
-        <Grid container rowSpacing={2} columnSpacing={8}>
+        <Grid container rowSpacing={{ xs: 3, md: 2 }} columnSpacing={8}>
           <Grid
             item
             sx={{ display: "flex", flexDirection: "column", gap: [1] }}
@@ -106,7 +111,6 @@ const Profile = () => {
             size="medium"
             id="surname"
             name="surname"
-            autoFocus
             InputLabelProps={{ shrink: true }}
             value="Surname"
             sx={{ width: { xs: "100%", md: "300px" } }}
@@ -117,7 +121,6 @@ const Profile = () => {
             size="medium"
             id="name"
             name="name"
-            autoFocus
             InputLabelProps={{ shrink: true }}
             value="Name"
             sx={{ width: { xs: "100%", md: "300px" } }}
@@ -129,7 +132,6 @@ const Profile = () => {
             required
             id="middlename"
             name="middlename"
-            autoFocus
             InputLabelProps={{ shrink: true }}
             value="Middlename"
             sx={{ width: { xs: "100%", md: "300px" } }}
@@ -142,10 +144,17 @@ const Profile = () => {
               required
               id="phone"
               name="phone"
-              autoFocus
               InputLabelProps={{ shrink: true }}
               placeholder="+7 (999) 999 99 99"
               sx={{ width: { xs: "100%", md: "300px" } }}
+              inputProps={{
+                sx: {
+                  "&::placeholder": {
+                    color: "text.primary",
+                    opacity: 1,
+                  },
+                },
+              }}
             />
           </InputMask>
           <TextField
@@ -156,63 +165,27 @@ const Profile = () => {
             fullWidth
             id="email"
             name="email"
-            autoFocus
             InputLabelProps={{ shrink: true }}
             value="Email"
             sx={{ width: { xs: "100%", md: "300px" } }}
           />
         </Stack>
         <FormControlLabel
-          control={<Checkbox value="policy" />}
+          control={
+            <Checkbox
+              value="corporate"
+              onChange={() => {
+                setIsCorporate(!isCorporate);
+              }}
+            />
+          }
           label={
             <Typography display="inline" color="text.secondary">
               Юридическое лицо
             </Typography>
           }
         />
-        <Typography variant="h5">Реквизиты</Typography>
-        <Stack
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            gap: [4],
-            flexWrap: "wrap",
-          }}
-        >
-          <TextField
-            label="Юридическое наименование"
-            required
-            variant="standard"
-            size="medium"
-            id="company"
-            name="company"
-            autoFocus
-            InputLabelProps={{ shrink: true }}
-            value="Company"
-            sx={{ width: { xs: "100%", md: "300px" } }}
-          />
-        </Stack>
-        <Stack
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            gap: [4],
-            flexWrap: "wrap",
-          }}
-        >
-          <TextField
-            label="Расчетный счет"
-            required
-            variant="standard"
-            size="medium"
-            id="checkingAccount"
-            name="checkingAccount"
-            autoFocus
-            InputLabelProps={{ shrink: true }}
-            value="123456"
-            sx={{ width: { xs: "100%", md: "300px" } }}
-          />
-        </Stack>
+        {isCorporate && <Requisites />}
         <Stack
           sx={{
             display: "flex",
@@ -238,27 +211,7 @@ const Profile = () => {
           </Button>
         </Stack>
       </Paper>
-      <Paper
-        elevation={0}
-        sx={{
-          p: { xs: [2], md: [4] },
-          display: "flex",
-          flexDirection: "column",
-          gap: { xs: [3], md: [4] },
-        }}
-      >
-        <Typography variant="h5">Есть вопросы?</Typography>
-        <Typography variant="p">
-          Заполните форму и наш менеджер свяжется с вами
-        </Typography>
-        <Button
-          type="submit"
-          variant="contained"
-          sx={{ minWidth: { xs: "100%", md: "200px" } }}
-        >
-          Задать вопрос
-        </Button>
-      </Paper>
+      <Questions />
     </Container>
   );
 };

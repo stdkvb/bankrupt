@@ -51,7 +51,6 @@ const Reg = () => {
         fullWidth
         id="surname"
         name="surname"
-        autoFocus
         sx={{ mb: 2 }}
       />
       <TextField
@@ -62,7 +61,6 @@ const Reg = () => {
         fullWidth
         id="name"
         name="name"
-        autoFocus
         sx={{ mb: 2 }}
       />
       <TextField
@@ -73,7 +71,6 @@ const Reg = () => {
         fullWidth
         id="middlename"
         name="middlename"
-        autoFocus
         sx={{ mb: 2 }}
       />
       <InputMask mask="+7 (999) 999 99 99">
@@ -85,7 +82,6 @@ const Reg = () => {
           fullWidth
           id="phone"
           name="phone"
-          autoFocus
           sx={{ mb: 2 }}
         />
       </InputMask>
@@ -97,7 +93,6 @@ const Reg = () => {
         fullWidth
         id="email"
         name="email"
-        autoFocus
         sx={{ mb: 2 }}
       />
       <TextField
@@ -108,7 +103,6 @@ const Reg = () => {
         fullWidth
         id="password"
         name="password"
-        autoFocus
         sx={{ mb: 2 }}
       />
       <TextField
@@ -119,7 +113,6 @@ const Reg = () => {
         fullWidth
         id="repeatpassword"
         name="repeatpassword"
-        autoFocus
         sx={{ mb: 2 }}
       />
       <FormControlLabel

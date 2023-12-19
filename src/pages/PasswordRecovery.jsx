@@ -64,7 +64,6 @@ const PasswordRecovery = () => {
         fullWidth
         id="email"
         name="email"
-        autoFocus
         sx={{ mb: 2 }}
       />
       <Button type="submit" fullWidth variant="contained" sx={{ mt: 3 }}>
