@@ -40,7 +40,7 @@ const PasswordRecovery = () => {
         }}
       >
         Уже есть аккаунт?
-        <Link href="#" color="primary.main">
+        <Link href="/login" color="primary.main">
           Войти
         </Link>
       </Typography>

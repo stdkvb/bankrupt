@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Outlet } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import { Avatar, Stack, Link } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
@@ -476,7 +477,7 @@ export default function MainLayout({ children }) {
           overflow: "auto",
         }}
       >
-        {children}
+        <Outlet />
       </Box>
     </Box>
   );

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { BrowserRouter } from "react-router-dom";
 import { createRoot } from "react-dom/client";
 import CssBaseline from "@mui/material/CssBaseline";
 import "./assets/styles/index.scss";
@@ -13,6 +14,8 @@ root.render(
   <ThemeProvider theme={theme}>
     {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
     <CssBaseline />
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </ThemeProvider>
 );
