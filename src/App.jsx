@@ -8,6 +8,7 @@ import Registration from "./pages/Registration";
 import PasswordRecovery from "./pages/PasswordRecovery";
 import NewPassword from "./pages/NewPassword";
 import Profile from "./pages/Profile";
+import Contacts from "./pages/Contacts";
 
 export default function App() {
   return useRoutes([
@@ -18,6 +19,16 @@ export default function App() {
         {
           index: true,
           element: <Profile />,
+        },
+      ],
+    },
+    {
+      path: "/contacts",
+      element: <MainLayout />,
+      children: [
+        {
+          index: true,
+          element: <Contacts />,
         },
       ],
     },

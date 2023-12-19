@@ -304,14 +304,18 @@ export default function MainLayout({ children }) {
               />
             </Stack>
           </ListItemButton>
-          <ListItemButton sx={{ px: [4] }}>
+          <ListItemButton sx={{ px: [4] }} component={Link} to={"#"}>
             <ListItemIcon>
               <LayersIcon />
             </ListItemIcon>
             <ListItemText primary="Каталог" />
           </ListItemButton>
           <Accordion sx={{ boxShadow: "none", m: "0 !important" }}>
-            <ListItemButton sx={{ px: [4], pr: [1], maxHeight: "48px" }}>
+            <ListItemButton
+              sx={{ px: [4], pr: [1], maxHeight: "48px" }}
+              component={Link}
+              to={"#"}
+            >
               <ListItemIcon sx={{ height: "24px" }}>
                 <FolderIcon />
               </ListItemIcon>
@@ -339,7 +343,11 @@ export default function MainLayout({ children }) {
             </AccordionDetails>
           </Accordion>
           <Accordion sx={{ boxShadow: "none", m: "0 !important" }}>
-            <ListItemButton sx={{ px: [4], pr: [1], maxHeight: "48px" }}>
+            <ListItemButton
+              sx={{ px: [4], pr: [1], maxHeight: "48px" }}
+              component={Link}
+              to={"#"}
+            >
               <ListItemIcon sx={{ height: "24px" }}>
                 <BookmarkIcon />
               </ListItemIcon>
@@ -435,25 +443,25 @@ export default function MainLayout({ children }) {
               </Stack>
             </AccordionDetails>
           </Accordion>
-          <ListItemButton sx={{ px: [4] }}>
+          <ListItemButton sx={{ px: [4] }} component={Link} to={"#"}>
             <ListItemIcon>
               <DescriptionIcon />
             </ListItemIcon>
             <ListItemText primary="Новости" />
           </ListItemButton>
-          <ListItemButton sx={{ px: [4] }}>
+          <ListItemButton sx={{ px: [4] }} component={Link} to={"#"}>
             <ListItemIcon>
               <DashboardIcon />
             </ListItemIcon>
             <ListItemText primary="Тарифы" />
           </ListItemButton>
-          <ListItemButton sx={{ px: [4] }}>
+          <ListItemButton sx={{ px: [4] }} component={Link} to={"#"}>
             <ListItemIcon>
               <HelpIcon />
             </ListItemIcon>
             <ListItemText primary="Вопросы и ответы" />
           </ListItemButton>
-          <ListItemButton sx={{ px: [4] }}>
+          <ListItemButton sx={{ px: [4] }} component={Link} to={"/contacts"}>
             <ListItemIcon>
               <MapIcon />
             </ListItemIcon>
