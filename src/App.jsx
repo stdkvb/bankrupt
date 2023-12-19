@@ -10,6 +10,7 @@ import NewPassword from "./pages/NewPassword";
 import Profile from "./pages/Profile";
 import Contacts from "./pages/Contacts";
 import PageNotFound from "./pages/PageNotFound";
+import QA from "./pages/QA";
 
 export default function App() {
   return useRoutes([
@@ -30,6 +31,16 @@ export default function App() {
         {
           index: true,
           element: <Contacts />,
+        },
+      ],
+    },
+    {
+      path: "/qa",
+      element: <MainLayout />,
+      children: [
+        {
+          index: true,
+          element: <QA />,
         },
       ],
     },

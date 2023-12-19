@@ -55,6 +55,8 @@ let theme = createTheme({
       styleOverrides: {
         root: {
           "&:before": { content: "none" },
+          ".MuiAccordionSummary-content": { margin: "0" },
+          ".MuiAccordionSummary-root .Mui-expanded": { minHeight: "unset" },
         },
       },
     },
