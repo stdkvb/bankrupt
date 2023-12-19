@@ -9,6 +9,7 @@ import PasswordRecovery from "./pages/PasswordRecovery";
 import NewPassword from "./pages/NewPassword";
 import Profile from "./pages/Profile";
 import Contacts from "./pages/Contacts";
+import PageNotFound from "./pages/PageNotFound";
 
 export default function App() {
   return useRoutes([
@@ -69,6 +70,16 @@ export default function App() {
         {
           index: true,
           element: <NewPassword />,
+        },
+      ],
+    },
+    {
+      path: "*",
+      element: <AuthLayout />,
+      children: [
+        {
+          index: true,
+          element: <PageNotFound />,
         },
       ],
     },
