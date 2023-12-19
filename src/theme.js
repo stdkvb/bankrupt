@@ -21,6 +21,7 @@ let theme = createTheme({
     text: {
       primary: "rgba(0, 0, 0, 0.87)",
       secondary: "rgba(0, 0, 0, 0.60)",
+      white: "#FFFFFF",
     },
   },
   components: {

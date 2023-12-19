@@ -9,6 +9,7 @@ import Checkbox from "@mui/material/Checkbox";
 
 import Requisites from "../components/Requisites";
 import Questions from "../components/Questions";
+import Notification from "../components/Notification";
 
 const Profile = () => {
   const [isCorporate, setIsCorporate] = React.useState(false);
@@ -27,6 +28,7 @@ const Profile = () => {
       <Typography variant="h4" component="h1">
         Профиль
       </Typography>
+      <Notification />
       <Paper
         elevation={0}
         sx={{
