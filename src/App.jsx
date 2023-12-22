@@ -8,9 +8,10 @@ import Registration from "./pages/Registration";
 import PasswordRecovery from "./pages/PasswordRecovery";
 import NewPassword from "./pages/NewPassword";
 import Profile from "./pages/Profile";
+import Catalog from "./pages/Catalog";
+import QA from "./pages/QA";
 import Contacts from "./pages/Contacts";
 import PageNotFound from "./pages/PageNotFound";
-import QA from "./pages/QA";
 
 export default function App() {
   return useRoutes([
@@ -21,6 +22,16 @@ export default function App() {
         {
           index: true,
           element: <Profile />,
+        },
+      ],
+    },
+    {
+      path: "/catalog",
+      element: <MainLayout />,
+      children: [
+        {
+          index: true,
+          element: <Catalog />,
         },
       ],
     },

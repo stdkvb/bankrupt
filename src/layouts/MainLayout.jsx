@@ -304,7 +304,7 @@ export default function MainLayout({ children }) {
               />
             </Stack>
           </ListItemButton>
-          <ListItemButton sx={{ px: [4] }} component={Link} to={"#"}>
+          <ListItemButton sx={{ px: [4] }} component={Link} to={"/catalog"}>
             <ListItemIcon>
               <LayersIcon />
             </ListItemIcon>

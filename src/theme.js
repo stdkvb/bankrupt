@@ -1,6 +1,5 @@
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 import { createBreakpoints } from "@mui/system";
-const breakpoints = createBreakpoints({});
 
 // Create a theme instance.
 let theme = createTheme({
@@ -57,6 +56,15 @@ let theme = createTheme({
           "&:before": { content: "none" },
           ".MuiAccordionSummary-content": { margin: "0" },
           ".MuiAccordionSummary-root .Mui-expanded": { minHeight: "unset" },
+        },
+      },
+    },
+    MuiBox: {
+      styleOverrides: {
+        root: {
+          ".table-head": {
+            display: "none",
+          },
         },
       },
     },

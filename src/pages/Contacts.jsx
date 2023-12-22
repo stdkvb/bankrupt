@@ -7,7 +7,7 @@ import Questions from "../components/Questions";
 const Contacts = () => {
   return (
     <Container
-      maxWidth="lg"
+      maxWidth="false"
       sx={{
         mt: 4,
         mb: 4,

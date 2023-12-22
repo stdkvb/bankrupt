@@ -16,7 +16,7 @@ const Profile = () => {
 
   return (
     <Container
-      maxWidth="lg"
+      maxWidth="false"
       sx={{
         mt: 4,
         mb: 4,
@@ -89,6 +89,7 @@ const Profile = () => {
         </Stack>
       </Paper>
       <Paper
+        component="form"
         elevation={0}
         sx={{
           p: { xs: [2], md: [4] },
@@ -205,7 +206,6 @@ const Profile = () => {
             Редактировать
           </Button>
           <Button
-            type="submit"
             variant="outlined"
             sx={{ minWidth: { xs: "100%", md: "200px" } }}
           >

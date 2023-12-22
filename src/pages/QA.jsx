@@ -6,10 +6,13 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
+import qa from "../data/qa.json";
+
 const QA = () => {
+  console.log(qa);
   return (
     <Container
-      maxWidth="lg"
+      maxWidth="false"
       sx={{
         mt: 4,
         mb: 4,
@@ -27,80 +30,34 @@ const QA = () => {
         <Typography variant="h4" component="h1" sx={{ mb: { xs: 2, md: 4 } }}>
           Часто задаваемые вопросы
         </Typography>
-        <Accordion
-          square={true}
-          sx={{
-            boxShadow: "none",
-            borderBottom: "solid 1px rgba(101, 108, 101, 0.20)",
-          }}
-        >
-          <AccordionSummary
-            sx={{ p: 0, my: 2, borderRadius: "0" }}
-            expandIcon={<ExpandMoreIcon />}
-          >
-            <Typography variant="h5">
-              На что не распространяется банкротство физического лица?
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails sx={{ px: 0, pt: 0, pb: 4 }}>
-            <Typography
-              variant="p"
-              color="text.secondary"
-              sx={{ maxWidth: "860px" }}
+        {qa.map(({ question, answer }, i) => {
+          return (
+            <Accordion
+              key={i}
+              square={true}
+              sx={{
+                boxShadow: "none",
+                borderBottom: "solid 1px rgba(101, 108, 101, 0.20)",
+              }}
             >
-              Суды не приняли во внимание, что недействительность договора может
-              быть связана не только с нарушением самих правил проведения
-              торгов, но и с иными нарушениями требований закона. Заключение
-              договора об отчуждении недвижимого имущества, принадлежащего
-              обществу, допускалось исключительно посредством торгов. Согласно
-              пункту 8 статьи 448 ГК РФ условия соответствующего договора могли
-              быть изменены сторонами после проведения торгов по основаниям,
-              установленным законом, или по иным основаниям, если изменение
-              договора не повлияло на те его условия, которые имели существенное
-              значение для определения цены на торгах. Однако условие
-              относительного того, что продается имущество, обремененное арестом
-              в пользу ФНС России, имело существенное значение для правильного
-              определения цены договора.
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-        <Accordion
-          square={true}
-          sx={{
-            boxShadow: "none",
-            borderBottom: "solid 1px rgba(101, 108, 101, 0.20)",
-          }}
-        >
-          <AccordionSummary
-            sx={{ p: 0, my: 2, borderRadius: "0" }}
-            expandIcon={<ExpandMoreIcon />}
-          >
-            <Typography variant="h5">
-              На что не распространяется банкротство физического лица?
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails sx={{ px: 0, pt: 0, pb: 4 }}>
-            <Typography
-              variant="p"
-              color="text.secondary"
-              sx={{ maxWidth: "860px" }}
-            >
-              Суды не приняли во внимание, что недействительность договора может
-              быть связана не только с нарушением самих правил проведения
-              торгов, но и с иными нарушениями требований закона. Заключение
-              договора об отчуждении недвижимого имущества, принадлежащего
-              обществу, допускалось исключительно посредством торгов. Согласно
-              пункту 8 статьи 448 ГК РФ условия соответствующего договора могли
-              быть изменены сторонами после проведения торгов по основаниям,
-              установленным законом, или по иным основаниям, если изменение
-              договора не повлияло на те его условия, которые имели существенное
-              значение для определения цены на торгах. Однако условие
-              относительного того, что продается имущество, обремененное арестом
-              в пользу ФНС России, имело существенное значение для правильного
-              определения цены договора.
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
+              <AccordionSummary
+                sx={{ p: 0, my: 2, borderRadius: "0" }}
+                expandIcon={<ExpandMoreIcon />}
+              >
+                <Typography variant="h5">{question}</Typography>
+              </AccordionSummary>
+              <AccordionDetails sx={{ px: 0, pt: 0, pb: 4 }}>
+                <Typography
+                  variant="p"
+                  color="text.secondary"
+                  sx={{ maxWidth: "860px" }}
+                >
+                  {answer}
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+          );
+        })}
       </Paper>
     </Container>
   );
