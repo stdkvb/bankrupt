@@ -40,7 +40,7 @@ const Login = () => {
         }}
       >
         Новый пользователь?
-        <Link href="/registration" color="primary.main">
+        <Link href="/sign-up" color="primary.main">
           Создать аккаунт
         </Link>
       </Typography>

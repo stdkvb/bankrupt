@@ -50,7 +50,7 @@ const AuthLayout = ({ children }) => {
             justifyContent: "center",
           }}
         >
-          <Outlet />
+          {children}
         </Container>
       </Box>
       <Box

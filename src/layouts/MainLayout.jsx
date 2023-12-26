@@ -196,12 +196,16 @@ export default function MainLayout({ children }) {
             <CloseIcon />
           </IconButton>
           <IconButton
-            sx={{ display: { xs: "none", md: "block", height: "40px" } }}
+            component={Link}
+            href={"/"}
+            sx={{ display: { xs: "none", md: "flex", height: "40px" } }}
           >
             <SearchOutlinedIcon />
           </IconButton>
           <IconButton
-            sx={{ display: { xs: "none", md: "block", height: "40px" } }}
+            component={Link}
+            href={"/qa"}
+            sx={{ display: { xs: "none", md: "flex", height: "40px" } }}
           >
             <HelpOutlineOutlinedIcon />
           </IconButton>
@@ -265,11 +269,19 @@ export default function MainLayout({ children }) {
               </Stack>
             </MenuItem>
             <Divider />
-            <MenuItem onClick={handleProfileMenuClose}>
+            <MenuItem
+              onClick={handleProfileMenuClose}
+              component={Link}
+              href={"/profile"}
+            >
               <PersonIcon /> Профиль
             </MenuItem>
             <Divider />
-            <MenuItem onClick={handleProfileMenuClose}>
+            <MenuItem
+              onClick={handleProfileMenuClose}
+              component={Link}
+              href={"/login"}
+            >
               <ListItemIcon>
                 <LogoutOutlinedIcon />
               </ListItemIcon>
@@ -304,7 +316,7 @@ export default function MainLayout({ children }) {
               />
             </Stack>
           </ListItemButton>
-          <ListItemButton sx={{ px: [4] }} component={Link} to={"/catalog"}>
+          <ListItemButton sx={{ px: [4] }} component={Link} to={"/"}>
             <ListItemIcon>
               <LayersIcon />
             </ListItemIcon>
@@ -485,7 +497,7 @@ export default function MainLayout({ children }) {
           overflow: "auto",
         }}
       >
-        <Outlet />
+        {children}
       </Box>
     </Box>
   );

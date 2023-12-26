@@ -1,7 +1,8 @@
 import * as React from "react";
-import { useRoutes } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
 
-import MainLayout from "./layouts/MainLayout";
+import PrivateRoute from "./utils/PrivateRoute";
 import AuthLayout from "./layouts/AuthLayout";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
@@ -14,96 +15,82 @@ import Contacts from "./pages/Contacts";
 import PageNotFound from "./pages/PageNotFound";
 
 export default function App() {
-  return useRoutes([
-    {
-      path: "/profile",
-      element: <MainLayout />,
-      children: [
-        {
-          index: true,
-          element: <Profile />,
-        },
-      ],
-    },
-    {
-      path: "/catalog",
-      element: <MainLayout />,
-      children: [
-        {
-          index: true,
-          element: <Catalog />,
-        },
-      ],
-    },
-    {
-      path: "/contacts",
-      element: <MainLayout />,
-      children: [
-        {
-          index: true,
-          element: <Contacts />,
-        },
-      ],
-    },
-    {
-      path: "/qa",
-      element: <MainLayout />,
-      children: [
-        {
-          index: true,
-          element: <QA />,
-        },
-      ],
-    },
-    {
-      path: "/login",
-      element: <AuthLayout />,
-      children: [
-        {
-          index: true,
-          element: <Login />,
-        },
-      ],
-    },
-    {
-      path: "/registration",
-      element: <AuthLayout />,
-      children: [
-        {
-          index: true,
-          element: <Registration />,
-        },
-      ],
-    },
-    {
-      path: "/password-recovery",
-      element: <AuthLayout />,
-      children: [
-        {
-          index: true,
-          element: <PasswordRecovery />,
-        },
-      ],
-    },
-    {
-      path: "/new-password",
-      element: <AuthLayout />,
-      children: [
-        {
-          index: true,
-          element: <NewPassword />,
-        },
-      ],
-    },
-    {
-      path: "*",
-      element: <AuthLayout />,
-      children: [
-        {
-          index: true,
-          element: <PageNotFound />,
-        },
-      ],
-    },
-  ]);
+  const [loggedIn, setLoggedIn] = useState(true);
+
+  return (
+    <Routes>
+      <Route
+        path="/login"
+        element={
+          <AuthLayout>
+            <Login />
+          </AuthLayout>
+        }
+      />
+      <Route
+        path="/sign-up"
+        element={
+          <AuthLayout>
+            <Registration />
+          </AuthLayout>
+        }
+      />
+      <Route
+        path="/password-recovery"
+        element={
+          <AuthLayout>
+            <PasswordRecovery />
+          </AuthLayout>
+        }
+      />
+      <Route
+        path="/new-password"
+        element={
+          <AuthLayout>
+            <NewPassword />
+          </AuthLayout>
+        }
+      />
+      <Route
+        path="/"
+        element={
+          <PrivateRoute loggedIn={loggedIn}>
+            <Catalog />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <PrivateRoute loggedIn={loggedIn}>
+            <Profile />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/contacts"
+        element={
+          <PrivateRoute loggedIn={loggedIn}>
+            <Contacts />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/qa"
+        element={
+          <PrivateRoute loggedIn={loggedIn}>
+            <QA />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="*"
+        element={
+          <AuthLayout>
+            <PageNotFound />
+          </AuthLayout>
+        }
+      />
+    </Routes>
+  );
 }
