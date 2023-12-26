@@ -18,20 +18,19 @@ const MenuProps = {
   },
 };
 
-const names = [
-  "Oliver Hansen",
-  "Van Henry",
-  "April Tucker",
-  "Ralph Hubbard",
-  "Omar Alexander",
-  "Carlos Abbott",
-  "Miriam Wagner",
-  "Bradley Wilkerson",
-  "Virginia Andrews",
-  "Kelly Snyder",
-  "Alexander",
-  "Wilkerson",
-  "Ralph",
+const tags = [
+  "ООО",
+  "Конкурсное производство",
+  "Торги",
+  "Недействительные торги",
+  "Договор купли-продажи",
+  "ООО",
+  "Конкурсное производство",
+  "Торги",
+  "Недействительные торги",
+  "Договор купли-продажи",
+  "Недействительные торги",
+  "ООО",
 ];
 
 export default function MultipleSelectChip() {
@@ -68,10 +67,10 @@ export default function MultipleSelectChip() {
         )}
         MenuProps={MenuProps}
       >
-        {names.map((name) => (
+        {tags.map((tag, i) => (
           <MenuItem
-            key={name}
-            value={name}
+            key={i}
+            value={tag}
             sx={{
               mr: 1,
               mb: 1,
@@ -81,7 +80,7 @@ export default function MultipleSelectChip() {
               borderRadius: 16,
             }}
           >
-            <Chip label={name} onDelete={() => {}}></Chip>
+            <Chip label={tag} onDelete={() => {}}></Chip>
           </MenuItem>
         ))}
       </Select>

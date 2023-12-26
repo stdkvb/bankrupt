@@ -6,7 +6,22 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import qa from "../data/qa.json";
+const qa = [
+  {
+    question: "На что не распространяется банкротство физического лица?",
+    answer:
+      "Суды не приняли во внимание, что недействительность договора может",
+  },
+  {
+    question: "На что не распространяется банкротство физического лица?",
+    answer: "ния цены на торгах. Однако условие",
+  },
+  {
+    question: "На что не распространяется банкротств?",
+    answer:
+      "Суды не приняли во внимание, что недействительность договора может",
+  },
+];
 
 const QA = () => {
   console.log(qa);

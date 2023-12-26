@@ -15,6 +15,21 @@ import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 
 import Filters from "../components/Filters";
 
+const tags = [
+  "ООО",
+  "Конкурсное производство",
+  "Торги",
+  "Недействительные торги",
+  "Договор купли-продажи",
+  "ООО",
+  "Конкурсное производство",
+  "Торги",
+  "Недействительные торги",
+  "Договор купли-продажи",
+  "Недействительные торги",
+  "ООО",
+];
+
 const Catalog = () => {
   //row menu
   const [isDocumentMenuOpen, setIsDocumentMenuOpen] = React.useState(null);
@@ -24,6 +39,7 @@ const Catalog = () => {
   };
   const handleDocumentMenuClose = () => {
     setIsDocumentMenuOpen(null);
+    setOpen(true);
   };
 
   // modal controller
@@ -56,6 +72,7 @@ const Catalog = () => {
         }}
       >
         <Typography variant="h5">Найдено 25 895 документов</Typography>
+
         <Box
           className="table"
           display="grid"
@@ -128,357 +145,9 @@ const Catalog = () => {
                 gap: 1,
               }}
             >
-              <Chip label="ООО" />
-              <Chip label="Конкурсное производство" />
-              <Chip label="Торги" />
-              <Chip label="Недействительные торги" />
-              <Chip label="Договор купли-продажи" />
-              <Chip label="ООО" />
-              <Chip label="Конкурсное производство" />
-              <Chip label="Торги" />
-              <Chip label="Недействительные торги" />
-              <Chip label="Договор купли-продажи" />
-              <Chip label="ООО" />
-              <Chip label="Конкурсное производство" />
-              <Chip label="Торги" />
-              <Chip label="Недействительные торги" />
-              <Chip label="Договор купли-продажи" />
-            </Stack>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            123456
-            <IconButton
-              onClick={handleDocumentMenuClick}
-              sx={{
-                mt: "-8px",
-                position: { xs: "absolute", md: "relative" },
-                top: 0,
-                right: 0,
-                display: {
-                  height: "40px",
-                },
-              }}
-            >
-              <MoreVertIcon />
-            </IconButton>
-          </Box>
-        </Box>
-        <Box
-          className="table"
-          display="grid"
-          gridAutoFlow={{ xs: "column", md: "row" }}
-          gridTemplateColumns={{
-            xs: "auto 1fr",
-            md: "minmax(80px, 200px) auto minmax(80px, 200px)",
-          }}
-          gridTemplateRows={{ xs: "repeat(3, auto)", md: "40px auto" }}
-          columnGap={{ xs: 2, md: 0 }}
-          rowGap={3}
-          position="relative"
-          pb={2}
-          borderBottom="solid 1px rgba(101, 108, 101, 0.2)"
-        >
-          <Box
-            className="table-head"
-            sx={{
-              borderBottom: {
-                xs: "none",
-                md: "solid 1px rgba(101, 108, 101, 0.2)",
-              },
-            }}
-          >
-            Дата
-          </Box>
-          <Box
-            className="table-head"
-            sx={{
-              borderBottom: {
-                xs: "none",
-                md: "solid 1px rgba(101, 108, 101, 0.2)",
-              },
-            }}
-          >
-            Документ
-          </Box>
-          <Box
-            className="table-head"
-            sx={{
-              borderBottom: {
-                xs: "none",
-                md: "solid 1px rgba(101, 108, 101, 0.2)",
-              },
-            }}
-          >
-            ID
-          </Box>
-          <Box>06.03.2023</Box>
-          <Box>
-            <Typography
-              sx={{
-                mb: 2,
-                pr: 2,
-                "&:hover": {
-                  color: "primary.main",
-                  textDecoration: "underline",
-                  cursor: "pointer",
-                },
-              }}
-              onClick={handleOpen}
-            >
-              Определение №А49-4822/2022
-            </Typography>
-            <Stack
-              direction="row"
-              sx={{
-                flexWrap: "wrap",
-                justifyContent: "flex-start",
-                gap: 1,
-              }}
-            >
-              <Chip label="ООО" />
-              <Chip label="Конкурсное производство" />
-              <Chip label="Торги" />
-              <Chip label="Недействительные торги" />
-              <Chip label="Договор купли-продажи" />
-              <Chip label="ООО" />
-              <Chip label="Конкурсное производство" />
-              <Chip label="Торги" />
-              <Chip label="Недействительные торги" />
-              <Chip label="Договор купли-продажи" />
-              <Chip label="ООО" />
-              <Chip label="Конкурсное производство" />
-              <Chip label="Торги" />
-              <Chip label="Недействительные торги" />
-              <Chip label="Договор купли-продажи" />
-            </Stack>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            123456
-            <IconButton
-              onClick={handleDocumentMenuClick}
-              sx={{
-                mt: "-8px",
-                position: { xs: "absolute", md: "relative" },
-                top: 0,
-                right: 0,
-                display: {
-                  height: "40px",
-                },
-              }}
-            >
-              <MoreVertIcon />
-            </IconButton>
-          </Box>
-        </Box>
-        <Box
-          className="table"
-          display="grid"
-          gridAutoFlow={{ xs: "column", md: "row" }}
-          gridTemplateColumns={{
-            xs: "auto 1fr",
-            md: "minmax(80px, 200px) auto minmax(80px, 200px)",
-          }}
-          gridTemplateRows={{ xs: "repeat(3, auto)", md: "40px auto" }}
-          columnGap={{ xs: 2, md: 0 }}
-          rowGap={3}
-          position="relative"
-          pb={2}
-          borderBottom="solid 1px rgba(101, 108, 101, 0.2)"
-        >
-          <Box
-            className="table-head"
-            sx={{
-              borderBottom: {
-                xs: "none",
-                md: "solid 1px rgba(101, 108, 101, 0.2)",
-              },
-            }}
-          >
-            Дата
-          </Box>
-          <Box
-            className="table-head"
-            sx={{
-              borderBottom: {
-                xs: "none",
-                md: "solid 1px rgba(101, 108, 101, 0.2)",
-              },
-            }}
-          >
-            Документ
-          </Box>
-          <Box
-            className="table-head"
-            sx={{
-              borderBottom: {
-                xs: "none",
-                md: "solid 1px rgba(101, 108, 101, 0.2)",
-              },
-            }}
-          >
-            ID
-          </Box>
-          <Box>06.03.2023</Box>
-          <Box>
-            <Typography
-              sx={{
-                mb: 2,
-                pr: 2,
-                "&:hover": {
-                  color: "primary.main",
-                  textDecoration: "underline",
-                  cursor: "pointer",
-                },
-              }}
-              onClick={handleOpen}
-            >
-              Определение №А49-4822/2022
-            </Typography>
-            <Stack
-              direction="row"
-              sx={{
-                flexWrap: "wrap",
-                justifyContent: "flex-start",
-                gap: 1,
-              }}
-            >
-              <Chip label="ООО" />
-              <Chip label="Конкурсное производство" />
-              <Chip label="Торги" />
-              <Chip label="Недействительные торги" />
-              <Chip label="Договор купли-продажи" />
-              <Chip label="ООО" />
-              <Chip label="Конкурсное производство" />
-              <Chip label="Торги" />
-              <Chip label="Недействительные торги" />
-              <Chip label="Договор купли-продажи" />
-              <Chip label="ООО" />
-              <Chip label="Конкурсное производство" />
-              <Chip label="Торги" />
-              <Chip label="Недействительные торги" />
-              <Chip label="Договор купли-продажи" />
-            </Stack>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            123456
-            <IconButton
-              onClick={handleDocumentMenuClick}
-              sx={{
-                mt: "-8px",
-                position: { xs: "absolute", md: "relative" },
-                top: 0,
-                right: 0,
-                display: {
-                  height: "40px",
-                },
-              }}
-            >
-              <MoreVertIcon />
-            </IconButton>
-          </Box>
-        </Box>
-        <Box
-          className="table"
-          display="grid"
-          gridAutoFlow={{ xs: "column", md: "row" }}
-          gridTemplateColumns={{
-            xs: "auto 1fr",
-            md: "minmax(80px, 200px) auto minmax(80px, 200px)",
-          }}
-          gridTemplateRows={{ xs: "repeat(3, auto)", md: "40px auto" }}
-          columnGap={{ xs: 2, md: 0 }}
-          rowGap={3}
-          position="relative"
-          pb={2}
-          borderBottom="solid 1px rgba(101, 108, 101, 0.2)"
-        >
-          <Box
-            className="table-head"
-            sx={{
-              borderBottom: {
-                xs: "none",
-                md: "solid 1px rgba(101, 108, 101, 0.2)",
-              },
-            }}
-          >
-            Дата
-          </Box>
-          <Box
-            className="table-head"
-            sx={{
-              borderBottom: {
-                xs: "none",
-                md: "solid 1px rgba(101, 108, 101, 0.2)",
-              },
-            }}
-          >
-            Документ
-          </Box>
-          <Box
-            className="table-head"
-            sx={{
-              borderBottom: {
-                xs: "none",
-                md: "solid 1px rgba(101, 108, 101, 0.2)",
-              },
-            }}
-          >
-            ID
-          </Box>
-          <Box>06.03.2023</Box>
-          <Box>
-            <Typography
-              sx={{
-                mb: 2,
-                pr: 2,
-                "&:hover": {
-                  color: "primary.main",
-                  textDecoration: "underline",
-                  cursor: "pointer",
-                },
-              }}
-              onClick={handleOpen}
-            >
-              Определение №А49-4822/2022
-            </Typography>
-            <Stack
-              direction="row"
-              sx={{
-                flexWrap: "wrap",
-                justifyContent: "flex-start",
-                gap: 1,
-              }}
-            >
-              <Chip label="ООО" />
-              <Chip label="Конкурсное производство" />
-              <Chip label="Торги" />
-              <Chip label="Недействительные торги" />
-              <Chip label="Договор купли-продажи" />
-              <Chip label="ООО" />
-              <Chip label="Конкурсное производство" />
-              <Chip label="Торги" />
-              <Chip label="Недействительные торги" />
-              <Chip label="Договор купли-продажи" />
-              <Chip label="ООО" />
-              <Chip label="Конкурсное производство" />
-              <Chip label="Торги" />
-              <Chip label="Недействительные торги" />
-              <Chip label="Договор купли-продажи" />
+              {tags.map((tag, i) => {
+                return <Chip key={i} label={tag} />;
+              })}
             </Stack>
           </Box>
           <Box
@@ -505,97 +174,6 @@ const Catalog = () => {
           </Box>
         </Box>
       </Paper>
-      {/* <TableContainer
-        component={Paper}
-        elevation={0}
-        sx={{
-          p: { xs: [2], md: [4] },
-        }}
-      >
-        <Typography variant="h5" sx={{ mb: { xs: 2, md: 4 } }}>
-          Найдено 25 895 документов
-        </Typography>
-        <Table aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell sx={{ color: "text.secondary" }}>Дата</TableCell>
-              <TableCell sx={{ color: "text.secondary" }}>Документ</TableCell>
-              <TableCell sx={{ color: "text.secondary" }}>ID</TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <TableRow
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell
-                component="th"
-                scope="row"
-                sx={{ verticalAlign: "top", color: "text.secondary" }}
-              >
-                06.03.2023
-              </TableCell>
-              <TableCell>
-                <Typography
-                  sx={{
-                    mb: 2,
-                    "&:hover": {
-                      color: "primary.main",
-                      textDecoration: "underline",
-                      cursor: "pointer",
-                    },
-                  }}
-                  onClick={handleOpen}
-                >
-                  Определение №А49-4822/2022
-                </Typography>
-                <Stack
-                  direction="row"
-                  sx={{
-                    flexWrap: "wrap",
-                    justifyContent: "flex-start",
-                    gap: 1,
-                  }}
-                >
-                  <Chip label="ООО" />
-                  <Chip label="Конкурсное производство" />
-                  <Chip label="Торги" />
-                  <Chip label="Недействительные торги" />
-                  <Chip label="Договор купли-продажи" />
-                  <Chip label="ООО" />
-                  <Chip label="Конкурсное производство" />
-                  <Chip label="Торги" />
-                  <Chip label="Недействительные торги" />
-                  <Chip label="Договор купли-продажи" />
-                  <Chip label="ООО" />
-                  <Chip label="Конкурсное производство" />
-                  <Chip label="Торги" />
-                  <Chip label="Недействительные торги" />
-                  <Chip label="Договор купли-продажи" />
-                </Stack>
-              </TableCell>
-              <TableCell sx={{ verticalAlign: "top", color: "text.secondary" }}>
-                123456
-              </TableCell>
-              <TableCell
-                align="right"
-                sx={{ verticalAlign: "top", pt: 1, pr: 0 }}
-              >
-                <IconButton
-                  onClick={handleDocumentMenuClick}
-                  sx={{
-                    display: {
-                      height: "40px",
-                    },
-                  }}
-                >
-                  <MoreVertIcon />
-                </IconButton>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer> */}
       <Menu
         anchorEl={isDocumentMenuOpen}
         id="folder-menu"

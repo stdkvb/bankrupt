@@ -39,7 +39,16 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import logo from "../assets/images/logo.svg";
 
-import folders from "../data/folders.json";
+const folders = [
+  "Название папки 1",
+  "Название папки 2",
+  "Название папки 3",
+  "Название папки 4",
+  "Название папки 5",
+  "Название папки 6",
+  "Название папки 7",
+  "Название папки 8",
+];
 
 //check window width
 let mobile;
@@ -385,7 +394,7 @@ export default function MainLayout({ children }) {
                 <ListItemText primary="Создать папку" />
               </ListItemButton>
               <Stack sx={{ maxHeight: "265px", overflowY: "scroll" }}>
-                {folders.map(({ folder }, i) => {
+                {folders.map((folder, i) => {
                   return (
                     <ListItemButton key={i} sx={{ pl: [4], pr: [1], gap: [1] }}>
                       <ListItemIcon sx={{ minWidth: "40px" }}>
