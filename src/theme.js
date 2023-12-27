@@ -46,6 +46,11 @@ let theme = createTheme({
       styleOverrides: {
         root: {
           "&:hover": { backgroundColor: "rgba(0, 155, 0, 0.10)" },
+          "&.active": {
+            backgroundColor: "rgba(0, 155, 0, 0.10)",
+            cursor: "default",
+            pointerEvents: "none",
+          },
         },
       },
     },

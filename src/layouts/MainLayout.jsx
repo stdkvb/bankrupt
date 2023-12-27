@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import { Avatar, Stack, Link } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
@@ -107,6 +107,16 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function MainLayout({ children }) {
+  //current page
+  let location = useLocation();
+  const pathName = location.pathname;
+  console.log(pathName);
+  function activateMenuItem(pathname) {
+    if (pathname === pathName) {
+      return "active";
+    }
+  }
+
   //drawer control
   const [open, setOpen] = React.useState(!mobile);
   const toggleDrawer = () => {
@@ -312,7 +322,10 @@ export default function MainLayout({ children }) {
           }}
         >
           <ListItemButton
+            className={activateMenuItem("/profile")}
             sx={{ my: [3], px: [4], py: 0, display: { md: "none" } }}
+            component={Link}
+            to={"/profile"}
           >
             <ListItemIcon>
               <Avatar {...stringAvatar("Kent Dodds")} />
@@ -325,7 +338,12 @@ export default function MainLayout({ children }) {
               />
             </Stack>
           </ListItemButton>
-          <ListItemButton sx={{ px: [4] }} component={Link} to={"/"}>
+          <ListItemButton
+            className={activateMenuItem("/")}
+            sx={{ px: [4] }}
+            component={Link}
+            to={"/"}
+          >
             <ListItemIcon>
               <LayersIcon />
             </ListItemIcon>
@@ -333,14 +351,24 @@ export default function MainLayout({ children }) {
           </ListItemButton>
           <Accordion sx={{ boxShadow: "none", m: "0 !important" }}>
             <ListItemButton
-              sx={{ px: [4], pr: [1], maxHeight: "48px" }}
-              component={Link}
-              to={"#"}
+              className={activateMenuItem("/base")}
+              sx={{
+                px: [4],
+                pr: [1],
+                maxHeight: "48px",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
             >
-              <ListItemIcon sx={{ height: "24px" }}>
-                <FolderIcon />
-              </ListItemIcon>
-              <ListItemText primary="База знаний" sx={{ m: 0 }} />
+              <Link
+                href="/base"
+                sx={{ display: "flex", textDecoration: "none !important" }}
+              >
+                <ListItemIcon sx={{ height: "24px" }}>
+                  <FolderIcon />
+                </ListItemIcon>
+                <ListItemText primary="База знаний" sx={{ m: 0 }} />
+              </Link>
               <AccordionSummary
                 expandIcon={
                   <IconButton>
@@ -365,14 +393,25 @@ export default function MainLayout({ children }) {
           </Accordion>
           <Accordion sx={{ boxShadow: "none", m: "0 !important" }}>
             <ListItemButton
-              sx={{ px: [4], pr: [1], maxHeight: "48px" }}
-              component={Link}
-              to={"#"}
+              className={activateMenuItem("/favorites")}
+              sx={{
+                px: [4],
+                pr: [1],
+                maxHeight: "48px",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
             >
-              <ListItemIcon sx={{ height: "24px" }}>
-                <BookmarkIcon />
-              </ListItemIcon>
-              <ListItemText primary="Избранное" sx={{ m: 0 }} />
+              <Link
+                href="/favorites"
+                sx={{ display: "flex", textDecoration: "none !important" }}
+              >
+                {" "}
+                <ListItemIcon sx={{ height: "24px" }}>
+                  <BookmarkIcon />
+                </ListItemIcon>
+                <ListItemText primary="Избранное" sx={{ m: 0 }} />
+              </Link>
               <AccordionSummary
                 expandIcon={
                   <IconButton>
@@ -464,25 +503,45 @@ export default function MainLayout({ children }) {
               </Stack>
             </AccordionDetails>
           </Accordion>
-          <ListItemButton sx={{ px: [4] }} component={Link} to={"#"}>
+          <ListItemButton
+            className={activateMenuItem("/news")}
+            sx={{ px: [4] }}
+            component={Link}
+            to={"/news"}
+          >
             <ListItemIcon>
               <DescriptionIcon />
             </ListItemIcon>
             <ListItemText primary="Новости" />
           </ListItemButton>
-          <ListItemButton sx={{ px: [4] }} component={Link} to={"/rates"}>
+          <ListItemButton
+            className={activateMenuItem("/rates")}
+            sx={{ px: [4] }}
+            component={Link}
+            to={"/rates"}
+          >
             <ListItemIcon>
               <DashboardIcon />
             </ListItemIcon>
             <ListItemText primary="Тарифы" />
           </ListItemButton>
-          <ListItemButton sx={{ px: [4] }} component={Link} to={"/qa"}>
+          <ListItemButton
+            className={activateMenuItem("/qa")}
+            sx={{ px: [4] }}
+            component={Link}
+            to={"/qa"}
+          >
             <ListItemIcon>
               <HelpIcon />
             </ListItemIcon>
             <ListItemText primary="Вопросы и ответы" />
           </ListItemButton>
-          <ListItemButton sx={{ px: [4] }} component={Link} to={"/contacts"}>
+          <ListItemButton
+            className={activateMenuItem("/contacts")}
+            sx={{ px: [4] }}
+            component={Link}
+            to={"/contacts"}
+          >
             <ListItemIcon>
               <MapIcon />
             </ListItemIcon>
