@@ -14,6 +14,8 @@ import Catalog from "./pages/Catalog";
 import QA from "./pages/QA";
 import Contacts from "./pages/Contacts";
 import PageNotFound from "./pages/PageNotFound";
+import News from "./pages/News";
+import Article from "./pages/Article";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(true);
@@ -73,6 +75,22 @@ export default function App() {
         element={
           <PrivateRoute loggedIn={loggedIn}>
             <Rates />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/news"
+        element={
+          <PrivateRoute loggedIn={loggedIn}>
+            <News />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/news/"
+        element={
+          <PrivateRoute loggedIn={loggedIn}>
+            <Article />
           </PrivateRoute>
         }
       />

@@ -1,4 +1,4 @@
-import { BASE_URL } from "./constants";
+const BASE_URL = "https://human.wptt.ru/api";
 
 class Api {
   constructor(configuration) {
