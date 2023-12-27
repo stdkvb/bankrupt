@@ -32,9 +32,9 @@ const Notification = () => {
             ? "Действие вашего тарифа закончилось"
             : "Действие ващего тарифа заканчивается" + " ДАТА"}
         </Typography>
-        <Link href="#" color="text.white">
+        <Typography variant="p" color="text.white">
           Обновите подписку
-        </Link>
+        </Typography>
       </Stack>
     </Paper>
   );

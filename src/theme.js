@@ -3,6 +3,16 @@ import { createBreakpoints } from "@mui/system";
 
 // Create a theme instance.
 let theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+      sxl: 1700,
+    },
+  },
   palette: {
     primary: {
       main: "#009B00",
@@ -59,11 +69,11 @@ let theme = createTheme({
         },
       },
     },
-    MuiBox: {
+    MuiFormControlLabel: {
       styleOverrides: {
         root: {
-          ".table-head": {
-            display: "none",
+          ".MuiFormControlLabel-label": {
+            width: "100%",
           },
         },
       },

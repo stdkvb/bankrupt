@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import PasswordRecovery from "./pages/PasswordRecovery";
 import NewPassword from "./pages/NewPassword";
+import Rates from "./pages/Rates";
 import Profile from "./pages/Profile";
 import Catalog from "./pages/Catalog";
 import QA from "./pages/QA";
@@ -64,6 +65,14 @@ export default function App() {
         element={
           <PrivateRoute loggedIn={loggedIn}>
             <Profile />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/rates"
+        element={
+          <PrivateRoute loggedIn={loggedIn}>
+            <Rates />
           </PrivateRoute>
         }
       />

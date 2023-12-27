@@ -173,6 +173,106 @@ const Catalog = () => {
             </IconButton>
           </Box>
         </Box>
+        <Box
+          className="table"
+          display="grid"
+          gridAutoFlow={{ xs: "column", md: "row" }}
+          gridTemplateColumns={{
+            xs: "auto 1fr",
+            md: "minmax(80px, 200px) auto minmax(80px, 200px)",
+          }}
+          gridTemplateRows={{ xs: "repeat(3, auto)", md: "40px auto" }}
+          columnGap={{ xs: 2, md: 0 }}
+          rowGap={3}
+          position="relative"
+          pb={2}
+          borderBottom="solid 1px rgba(101, 108, 101, 0.2)"
+        >
+          <Box
+            className="table-head"
+            sx={{
+              borderBottom: {
+                xs: "none",
+                md: "solid 1px rgba(101, 108, 101, 0.2)",
+              },
+            }}
+          >
+            Дата
+          </Box>
+          <Box
+            className="table-head"
+            sx={{
+              borderBottom: {
+                xs: "none",
+                md: "solid 1px rgba(101, 108, 101, 0.2)",
+              },
+            }}
+          >
+            Документ
+          </Box>
+          <Box
+            className="table-head"
+            sx={{
+              borderBottom: {
+                xs: "none",
+                md: "solid 1px rgba(101, 108, 101, 0.2)",
+              },
+            }}
+          >
+            ID
+          </Box>
+          <Box>06.03.2023</Box>
+          <Box>
+            <Typography
+              sx={{
+                mb: 2,
+                pr: 2,
+                "&:hover": {
+                  color: "primary.main",
+                  textDecoration: "underline",
+                  cursor: "pointer",
+                },
+              }}
+              onClick={handleOpen}
+            >
+              Определение №А49-4822/2022
+            </Typography>
+            <Stack
+              direction="row"
+              sx={{
+                flexWrap: "wrap",
+                justifyContent: "flex-start",
+                gap: 1,
+              }}
+            >
+              {tags.map((tag, i) => {
+                return <Chip key={i} label={tag} />;
+              })}
+            </Stack>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            123456
+            <IconButton
+              onClick={handleDocumentMenuClick}
+              sx={{
+                mt: "-8px",
+                position: { xs: "absolute", md: "relative" },
+                top: 0,
+                right: 0,
+                display: {
+                  height: "40px",
+                },
+              }}
+            >
+              <MoreVertIcon />
+            </IconButton>
+          </Box>
+        </Box>
       </Paper>
       <Menu
         anchorEl={isDocumentMenuOpen}
@@ -329,21 +429,9 @@ const Catalog = () => {
               mb: 8,
             }}
           >
-            <Chip label="ООО" />
-            <Chip label="Конкурсное производство" />
-            <Chip label="Торги" />
-            <Chip label="Недействительные торги" />
-            <Chip label="Договор купли-продажи" />
-            <Chip label="ООО" />
-            <Chip label="Конкурсное производство" />
-            <Chip label="Торги" />
-            <Chip label="Недействительные торги" />
-            <Chip label="Договор купли-продажи" />
-            <Chip label="ООО" />
-            <Chip label="Конкурсное производство" />
-            <Chip label="Торги" />
-            <Chip label="Недействительные торги" />
-            <Chip label="Договор купли-продажи" />
+            {tags.map((tag, i) => {
+              return <Chip key={i} label={tag} />;
+            })}
           </Stack>
           <Typography variant="h5" color="text.secondary" sx={{ mb: 4 }}>
             Судебные акты

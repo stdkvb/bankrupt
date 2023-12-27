@@ -42,7 +42,6 @@ const Questions = () => {
           Заполните форму и наш менеджер свяжется с вами
         </Typography>
         <Button
-          type="submit"
           variant="contained"
           sx={{ width: { xs: "100%", md: "200px" } }}
           onClick={handleOpen}

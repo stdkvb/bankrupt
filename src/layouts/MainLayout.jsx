@@ -470,7 +470,7 @@ export default function MainLayout({ children }) {
             </ListItemIcon>
             <ListItemText primary="Новости" />
           </ListItemButton>
-          <ListItemButton sx={{ px: [4] }} component={Link} to={"#"}>
+          <ListItemButton sx={{ px: [4] }} component={Link} to={"/rates"}>
             <ListItemIcon>
               <DashboardIcon />
             </ListItemIcon>
