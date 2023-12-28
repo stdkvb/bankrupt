@@ -87,7 +87,7 @@ export default function App() {
         }
       />
       <Route
-        path="/news/"
+        path="/news/:id"
         element={
           <PrivateRoute loggedIn={loggedIn}>
             <Article />

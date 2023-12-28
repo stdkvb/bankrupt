@@ -83,6 +83,15 @@ let theme = createTheme({
         },
       },
     },
+    MuiPagination: {
+      styleOverrides: {
+        root: {
+          ".MuiPagination-ul": {
+            justifyContent: "flex-end",
+          },
+        },
+      },
+    },
   },
 });
 
