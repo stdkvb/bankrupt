@@ -361,7 +361,7 @@ export default function MainLayout({ children }) {
               }}
             >
               <Link
-                href="/base"
+                href="/wiki"
                 sx={{ display: "flex", textDecoration: "none !important" }}
               >
                 <ListItemIcon sx={{ height: "24px" }}>

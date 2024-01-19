@@ -16,6 +16,7 @@ import Contacts from "./pages/Contacts";
 import PageNotFound from "./pages/PageNotFound";
 import News from "./pages/News";
 import Article from "./pages/Article";
+import Wiki from "./pages/Wiki";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(true);
@@ -75,6 +76,14 @@ export default function App() {
         element={
           <PrivateRoute loggedIn={loggedIn}>
             <Rates />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/wiki"
+        element={
+          <PrivateRoute loggedIn={loggedIn}>
+            <Wiki />
           </PrivateRoute>
         }
       />
