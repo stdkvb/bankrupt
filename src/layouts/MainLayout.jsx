@@ -110,7 +110,7 @@ export default function MainLayout({ children }) {
   //current page
   let location = useLocation();
   const pathName = location.pathname;
-  console.log(pathName);
+  // console.log(pathName);
   function activateMenuItem(pathname) {
     if (pathname === pathName) {
       return "active";

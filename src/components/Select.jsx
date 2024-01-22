@@ -18,22 +18,7 @@ const MenuProps = {
   },
 };
 
-const tags = [
-  "ООО",
-  "Конкурсное производство",
-  "Торги",
-  "Недействительные торги",
-  "Договор купли-продажи",
-  "ООО",
-  "Конкурсное производство",
-  "Торги",
-  "Недействительные торги",
-  "Договор купли-продажи",
-  "Недействительные торги",
-  "ООО",
-];
-
-export default function MultipleSelectChip() {
+export default function MultipleSelectChip({ title, tags }) {
   const [personName, setPersonName] = React.useState([]);
 
   const handleChange = (event) => {
@@ -49,7 +34,7 @@ export default function MultipleSelectChip() {
         id="demo-multiple-name-label"
         sx={{ transform: "translate(0, -1.5px) scale(0.75)" }}
       >
-        Участники дела
+        {title}
       </InputLabel>
       <Select
         labelId="demo-multiple-chip-label"

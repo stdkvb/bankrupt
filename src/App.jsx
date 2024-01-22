@@ -23,7 +23,6 @@ import api from "./utils/Api";
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(true);
   const [submitError, setSubmitError] = useState("");
-  const [inactiveForm, setInactiveForm] = useState(false);
 
   const handleLoginSubmit = ({ login, password }) => {
     api
