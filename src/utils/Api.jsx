@@ -1,4 +1,4 @@
-const BASE_URL = "https://human.wptt.ru/api";
+const BASE_URL = "https://bankrotvestnik.ru/api";
 
 class Api {
   constructor(configuration) {
@@ -27,12 +27,12 @@ class Api {
     }).then(Api.handleResponse);
   }
 
-  loginUser(email, password) {
-    return fetch(`${this._url}/signin`, {
+  loginUser(login, password) {
+    return fetch(`${this._url}/auth`, {
       method: "POST",
       headers: this._headers,
       credentials: "include",
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ login, password }),
     }).then(Api.handleResponse);
   }
 
@@ -71,3 +71,15 @@ const api = new Api({
 });
 
 export default api;
+
+// fetch("https://bankrotvestnik.ru/api/auth", {
+//   method: "POST",
+//   body: JSON.stringify({}),
+//   headers: {
+//     "Content-type": "application/json; charset=UTF-8",
+//   },
+// })
+//   .then((response) => response.json())
+//   .then((data) => {
+//     console.log(data);
+//   });

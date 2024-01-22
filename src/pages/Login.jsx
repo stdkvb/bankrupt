@@ -1,59 +1,24 @@
 import React from "react";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { Button, Link } from "@mui/material";
+import { Link } from "@mui/material";
 
-import api from "../utils/Api";
+import Form from "../components/Form";
 
-const Login = () => {
-  //inputs values
-  const [formValue, setFormValue] = useState({
-    email: "",
-    password: "",
+const Login = ({ onLoginSubmit, submitError, inactiveForm }) => {
+  const { handleSubmit } = useForm({
+    mode: "onChange",
   });
 
-  //inputs changes listener
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setFormValue({
-      ...formValue,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const { email, password } = formValue;
-    console.log(formValue);
-    api
-      .loginUser(email, password)
-      .then((data) => {
-        if (data.jwt) {
-          setFormValue({ username: "", password: "" });
-          navigate("/", { replace: true });
-        }
-      })
-      .catch((err) => console.log(err));
-  };
-
   return (
-    <Box
-      component="form"
-      onSubmit={handleSubmit}
-      sx={{
-        maxWidth: "400px",
-      }}
+    <Form
+      title="Авторизация"
+      buttonText="Войти"
+      onHandleSubmit={handleSubmit}
+      onSubmit={onLoginSubmit}
+      submitError={submitError}
     >
-      <Typography
-        variant="h4"
-        component="h1"
-        sx={{ mb: 2, textAlign: { xs: "center", md: "left" } }}
-      >
-        Авторизация
-      </Typography>
       <Typography
         color="text.secondary"
         sx={{
@@ -73,13 +38,11 @@ const Login = () => {
         label="Логин"
         variant="standard"
         size="medium"
-        required
         fullWidth
-        id="email"
-        name="email"
-        value={formValue.email}
-        onChange={handleChange}
+        id="login"
+        name="login"
         sx={{ mb: 2 }}
+        required
       />
       <TextField
         label="Пароль"
@@ -89,17 +52,12 @@ const Login = () => {
         fullWidth
         id="password"
         name="password"
-        value={formValue.password}
-        onChange={handleChange}
         sx={{ mb: 1 }}
       />
       <Link href="/password-recovery" color="primary.main">
         Забыли пароль?
       </Link>
-      <Button type="submit" fullWidth variant="contained" sx={{ mt: 3 }}>
-        Войти
-      </Button>
-    </Box>
+    </Form>
   );
 };
 

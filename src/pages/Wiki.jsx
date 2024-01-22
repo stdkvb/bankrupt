@@ -1,17 +1,11 @@
 import React from "react";
-import { Paper, Typography, Stack, Link, Button } from "@mui/material";
+import { Paper, Typography, Stack, Button } from "@mui/material";
 import Container from "@mui/material/Container";
-import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Divider from "@mui/material/Divider";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CloseIcon from "@mui/icons-material/Close";
-import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 
 import WikiFilters from "../components/WikiFilters";
 

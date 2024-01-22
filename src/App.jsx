@@ -18,8 +18,30 @@ import News from "./pages/News";
 import Article from "./pages/Article";
 import Wiki from "./pages/Wiki";
 
+import api from "./utils/Api";
+
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(true);
+  const [submitError, setSubmitError] = useState("");
+  const [inactiveForm, setInactiveForm] = useState(false);
+
+  const handleLoginSubmit = ({ login, password }) => {
+    api
+      .loginUser(login, password)
+      .then(() => {
+        setLoggedIn(true);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error.status);
+        if (error.status === 401 || 404) {
+          setSubmitError("Вы ввели неправильный логин или пароль.");
+        } else {
+          setSubmitError("На сервере произошла ошибка.");
+        }
+      })
+      .finally(() => setInactiveForm(false));
+  };
 
   return (
     <Routes>
@@ -27,7 +49,10 @@ export default function App() {
         path="/login"
         element={
           <AuthLayout>
-            <Login />
+            <Login
+              onLoginSubmit={handleLoginSubmit}
+              submitError={submitError}
+            />
           </AuthLayout>
         }
       />
