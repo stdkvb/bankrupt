@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 import PrivateRoute from "./utils/PrivateRoute";
 import AuthLayout from "./layouts/AuthLayout";
@@ -21,25 +21,34 @@ import Wiki from "./pages/Wiki";
 import api from "./utils/Api";
 
 export default function App() {
-  const [loggedIn, setLoggedIn] = useState(true);
-  const [submitError, setSubmitError] = useState("");
+  const navigate = useNavigate();
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [catalog, setCatalog] = React.useState([]);
+
+  const getAccess = () => {
+    api
+      .getCatalog()
+      .then((data) => {
+        setLoggedIn(true);
+        setCatalog(data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  useEffect(getAccess, []);
 
   const handleLoginSubmit = ({ login, password }) => {
     api
       .loginUser(login, password)
-      .then(() => {
+      .then((data) => {
+        localStorage.setItem("token", data.data.token);
         setLoggedIn(true);
         navigate("/");
       })
       .catch((error) => {
-        console.log(error.status);
-        if (error.status === 401 || 404) {
-          setSubmitError("Вы ввели неправильный логин или пароль.");
-        } else {
-          setSubmitError("На сервере произошла ошибка.");
-        }
-      })
-      .finally(() => setInactiveForm(false));
+        console.log(error);
+      });
   };
 
   return (
@@ -48,10 +57,7 @@ export default function App() {
         path="/login"
         element={
           <AuthLayout>
-            <Login
-              onLoginSubmit={handleLoginSubmit}
-              submitError={submitError}
-            />
+            <Login onLoginSubmit={handleLoginSubmit} />
           </AuthLayout>
         }
       />
@@ -79,15 +85,10 @@ export default function App() {
           </AuthLayout>
         }
       />
-      <Route
-        path="/"
-        element={
-          <PrivateRoute loggedIn={loggedIn}>
-            <Catalog />
-          </PrivateRoute>
-        }
-      />
-      <Route
+      <Route exact path="/" element={<PrivateRoute loggedIn={loggedIn} />}>
+        <Route exact path="/" element={<Catalog data={catalog} />} />
+      </Route>
+      {/* <Route
         path="/profile"
         element={
           <PrivateRoute loggedIn={loggedIn}>
@@ -150,7 +151,7 @@ export default function App() {
             <PageNotFound />
           </AuthLayout>
         }
-      />
+      /> */}
     </Routes>
   );
 }

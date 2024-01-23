@@ -1,24 +1,34 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { useState } from "react";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import { Link } from "@mui/material";
+import { Button, Link } from "@mui/material";
+import Box from "@mui/material/Box";
 
-import Form from "../components/Form";
+const Login = ({ onLoginSubmit }) => {
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
 
-const Login = ({ onLoginSubmit, submitError, inactiveForm }) => {
-  const { handleSubmit } = useForm({
-    mode: "onChange",
-  });
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    onLoginSubmit({ login, password });
+  };
 
   return (
-    <Form
-      title="Авторизация"
-      buttonText="Войти"
-      onHandleSubmit={handleSubmit}
-      onSubmit={onLoginSubmit}
-      submitError={submitError}
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      sx={{
+        maxWidth: "400px",
+      }}
     >
+      <Typography
+        variant="h4"
+        component="h1"
+        sx={{ mb: 2, textAlign: { xs: "center", md: "left" } }}
+      >
+        Авторизация
+      </Typography>
       <Typography
         color="text.secondary"
         sx={{
@@ -43,6 +53,8 @@ const Login = ({ onLoginSubmit, submitError, inactiveForm }) => {
         name="login"
         sx={{ mb: 2 }}
         required
+        value={login}
+        onChange={(e) => setLogin(e.target.value)}
       />
       <TextField
         label="Пароль"
@@ -53,11 +65,16 @@ const Login = ({ onLoginSubmit, submitError, inactiveForm }) => {
         id="password"
         name="password"
         sx={{ mb: 1 }}
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
       />
       <Link href="/password-recovery" color="primary.main">
         Забыли пароль?
       </Link>
-    </Form>
+      <Button type="submit" fullWidth variant="contained" sx={{ mt: 3 }}>
+        Войти
+      </Button>
+    </Box>
   );
 };
 
