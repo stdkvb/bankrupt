@@ -15,7 +15,7 @@ import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 
 import Filters from "../components/Filters";
 
-const Catalog = ({ data }) => {
+const Catalog = ({ data, onFilterSubmit }) => {
   const [currentDocument, setCurrentDocument] = React.useState(null);
 
   //row menu
@@ -52,7 +52,7 @@ const Catalog = ({ data }) => {
       <Typography variant="h4" component="h1">
         Каталог
       </Typography>
-      <Filters data={data} />
+      <Filters data={data} onFilterSubmit={onFilterSubmit} />
       <Paper
         elevation={0}
         sx={{
@@ -62,7 +62,9 @@ const Catalog = ({ data }) => {
           gap: { xs: [3], md: [4] },
         }}
       >
-        <Typography variant="h5">Найдено 25 895 документов</Typography>
+        <Typography variant="h5">
+          Найденых документов: {data.documentsList.length}
+        </Typography>
 
         {data.documentsList.map((document, i) => {
           return (

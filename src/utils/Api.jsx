@@ -21,8 +21,8 @@ class Api {
     }).then(Api.handleResponse);
   }
 
-  getCatalog() {
-    return fetch(`${this._url}/catalog`, {
+  getCatalog(params) {
+    return fetch(`${this._url}/catalog?` + `${new URLSearchParams(params)}`, {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -83,16 +83,3 @@ const api = new Api({
 });
 
 export default api;
-
-// fetch("https://bankrotvestnik.ru/api/catalog", {
-//   method: "GET",
-//   body: JSON.stringify({}),
-//   headers: {
-//     "Content-type": "application/json; charset=UTF-8",
-//     "authorization": "Bearer null"
-//   },
-// })
-//   .then((response) => response.json())
-//   .then((data) => {
-//     console.log(data);
-//   });

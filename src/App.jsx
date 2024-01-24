@@ -59,6 +59,22 @@ export default function App() {
       });
   };
 
+  const handleFilterSubmit = (event) => {
+    event.preventDefault();
+    const filters = Array.from(new FormData(event.currentTarget));
+    console.log(filters);
+    api
+      .getCatalog(filters)
+      .then((data) => {
+        if (data.status === "success") {
+          setCatalog(data.data);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <Routes>
       <Route
@@ -98,7 +114,7 @@ export default function App() {
         path="/"
         element={
           <PrivateRoute loggedIn={loggedIn} loading={loading}>
-            <Catalog data={catalog} />
+            <Catalog data={catalog} onFilterSubmit={handleFilterSubmit} />
           </PrivateRoute>
         }
       />

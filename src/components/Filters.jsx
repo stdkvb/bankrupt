@@ -1,5 +1,5 @@
 import React from "react";
-import { Paper, Typography, Stack, Link, Button } from "@mui/material";
+import { Paper, Stack, Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -7,7 +7,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import Select from "./Select";
 
-const Filters = () => {
+const Filters = ({ onFilterSubmit }) => {
   const data = {
     filterParamsList: [
       {
@@ -134,20 +134,19 @@ const Filters = () => {
     isNextPage: false,
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const filters = new FormData(event.currentTarget);
-    console.log(filters);
-    // console.log({
-    //   login: filters.get("surname"),
-    //   password: filters.get("password"),
-    // });
+  const [filter, setFilter] = React.useState([]);
+
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setFilter(typeof value === "string" ? value.split(",") : value);
   };
 
   return (
     <Paper
       component="form"
-      onSubmit={handleSubmit}
+      onSubmit={onFilterSubmit}
       elevation={0}
       sx={{
         p: { xs: [2], md: [4] },
@@ -173,6 +172,7 @@ const Filters = () => {
               name={filter.name}
               title={filter.title}
               tags={filter.values}
+              handleChange={handleChange}
             />
           );
         })}
@@ -180,6 +180,7 @@ const Filters = () => {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
             label="Дата"
+            name="date"
             sx={{ width: "100%" }}
             slotProps={{
               textField: {
@@ -205,6 +206,7 @@ const Filters = () => {
           type="reset"
           variant="outlined"
           sx={{ width: { xs: "100%", md: "100px" } }}
+          onClick={setFilter([])}
         >
           Сбросить
         </Button>

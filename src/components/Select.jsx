@@ -18,16 +18,12 @@ const MenuProps = {
   },
 };
 
-export default function MultipleSelectChip({ name, title, tags }) {
-  const [personName, setPersonName] = React.useState([]);
-
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(typeof value === "string" ? value.split(",") : value);
-  };
-
+export default function MultipleSelectChip({
+  name,
+  title,
+  tags,
+  handleChange,
+}) {
   return (
     <FormControl sx={{ width: "100%" }}>
       <InputLabel
@@ -40,7 +36,7 @@ export default function MultipleSelectChip({ name, title, tags }) {
         labelId="demo-multiple-chip-label"
         id="demo-multiple-chip"
         multiple
-        value={personName}
+        value={filter}
         onChange={handleChange}
         input={<Input name={name} id="select-multiple-chip" label="Chip" />}
         renderValue={(selected) => (
