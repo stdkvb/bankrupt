@@ -1,13 +1,11 @@
 import React from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 import MainLayout from "../layouts/MainLayout";
 
-function PrivateRoute({ loggedIn }) {
+function PrivateRoute({ loggedIn, children }) {
   return loggedIn ? (
-    <MainLayout>
-      <Outlet />
-    </MainLayout>
+    <MainLayout>{children}</MainLayout>
   ) : (
     <Navigate to="/login" />
   );

@@ -29,6 +29,7 @@ export default function App() {
     api
       .getCatalog()
       .then((data) => {
+        console.log(data);
         setLoggedIn(true);
         setCatalog(data.data);
       })
@@ -85,10 +86,16 @@ export default function App() {
           </AuthLayout>
         }
       />
-      <Route exact path="/" element={<PrivateRoute loggedIn={loggedIn} />}>
-        <Route exact path="/" element={<Catalog data={catalog} />} />
-      </Route>
-      {/* <Route
+      <Route
+        exact
+        path="/"
+        element={
+          <PrivateRoute loggedIn={loggedIn}>
+            <Catalog data={catalog} />
+          </PrivateRoute>
+        }
+      />
+      <Route
         path="/profile"
         element={
           <PrivateRoute loggedIn={loggedIn}>
@@ -151,7 +158,7 @@ export default function App() {
             <PageNotFound />
           </AuthLayout>
         }
-      /> */}
+      />
     </Routes>
   );
 }
