@@ -83,3 +83,16 @@ const api = new Api({
 });
 
 export default api;
+
+// fetch("https://bankrotvestnik.ru/api/catalog", {
+//   method: "GET",
+//   body: JSON.stringify({}),
+//   headers: {
+//     "Content-type": "application/json; charset=UTF-8",
+//     "authorization": "Bearer null"
+//   },
+// })
+//   .then((response) => response.json())
+//   .then((data) => {
+//     console.log(data);
+//   });

@@ -3,11 +3,10 @@ import { Navigate } from "react-router-dom";
 
 import MainLayout from "../layouts/MainLayout";
 
-function PrivateRoute({ loggedIn, children }) {
-  return loggedIn ? (
-    <MainLayout>{children}</MainLayout>
-  ) : (
-    <Navigate to="/login" />
+function PrivateRoute({ loading, loggedIn, children }) {
+  return (
+    !loading &&
+    (loggedIn ? <MainLayout>{children}</MainLayout> : <Navigate to="/login" />)
   );
 }
 

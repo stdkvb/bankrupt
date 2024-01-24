@@ -22,6 +22,8 @@ import api from "./utils/Api";
 
 export default function App() {
   const navigate = useNavigate();
+  const pathName = useLocation().pathname;
+  const [loading, setLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
   const [catalog, setCatalog] = React.useState([]);
 
@@ -29,13 +31,15 @@ export default function App() {
     api
       .getCatalog()
       .then((data) => {
-        console.log(data);
-        setLoggedIn(true);
-        setCatalog(data.data);
+        if (data.status === "success") {
+          setLoggedIn(true);
+          setCatalog(data.data);
+        }
       })
       .catch((error) => {
         console.log(error);
-      });
+      })
+      .finally(() => setLoading(false));
   };
   useEffect(getAccess, []);
 
@@ -45,7 +49,10 @@ export default function App() {
       .then((data) => {
         localStorage.setItem("token", data.data.token);
         setLoggedIn(true);
-        navigate("/");
+        api.getCatalog().then((data) => {
+          setCatalog(data.data);
+          navigate("/");
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -90,7 +97,7 @@ export default function App() {
         exact
         path="/"
         element={
-          <PrivateRoute loggedIn={loggedIn}>
+          <PrivateRoute loggedIn={loggedIn} loading={loading}>
             <Catalog data={catalog} />
           </PrivateRoute>
         }
@@ -98,7 +105,7 @@ export default function App() {
       <Route
         path="/profile"
         element={
-          <PrivateRoute loggedIn={loggedIn}>
+          <PrivateRoute loggedIn={true}>
             <Profile />
           </PrivateRoute>
         }
@@ -106,7 +113,7 @@ export default function App() {
       <Route
         path="/rates"
         element={
-          <PrivateRoute loggedIn={loggedIn}>
+          <PrivateRoute loggedIn={true}>
             <Rates />
           </PrivateRoute>
         }
@@ -114,7 +121,7 @@ export default function App() {
       <Route
         path="/wiki"
         element={
-          <PrivateRoute loggedIn={loggedIn}>
+          <PrivateRoute loggedIn={true}>
             <Wiki />
           </PrivateRoute>
         }
@@ -122,7 +129,7 @@ export default function App() {
       <Route
         path="/news"
         element={
-          <PrivateRoute loggedIn={loggedIn}>
+          <PrivateRoute loggedIn={true}>
             <News />
           </PrivateRoute>
         }
@@ -130,7 +137,7 @@ export default function App() {
       <Route
         path="/news/:id"
         element={
-          <PrivateRoute loggedIn={loggedIn}>
+          <PrivateRoute loggedIn={true}>
             <Article />
           </PrivateRoute>
         }
@@ -138,7 +145,7 @@ export default function App() {
       <Route
         path="/contacts"
         element={
-          <PrivateRoute loggedIn={loggedIn}>
+          <PrivateRoute loggedIn={true}>
             <Contacts />
           </PrivateRoute>
         }
@@ -146,7 +153,7 @@ export default function App() {
       <Route
         path="/qa"
         element={
-          <PrivateRoute loggedIn={loggedIn}>
+          <PrivateRoute loggedIn={true}>
             <QA />
           </PrivateRoute>
         }

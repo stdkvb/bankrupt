@@ -7,23 +7,26 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import Select from "./Select";
 
-const data = {
-  status: "success",
-  data: {
+const Filters = () => {
+  const data = {
     filterParamsList: [
       {
+        name: "participants",
         title: "Участники дела",
         values: ["Участник 1", "Участник 2", "Участник 3"],
       },
       {
+        name: "theme",
         title: "Суть спора",
         values: ["Суть спора 1", "Суть спора 2", "Суть спора 3"],
       },
       {
+        name: "justice",
         title: "Суд",
         values: ["Суд 1", "Суд 2", "Суд 3"],
       },
       {
+        name: "location",
         title: "Территориальная принадлежность",
         values: ["Принадлежность 1", "Принадлежность 2", "Принадлежность 3"],
       },
@@ -129,18 +132,16 @@ const data = {
       },
     ],
     isNextPage: false,
-  },
-  errors: [],
-};
+  };
 
-const Filters = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      login: data.get("login"),
-      password: data.get("password"),
-    });
+    const filters = new FormData(event.currentTarget);
+    console.log(filters);
+    // console.log({
+    //   login: filters.get("surname"),
+    //   password: filters.get("password"),
+    // });
   };
 
   return (
@@ -165,8 +166,15 @@ const Filters = () => {
           gap: [4],
         }}
       >
-        {data.data.filterParamsList.map((filter, i) => {
-          return <Select key={i} title={filter.title} tags={filter.values} />;
+        {data.filterParamsList.map((filter, i) => {
+          return (
+            <Select
+              key={i}
+              name={filter.name}
+              title={filter.title}
+              tags={filter.values}
+            />
+          );
         })}
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -186,8 +194,8 @@ const Filters = () => {
           label="Поиск"
           variant="standard"
           size="medium"
-          id="surname"
-          name="surname"
+          id="search"
+          name="search"
           InputLabelProps={{ shrink: true }}
           sx={{ gridColumn: { xs: "unset", xl: "span 2" } }}
         />

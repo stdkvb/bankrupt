@@ -18,7 +18,7 @@ const MenuProps = {
   },
 };
 
-export default function MultipleSelectChip({ title, tags }) {
+export default function MultipleSelectChip({ name, title, tags }) {
   const [personName, setPersonName] = React.useState([]);
 
   const handleChange = (event) => {
@@ -42,7 +42,7 @@ export default function MultipleSelectChip({ title, tags }) {
         multiple
         value={personName}
         onChange={handleChange}
-        input={<Input id="select-multiple-chip" label="Chip" />}
+        input={<Input name={name} id="select-multiple-chip" label="Chip" />}
         renderValue={(selected) => (
           <Box sx={{ display: "flex", gap: 1, overflow: "hidden" }}>
             {selected.map((value) => (
