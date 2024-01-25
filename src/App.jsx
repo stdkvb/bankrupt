@@ -61,6 +61,7 @@ export default function App() {
 
   const handleFilterSubmit = (event) => {
     if (event) {
+      //if filters form submit
       event.preventDefault();
       const filters = Array.from(new FormData(event.currentTarget));
       console.log(filters);
@@ -75,6 +76,7 @@ export default function App() {
           console.log(error);
         });
     } else {
+      //if filters form reset
       api
         .getCatalog()
         .then((data) => {

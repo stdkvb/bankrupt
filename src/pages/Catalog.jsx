@@ -15,14 +15,17 @@ import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 
 import Filters from "../components/Filters";
 
+import api from "../utils/Api";
+
 const Catalog = ({ data, onFilterSubmit }) => {
   const [currentDocument, setCurrentDocument] = React.useState(null);
 
   //row menu
   const [isDocumentMenuOpen, setIsDocumentMenuOpen] = React.useState(null);
   const openDocumentMenu = Boolean(isDocumentMenuOpen);
-  const handleDocumentMenuClick = (event) => {
+  const handleDocumentMenuClick = (event, document) => {
     setIsDocumentMenuOpen(event.currentTarget);
+    setCurrentDocument(document);
   };
   const handleDocumentMenuClose = () => {
     setIsDocumentMenuOpen(null);
@@ -36,6 +39,16 @@ const Catalog = ({ data, onFilterSubmit }) => {
   };
   const handleClose = () => {
     setOpen(false);
+  };
+
+  //add to favorites
+  const handleAddToFavorites = (currentDocument) => {
+    api
+      .addToFavorites(currentDocument.id)
+      .then(() => {})
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -156,7 +169,9 @@ const Catalog = ({ data, onFilterSubmit }) => {
               >
                 {document.id}
                 <IconButton
-                  onClick={handleDocumentMenuClick}
+                  onClick={(event) => {
+                    handleDocumentMenuClick(event, document);
+                  }}
                   sx={{
                     mt: "-8px",
                     position: { xs: "absolute", md: "relative" },
@@ -208,6 +223,14 @@ const Catalog = ({ data, onFilterSubmit }) => {
         <MenuItem
           onClick={() => {
             handleDocumentMenuClose();
+            handleOpen(currentDocument);
+          }}
+        >
+          Посмотреть
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleDocumentMenuClose();
           }}
         >
           Отправить на почту
@@ -223,6 +246,7 @@ const Catalog = ({ data, onFilterSubmit }) => {
         <MenuItem
           onClick={() => {
             handleDocumentMenuClose();
+            handleAddToFavorites(currentDocument);
           }}
         >
           Добавить в избранное

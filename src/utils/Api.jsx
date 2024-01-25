@@ -24,10 +24,17 @@ class Api {
   getCatalog(params) {
     return fetch(`${this._url}/catalog?` + `${new URLSearchParams(params)}`, {
       method: "GET",
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
+      headers: this._headers,
       credentials: "include",
+    }).then(Api.handleResponse);
+  }
+
+  addToFavorites(id) {
+    return fetch(`${this._url}/favorites`, {
+      method: "POST",
+      headers: this._headers,
+      credentials: "include",
+      body: JSON.stringify({ id }),
     }).then(Api.handleResponse);
   }
 
@@ -79,6 +86,7 @@ const api = new Api({
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
+    authorization: `Bearer ${localStorage.getItem("token")}`,
   },
 });
 

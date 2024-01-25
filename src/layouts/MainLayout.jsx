@@ -548,7 +548,12 @@ export default function MainLayout({ children }) {
             </ListItemIcon>
             <ListItemText primary="Контакты" />
           </ListItemButton>
-          <ListItemButton sx={{ px: [4], mt: [5], display: { md: "none" } }}>
+          <ListItemButton
+            sx={{ px: [4], mt: [5], display: { md: "none" } }}
+            onClick={handleLogout}
+            component={Link}
+            href={"/login"}
+          >
             <ListItemIcon>
               <LogoutOutlinedIcon />
             </ListItemIcon>
