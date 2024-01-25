@@ -139,6 +139,11 @@ export default function MainLayout({ children }) {
   const handleProfileMenuClose = () => {
     setIsProfileMenuOpen(null);
   };
+  //logout
+  const handleLogout = () => {
+    setIsProfileMenuOpen(null);
+    localStorage.clear();
+  };
 
   //folder menu
   const [isFolderMenuOpen, setIsFolderMenuOpen] = React.useState(null);
@@ -296,11 +301,7 @@ export default function MainLayout({ children }) {
               <PersonIcon /> Профиль
             </MenuItem>
             <Divider />
-            <MenuItem
-              onClick={handleProfileMenuClose}
-              component={Link}
-              href={"/login"}
-            >
+            <MenuItem onClick={handleLogout} component={Link} href={"/login"}>
               <ListItemIcon>
                 <LogoutOutlinedIcon />
               </ListItemIcon>
