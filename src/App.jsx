@@ -60,19 +60,32 @@ export default function App() {
   };
 
   const handleFilterSubmit = (event) => {
-    event.preventDefault();
-    const filters = Array.from(new FormData(event.currentTarget));
-    console.log(filters);
-    api
-      .getCatalog(filters)
-      .then((data) => {
-        if (data.status === "success") {
-          setCatalog(data.data);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (event) {
+      event.preventDefault();
+      const filters = Array.from(new FormData(event.currentTarget));
+      console.log(filters);
+      api
+        .getCatalog(filters)
+        .then((data) => {
+          if (data.status === "success") {
+            setCatalog(data.data);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      api
+        .getCatalog()
+        .then((data) => {
+          if (data.status === "success") {
+            setCatalog(data.data);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   return (

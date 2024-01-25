@@ -6,6 +6,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
+import { Typography } from "@mui/material";
 
 const MenuProps = {
   PaperProps: {
@@ -18,12 +19,22 @@ const MenuProps = {
   },
 };
 
-export default function MultipleSelectChip({
-  name,
-  title,
-  tags,
-  handleChange,
-}) {
+export default function MultipleSelectChip({ name, title, tags, onReset }) {
+  const [filter, setFilter] = React.useState([]);
+
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setFilter(typeof value === "string" ? value.split(",") : value);
+  };
+
+  const resetFilters = () => {
+    setFilter([]);
+  };
+
+  React.useEffect(resetFilters, [onReset]);
+
   return (
     <FormControl sx={{ width: "100%" }}>
       <InputLabel
@@ -42,7 +53,12 @@ export default function MultipleSelectChip({
         renderValue={(selected) => (
           <Box sx={{ display: "flex", gap: 1, overflow: "hidden" }}>
             {selected.map((value) => (
-              <Chip size="small" key={value} label={value} />
+              <Chip
+                size="small"
+                key={value}
+                label={value}
+                sx={{ maxHeight: "23px" }}
+              />
             ))}
           </Box>
         )}

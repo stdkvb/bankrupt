@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { Paper, Stack, Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -7,140 +8,17 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import Select from "./Select";
 
-const Filters = ({ onFilterSubmit }) => {
-  const data = {
-    filterParamsList: [
-      {
-        name: "participants",
-        title: "Участники дела",
-        values: ["Участник 1", "Участник 2", "Участник 3"],
-      },
-      {
-        name: "theme",
-        title: "Суть спора",
-        values: ["Суть спора 1", "Суть спора 2", "Суть спора 3"],
-      },
-      {
-        name: "justice",
-        title: "Суд",
-        values: ["Суд 1", "Суд 2", "Суд 3"],
-      },
-      {
-        name: "location",
-        title: "Территориальная принадлежность",
-        values: ["Принадлежность 1", "Принадлежность 2", "Принадлежность 3"],
-      },
-    ],
-    documentsList: [
-      {
-        id: 3,
-        title: "третий",
-        date: "01.01.2024",
-        caseNumber: "",
-        subtitle: "от 01.01.2024",
-        previewText: "описание третьего",
-        detailText: "детальное описание третьего",
-        tags: ["Участник 1", "Суть спора 1", "Суд 1", "Принадлежность 1"],
-        acts: [
-          {
-            title: null,
-            url: "https://bankrotvestnik.ru",
-          },
-        ],
-        file: [],
-      },
-      {
-        id: 1,
-        title: "Первый документ1",
-        date: "07.12.2023",
-        caseNumber: "1234-вс",
-        subtitle: "от 07.12.2023 по делу №1234-вс",
-        previewText: "Описание для анонса ...",
-        detailText: "Детальное описание ...",
-        tags: [
-          "Участник 1",
-          "Участник 2",
-          "Суть спора 2",
-          "Суть спора 3",
-          "Суд 1",
-          "Суд 3",
-          "Принадлежность 1",
-          "Принадлежность 2",
-        ],
-        acts: [
-          {
-            title: "Capture001.png",
-            url: "https://bankrotvestnik.ru/upload/iblock/23f/r9a71hxm1r7b56gqul742a5fnzqj3m6p.png",
-          },
-          {
-            title: "photo_2023-12-13_17-45-45.jpg",
-            url: "https://bankrotvestnik.ru/upload/iblock/01b/22847ll53xkvboynftx77nyrmbijlver.jpg",
-          },
-        ],
-        file: {
-          title: "2254e1fd4e79f9bcc2e85f127feebb51.pdf",
-          url: "https://bankrotvestnik.ru/upload/iblock/805/ty936c5lanxb3y92emanxodcrhars9n9.pdf",
-        },
-      },
-      {
-        id: 2,
-        title: "второй документ",
-        date: "07.12.2023",
-        caseNumber: "1234-вс",
-        subtitle: "от 07.12.2023 по делу №1234-вс",
-        previewText: "Описание для анонса ...",
-        detailText: "Детальное описание ...",
-        tags: [
-          "Участник 1",
-          "Суть спора 2",
-          "Суть спора 3",
-          "Суд 1",
-          "Суд 3",
-          "Принадлежность 1",
-          "Принадлежность 3",
-        ],
-        acts: [
-          {
-            title: null,
-            url: "https://bankrotvestnik.ru",
-          },
-        ],
-        file: {
-          title: "2254e1fd4e79f9bcc2e85f127feebb51.pdf",
-          url: "https://bankrotvestnik.ru/upload/iblock/805/ty936c5lanxb3y92emanxodcrhars9n9.pdf",
-        },
-      },
-      {
-        id: 4,
-        title: "четрвертый",
-        date: "",
-        caseNumber: "",
-        subtitle: "",
-        previewText: "описание документа",
-        detailText: "детальное описание документа",
-        tags: [],
-        acts: [
-          {
-            title: null,
-            url: "https://bankrotvestnik.ru",
-          },
-        ],
-        file: {
-          title: "2254e1fd4e79f9bcc2e85f127feebb51.pdf",
-          url: "https://bankrotvestnik.ru/upload/iblock/805/ty936c5lanxb3y92emanxodcrhars9n9.pdf",
-        },
-      },
-    ],
-    isNextPage: false,
-  };
+const Filters = ({ onFilterSubmit, data }) => {
+  //tags filters clear
+  const [filtersClear, setFiltersClear] = useState(false);
 
-  const [filter, setFilter] = React.useState([]);
+  //date picker clear
+  const [dateValue, setDateValue] = React.useState(null);
 
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setFilter(typeof value === "string" ? value.split(",") : value);
+  const handleResetFilters = () => {
+    setFiltersClear(!filtersClear);
+    setDateValue(null);
+    onFilterSubmit();
   };
 
   return (
@@ -172,13 +50,17 @@ const Filters = ({ onFilterSubmit }) => {
               name={filter.name}
               title={filter.title}
               tags={filter.values}
-              handleChange={handleChange}
+              onReset={filtersClear}
             />
           );
         })}
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
+            value={dateValue}
+            onChange={(newValue) => {
+              setDateValue(newValue);
+            }}
             label="Дата"
             name="date"
             sx={{ width: "100%" }}
@@ -206,7 +88,7 @@ const Filters = ({ onFilterSubmit }) => {
           type="reset"
           variant="outlined"
           sx={{ width: { xs: "100%", md: "100px" } }}
-          onClick={setFilter([])}
+          onClick={handleResetFilters}
         >
           Сбросить
         </Button>
