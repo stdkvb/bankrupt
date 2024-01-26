@@ -17,7 +17,7 @@ import Filters from "../components/Filters";
 
 import api from "../utils/Api";
 
-const Catalog = ({ data, onFilterSubmit }) => {
+const Catalog = ({ title, data, onFilterSubmit }) => {
   const [currentDocument, setCurrentDocument] = React.useState(null);
 
   //row menu
@@ -63,7 +63,7 @@ const Catalog = ({ data, onFilterSubmit }) => {
       }}
     >
       <Typography variant="h4" component="h1">
-        Каталог
+        {title}
       </Typography>
       <Filters data={data} onFilterSubmit={onFilterSubmit} />
       <Paper
@@ -348,6 +348,7 @@ const Catalog = ({ data, onFilterSubmit }) => {
                       alignItems: "center",
                       gap: "12px",
                     }}
+                    target="_blank"
                   >
                     <DescriptionOutlinedIcon />
                     <Typography>{act.title}</Typography>

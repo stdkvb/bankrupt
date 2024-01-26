@@ -352,7 +352,7 @@ export default function MainLayout({ children }) {
           </ListItemButton>
           <Accordion sx={{ boxShadow: "none", m: "0 !important" }}>
             <ListItemButton
-              className={activateMenuItem("/base")}
+              className={activateMenuItem("/wiki")}
               sx={{
                 px: [4],
                 pr: [1],
@@ -394,7 +394,7 @@ export default function MainLayout({ children }) {
           </Accordion>
           <Accordion sx={{ boxShadow: "none", m: "0 !important" }}>
             <ListItemButton
-              className={activateMenuItem("/favorites")}
+              className={activateMenuItem("/favourites")}
               sx={{
                 px: [4],
                 pr: [1],
@@ -404,7 +404,7 @@ export default function MainLayout({ children }) {
               }}
             >
               <Link
-                href="/favorites"
+                href="/favourites"
                 sx={{ display: "flex", textDecoration: "none !important" }}
               >
                 {" "}

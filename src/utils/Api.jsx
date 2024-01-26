@@ -24,17 +24,29 @@ class Api {
   getCatalog(params) {
     return fetch(`${this._url}/catalog?` + `${new URLSearchParams(params)}`, {
       method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      credentials: "include",
+    }).then(Api.handleResponse);
+  }
+
+  getFavourites(params) {
+    return fetch(`${this._url}/catalog?` + `${new URLSearchParams(params)}`, {
+      method: "GET",
       headers: this._headers,
       credentials: "include",
     }).then(Api.handleResponse);
   }
 
   addToFavorites(id) {
-    return fetch(`${this._url}/favorites`, {
+    const body = new FormData();
+    body.set("document_id", id);
+    return fetch(`${this._url}/favourites/add`, {
       method: "POST",
       headers: this._headers,
       credentials: "include",
-      body: JSON.stringify({ id }),
+      body,
     }).then(Api.handleResponse);
   }
 

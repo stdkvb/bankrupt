@@ -75,6 +75,7 @@ export default function MultipleSelectChip({ name, title, tags, onReset }) {
               minHeight: "unset",
               p: 0,
               borderRadius: 16,
+              maxWidth: "98%",
             }}
           >
             <Chip label={tag} onDelete={() => {}}></Chip>

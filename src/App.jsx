@@ -25,7 +25,8 @@ export default function App() {
   const pathName = useLocation().pathname;
   const [loading, setLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [catalog, setCatalog] = React.useState([]);
+  const [catalog, setCatalog] = useState([]);
+  const [errors, setErrors] = useState([]);
 
   const getAccess = () => {
     api
@@ -39,7 +40,9 @@ export default function App() {
       .catch((error) => {
         console.log(error);
       })
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+      });
   };
   useEffect(getAccess, []);
 
@@ -47,12 +50,16 @@ export default function App() {
     api
       .loginUser(login, password)
       .then((data) => {
-        localStorage.setItem("token", data.data.token);
-        setLoggedIn(true);
-        api.getCatalog().then((data) => {
-          setCatalog(data.data);
+        if (data.status === "success") {
+          localStorage.setItem("token", data.data.token);
+          setLoggedIn(true);
+          setLoading(true);
+          setErrors([]);
+          getAccess();
           navigate("/");
-        });
+        } else {
+          setErrors(data.errors);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -96,7 +103,7 @@ export default function App() {
         path="/login"
         element={
           <AuthLayout>
-            <Login onLoginSubmit={handleLoginSubmit} />
+            <Login onLoginSubmit={handleLoginSubmit} errors={errors} />
           </AuthLayout>
         }
       />
@@ -129,7 +136,24 @@ export default function App() {
         path="/"
         element={
           <PrivateRoute loggedIn={loggedIn} loading={loading}>
-            <Catalog data={catalog} onFilterSubmit={handleFilterSubmit} />
+            <Catalog
+              title={"Каталог"}
+              data={catalog}
+              onFilterSubmit={handleFilterSubmit}
+            />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        exact
+        path="/favourites"
+        element={
+          <PrivateRoute loggedIn={loggedIn} loading={loading}>
+            <Catalog
+              title={"Избранное"}
+              data={catalog}
+              onFilterSubmit={handleFilterSubmit}
+            />
           </PrivateRoute>
         }
       />

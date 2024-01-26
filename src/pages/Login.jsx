@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import { Button, Link } from "@mui/material";
 import Box from "@mui/material/Box";
 
-const Login = ({ onLoginSubmit }) => {
+const Login = ({ onLoginSubmit, errors }) => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 
@@ -68,6 +68,13 @@ const Login = ({ onLoginSubmit }) => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
+      {errors.map((error, i) => {
+        return (
+          <Typography color="error.main" sx={{ my: 2 }} key={i}>
+            {error.message}
+          </Typography>
+        );
+      })}
       <Link href="/password-recovery" color="primary.main">
         Забыли пароль?
       </Link>
