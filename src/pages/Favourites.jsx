@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Typography } from "@mui/material";
 import Container from "@mui/material/Container";
 import Skeleton from "@mui/material/Skeleton";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 
 import Filters from "../components/Filters";
 import DocumentsList from "../components/DocumentsList";
@@ -67,26 +70,47 @@ const Favourites = ({ title }) => {
         display: "flex",
         flexDirection: "column",
         gap: { xs: [2], md: [4] },
+        position: "relative",
+        height: "calc(100% - 76px)",
       }}
     >
       <Typography variant="h4" component="h1">
         {title}
       </Typography>
       {loading ? (
-        <>
-          <Skeleton
-            variant="rounded"
-            height={265}
-            animation="wave"
-            sx={{ bgcolor: "rgb(238, 239, 242);" }}
+        <CircularProgress
+          sx={{
+            position: "absolute",
+            top: "0",
+            bottom: "0",
+            left: "0",
+            right: "0",
+            margin: "auto",
+          }}
+        />
+      ) : favourites.documentsList.length == 0 ? (
+        <Box
+          sx={{
+            position: "absolute",
+            top: "0",
+            bottom: "0",
+            left: "0",
+            right: "0",
+            margin: "auto",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <BookmarkIcon
+            fontSize="large"
+            sx={{ opacity: "0.2", scale: "2", mb: 2 }}
           />
-          <Skeleton
-            variant="rounded"
-            animation="wave"
-            height={600}
-            sx={{ bgcolor: "rgb(238, 239, 242);" }}
-          />
-        </>
+          <Typography color="text.secondary">
+            Нет избранных документов
+          </Typography>
+        </Box>
       ) : (
         <>
           <Filters data={favourites} onFilterSubmit={handleFilterSubmit} />

@@ -4,6 +4,8 @@ import { Paper, Stack, Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import dayjs from "dayjs";
+import "dayjs/locale/ru";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import Select from "./Select";
@@ -55,7 +57,7 @@ const Filters = ({ onFilterSubmit, data }) => {
           );
         })}
 
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
           <DatePicker
             value={dateValue}
             onChange={(newValue) => {
@@ -87,7 +89,7 @@ const Filters = ({ onFilterSubmit, data }) => {
         <Button
           type="reset"
           variant="outlined"
-          sx={{ width: { xs: "100%", md: "100px" } }}
+          sx={{ width: { xs: "100%", md: "100px", border: "none" } }}
           onClick={handleResetFilters}
         >
           Сбросить

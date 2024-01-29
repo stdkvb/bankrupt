@@ -20,6 +20,10 @@ const Login = ({ onLoginSubmit, errors }) => {
       onSubmit={handleSubmit}
       sx={{
         maxWidth: "400px",
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: { xs: "center", md: "flex-start" },
       }}
     >
       <Typography

@@ -114,8 +114,16 @@ const DocumentsList = ({ data, isFavourites }) => {
               >
                 ID
               </Box>
-              <Box>{document.date}</Box>
               <Box>
+                <Typography sx={{ fontSize: { xs: "1rem", md: "14px" } }}>
+                  {document.date}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  overflow: "hidden",
+                }}
+              >
                 <Typography
                   sx={{
                     mb: 2,
@@ -151,7 +159,9 @@ const DocumentsList = ({ data, isFavourites }) => {
                   justifyContent: "space-between",
                 }}
               >
-                {document.id}
+                <Typography sx={{ fontSize: { xs: "1rem", md: "14px" } }}>
+                  {document.id}
+                </Typography>
                 <IconButton
                   onClick={(event) => {
                     handleDocumentMenuClick(event, document);
@@ -204,14 +214,16 @@ const DocumentsList = ({ data, isFavourites }) => {
           vertical: "bottom",
         }}
       >
-        <MenuItem
-          onClick={() => {
-            handleDocumentMenuClose();
-            handleOpen(currentDocument);
-          }}
-        >
-          Посмотреть
-        </MenuItem>
+        {!open && (
+          <MenuItem
+            onClick={() => {
+              handleDocumentMenuClose();
+              handleOpen(currentDocument);
+            }}
+          >
+            Посмотреть
+          </MenuItem>
+        )}
         <MenuItem
           onClick={() => {
             handleDocumentMenuClose();
@@ -266,7 +278,9 @@ const DocumentsList = ({ data, isFavourites }) => {
               <CloseIcon />
             </IconButton>
             <IconButton
-              onClick={handleDocumentMenuClick}
+              onClick={(event) => {
+                handleDocumentMenuClick(event, currentDocument);
+              }}
               sx={{
                 position: "absolute",
                 right: { xs: "16px", md: "32px" },

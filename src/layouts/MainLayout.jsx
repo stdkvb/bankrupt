@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import { Avatar, Stack, Link } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";

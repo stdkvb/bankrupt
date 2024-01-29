@@ -67,10 +67,18 @@ const AuthLayout = ({ children }) => {
         }}
         color="text.secondary"
       >
-        <Typography>
-          Техническая поддержка:{" "}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: { xs: "0", md: "1" },
+            flexDirection: { xs: "column", md: "row" },
+          }}
+        >
+          <Typography>Техническая поддержка:</Typography>
           <Link href="mailto:info@example.ru">info@example.ru</Link>
-        </Typography>
+        </Box>
+
         <Box sx={{ display: "flex", gap: 1 }}>
           <Typography>Разработка</Typography>
           <Typography>–</Typography>
