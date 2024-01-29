@@ -32,19 +32,27 @@ class Api {
   }
 
   getFavourites(params) {
-    return fetch(`${this._url}/catalog?` + `${new URLSearchParams(params)}`, {
-      method: "GET",
-      headers: this._headers,
-      credentials: "include",
-    }).then(Api.handleResponse);
+    return fetch(
+      `${this._url}/favourites?` + `${new URLSearchParams(params)}`,
+      {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        credentials: "include",
+      }
+    ).then(Api.handleResponse);
   }
 
   addToFavorites(id) {
     const body = new FormData();
     body.set("document_id", id);
+    body.set("folder_id", id);
     return fetch(`${this._url}/favourites/add`, {
       method: "POST",
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
       credentials: "include",
       body,
     }).then(Api.handleResponse);
@@ -98,7 +106,6 @@ const api = new Api({
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
-    authorization: `Bearer ${localStorage.getItem("token")}`,
   },
 });
 

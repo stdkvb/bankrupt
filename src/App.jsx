@@ -11,6 +11,7 @@ import NewPassword from "./pages/NewPassword";
 import Rates from "./pages/Rates";
 import Profile from "./pages/Profile";
 import Catalog from "./pages/Catalog";
+import Favourites from "./pages/Favourites";
 import QA from "./pages/QA";
 import Contacts from "./pages/Contacts";
 import PageNotFound from "./pages/PageNotFound";
@@ -149,11 +150,7 @@ export default function App() {
         path="/favourites"
         element={
           <PrivateRoute loggedIn={loggedIn} loading={loading}>
-            <Catalog
-              title={"Избранное"}
-              data={catalog}
-              onFilterSubmit={handleFilterSubmit}
-            />
+            <Favourites title={"Избранное"} />
           </PrivateRoute>
         }
       />
