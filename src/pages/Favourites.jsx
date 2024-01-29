@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Typography } from "@mui/material";
 import Container from "@mui/material/Container";
+import Skeleton from "@mui/material/Skeleton";
 
 import Filters from "../components/Filters";
 import DocumentsList from "../components/DocumentsList";
@@ -72,7 +73,20 @@ const Favourites = ({ title }) => {
         {title}
       </Typography>
       {loading ? (
-        <>loading</>
+        <>
+          <Skeleton
+            variant="rounded"
+            height={265}
+            animation="wave"
+            sx={{ bgcolor: "rgb(238, 239, 242);" }}
+          />
+          <Skeleton
+            variant="rounded"
+            animation="wave"
+            height={600}
+            sx={{ bgcolor: "rgb(238, 239, 242);" }}
+          />
+        </>
       ) : (
         <>
           <Filters data={favourites} onFilterSubmit={handleFilterSubmit} />

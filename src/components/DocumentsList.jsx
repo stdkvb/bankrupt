@@ -226,18 +226,16 @@ const DocumentsList = ({ data, isFavourites }) => {
         >
           Скачать
         </MenuItem>
+        <Divider />
         {!isFavourites && (
-          <>
-            <Divider />
-            <MenuItem
-              onClick={() => {
-                handleDocumentMenuClose();
-                handleAddToFavorites(currentDocument);
-              }}
-            >
-              Добавить в избранное
-            </MenuItem>
-          </>
+          <MenuItem
+            onClick={() => {
+              handleDocumentMenuClose();
+              handleAddToFavorites(currentDocument);
+            }}
+          >
+            Добавить в избранное
+          </MenuItem>
         )}
       </Menu>
 
