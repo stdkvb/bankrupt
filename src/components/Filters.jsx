@@ -4,13 +4,15 @@ import { Paper, Stack, Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import dayjs from "dayjs";
 import "dayjs/locale/ru";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import Select from "./Select";
 
 const Filters = ({ onFilterSubmit, data }) => {
+  //tags
+  const [tags, setTags] = useState([]);
+
   //tags filters clear
   const [filtersClear, setFiltersClear] = useState(false);
 
@@ -56,7 +58,6 @@ const Filters = ({ onFilterSubmit, data }) => {
             />
           );
         })}
-
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
           <DatePicker
             value={dateValue}
@@ -70,7 +71,7 @@ const Filters = ({ onFilterSubmit, data }) => {
               textField: {
                 variant: "standard",
                 InputLabelProps: { shrink: true },
-                size: "medium",
+                size: "small",
               },
             }}
           />
@@ -78,7 +79,7 @@ const Filters = ({ onFilterSubmit, data }) => {
         <TextField
           label="Поиск"
           variant="standard"
-          size="medium"
+          size="small"
           id="search"
           name="search"
           InputLabelProps={{ shrink: true }}
