@@ -84,6 +84,7 @@ const Filters = ({ onFilterSubmit, data }) => {
           name="search"
           InputLabelProps={{ shrink: true }}
           sx={{ gridColumn: { xs: "unset", xl: "span 2" } }}
+          autoComplete="off"
         />
       </Stack>
       <Stack direction="row" spacing={2}>

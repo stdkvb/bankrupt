@@ -1,5 +1,5 @@
 import React from "react";
-import { Paper, Typography, Stack, Link } from "@mui/material";
+import { Paper, Typography, Stack, Link, Button } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
@@ -12,10 +12,12 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CloseIcon from "@mui/icons-material/Close";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 
+import Popup from "./Popup";
 import api from "../utils/Api";
 
 const DocumentsList = ({ data, isFavourites }) => {
   const [currentDocument, setCurrentDocument] = React.useState(null);
+  const [isSuccess, setIsSuccess] = React.useState(false);
 
   //row menu
   const [isDocumentMenuOpen, setIsDocumentMenuOpen] = React.useState(null);
@@ -28,7 +30,7 @@ const DocumentsList = ({ data, isFavourites }) => {
     setIsDocumentMenuOpen(null);
   };
 
-  // modal controller
+  // document detail modal controller
   const [open, setOpen] = React.useState(false);
   const handleOpen = (document) => {
     setCurrentDocument(document);
@@ -42,7 +44,11 @@ const DocumentsList = ({ data, isFavourites }) => {
   const handleAddToFavorites = (currentDocument) => {
     api
       .addToFavorites(currentDocument.id)
-      .then(() => {})
+      .then((data) => {
+        if (data.status === "success") {
+          setIsSuccess(!isSuccess);
+        }
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -334,7 +340,7 @@ const DocumentsList = ({ data, isFavourites }) => {
               })}
             </Stack>
             <Typography variant="h5" color="text.secondary" sx={{ mb: 4 }}>
-              Судебные акты
+              Ссылка на первоисточник
             </Typography>
             <Stack spacing={2}>
               {currentDocument.acts.map((act, i) => {
@@ -359,6 +365,37 @@ const DocumentsList = ({ data, isFavourites }) => {
           </Box>
         </Modal>
       )}
+      <Popup isPopupOpen={isSuccess}>
+        <IconButton
+          onClick={() => {
+            setIsSuccess(false);
+          }}
+          sx={{
+            position: "absolute",
+            right: { xs: 1, md: 2 },
+            top: { xs: 1, md: 2 },
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <Typography variant="h4" mb={3}>
+          Документ добавлен
+          <br />в избранное
+        </Typography>
+        <Typography color="text.secondary">
+          Документ добавлен в папку Избранное
+        </Typography>
+        <Button
+          variant="contained"
+          fullWidth
+          sx={{ mt: 4 }}
+          onClick={() => {
+            setIsSuccess(false);
+          }}
+        >
+          Закрыть
+        </Button>
+      </Popup>
     </>
   );
 };
