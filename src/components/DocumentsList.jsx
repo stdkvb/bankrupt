@@ -409,7 +409,7 @@ const DocumentsList = ({ data, isFavorites }) => {
           fullWidth
           sx={{ mt: 4 }}
           onClick={() => {
-            setIsSuccess(false);
+            setIsInFavorites(false);
           }}
         >
           Закрыть

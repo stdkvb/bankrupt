@@ -141,6 +141,7 @@ export default function App() {
               title={"Каталог"}
               data={catalog}
               onFilterSubmit={handleFilterSubmit}
+              loading={loading}
             />
           </PrivateRoute>
         }

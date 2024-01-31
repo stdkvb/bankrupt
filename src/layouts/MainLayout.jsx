@@ -1,5 +1,6 @@
-import * as React from "react";
+import React from "react";
 import { useLocation } from "react-router-dom";
+import { useState } from "react";
 import { styled } from "@mui/material/styles";
 import { Avatar, Stack, Link } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
@@ -17,6 +18,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -106,7 +108,7 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-export default function MainLayout({ children }) {
+export default function MainLayout({ children, loading }) {
   //current page
   let location = useLocation();
   const pathName = location.pathname;
@@ -118,7 +120,7 @@ export default function MainLayout({ children }) {
   }
 
   //drawer control
-  const [open, setOpen] = React.useState(!mobile);
+  const [open, setOpen] = useState(!mobile);
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -131,7 +133,7 @@ export default function MainLayout({ children }) {
   }
 
   //profile menu
-  const [isProfileMenuOpen, setIsProfileMenuOpen] = React.useState(null);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(null);
   const openProfileMenu = Boolean(isProfileMenuOpen);
   const handleProfileMenuClick = (event) => {
     setIsProfileMenuOpen(event.currentTarget);
@@ -146,7 +148,7 @@ export default function MainLayout({ children }) {
   };
 
   //folder menu
-  const [isFolderMenuOpen, setIsFolderMenuOpen] = React.useState(null);
+  const [isFolderMenuOpen, setIsFolderMenuOpen] = useState(null);
   const openFolderMenu = Boolean(isFolderMenuOpen);
   const handleFolderMenuClick = (event) => {
     setIsFolderMenuOpen(event.currentTarget);
@@ -581,7 +583,20 @@ export default function MainLayout({ children }) {
           overflow: "auto",
         }}
       >
-        {children}
+        {loading ? (
+          <CircularProgress
+            sx={{
+              position: "absolute",
+              top: "0",
+              bottom: "0",
+              left: "0",
+              right: "0",
+              margin: "auto",
+            }}
+          />
+        ) : (
+          <> {children}</>
+        )}
       </Box>
     </Box>
   );

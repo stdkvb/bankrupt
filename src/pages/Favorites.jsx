@@ -13,6 +13,7 @@ import api from "../utils/Api";
 const Favorites = ({ title }) => {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isFiltered, setIsFiltered] = useState(false);
 
   const getFavorites = () => {
     api
@@ -40,6 +41,7 @@ const Favorites = ({ title }) => {
         .then((data) => {
           if (data.status === "success") {
             setFavorites(data.data);
+            setIsFiltered(true);
           }
         })
         .catch((error) => {
@@ -52,6 +54,7 @@ const Favorites = ({ title }) => {
         .then((data) => {
           if (data.status === "success") {
             setFavorites(data.data);
+            setIsFiltered(true);
           }
         })
         .catch((error) => {
@@ -87,7 +90,7 @@ const Favorites = ({ title }) => {
             margin: "auto",
           }}
         />
-      ) : favorites.documentsList.length == 0 ? (
+      ) : favorites.documentsList.length == 0 && !isFiltered ? (
         <Box
           sx={{
             position: "absolute",

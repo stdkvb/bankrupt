@@ -5,8 +5,6 @@ import Container from "@mui/material/Container";
 import Filters from "../components/Filters";
 import DocumentsList from "../components/DocumentsList";
 
-import api from "../utils/Api";
-
 const Catalog = ({ title, data, onFilterSubmit }) => {
   return (
     <Container
