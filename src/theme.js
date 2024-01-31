@@ -49,7 +49,6 @@ let theme = createTheme({
           "&.active": {
             backgroundColor: "rgba(0, 155, 0, 0.10)",
             cursor: "default",
-            pointerEvents: "none",
           },
         },
       },
