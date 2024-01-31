@@ -4,6 +4,14 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import { Button, Link } from "@mui/material";
 import Box from "@mui/material/Box";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import Input from "@mui/material/Input";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const Login = ({ onLoginSubmit, errors }) => {
   const [login, setLogin] = useState("");
@@ -12,6 +20,13 @@ const Login = ({ onLoginSubmit, errors }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     onLoginSubmit({ login, password });
+  };
+
+  // show/hide password
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
   };
 
   return (
@@ -60,18 +75,30 @@ const Login = ({ onLoginSubmit, errors }) => {
         value={login}
         onChange={(e) => setLogin(e.target.value)}
       />
-      <TextField
-        label="Пароль"
-        variant="standard"
-        size="medium"
-        required
-        fullWidth
-        id="password"
-        name="password"
-        sx={{ mb: 1 }}
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+      <FormControl sx={{ mb: 1 }} variant="standard" fullWidth>
+        <InputLabel htmlFor="password">Пароль</InputLabel>
+        <Input
+          id="password"
+          variant="standard"
+          size="medium"
+          required
+          name="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          type={showPassword ? "text" : "password"}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          }
+        />
+      </FormControl>
       {errors.map((error, i) => {
         return (
           <Typography color="error.main" sx={{ my: 2 }} key={i}>

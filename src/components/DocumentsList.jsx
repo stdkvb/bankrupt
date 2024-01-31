@@ -256,13 +256,19 @@ const DocumentsList = ({ data, isFavorites }) => {
         >
           Отправить на почту
         </MenuItem>
-        {/* <MenuItem
-          onClick={() => {
-            handleDocumentMenuClose();
-          }}
-        >
-          Скачать
-        </MenuItem> */}
+        {currentDocument && (
+          <MenuItem
+            onClick={() => {
+              handleDocumentMenuClose();
+            }}
+            component={Link}
+            href={currentDocument.file.url}
+            download={currentDocument.file.title}
+            target="_blank"
+          >
+            Скачать
+          </MenuItem>
+        )}
         <Divider />
         {!isFavorites && (
           <MenuItem
