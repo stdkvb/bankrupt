@@ -31,7 +31,7 @@ class Api {
     }).then(Api.handleResponse);
   }
 
-  getFavourites(params) {
+  getFavorites(params) {
     return fetch(
       `${this._url}/favourites?` + `${new URLSearchParams(params)}`,
       {
@@ -59,7 +59,7 @@ class Api {
   }
 
   sendToMail(params) {
-    return fetch(`${this._url}/send?` + `${new URLSearchParams(params)}`, {
+    return fetch(`${this._url}/send?` + `${"id=" + params}`, {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("token")}`,

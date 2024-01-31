@@ -393,10 +393,10 @@ export default function MainLayout({ children }) {
             </AccordionDetails>
           </Accordion>
           <ListItemButton
-            className={activateMenuItem("/favourites")}
+            className={activateMenuItem("/favorites")}
             sx={{ px: [4] }}
             component={Link}
-            to={"/favourites"}
+            to={"/favorites"}
           >
             <ListItemIcon>
               <DescriptionIcon />
@@ -405,7 +405,7 @@ export default function MainLayout({ children }) {
           </ListItemButton>
           {/* <Accordion sx={{ boxShadow: "none", m: "0 !important" }}>
             <ListItemButton
-              className={activateMenuItem("/favourites")}
+              className={activateMenuItem("/favorites")}
               sx={{
                 px: [4],
                 pr: [1],
@@ -415,7 +415,7 @@ export default function MainLayout({ children }) {
               }}
             >
               <Link
-                href="/favourites"
+                href="/favorites"
                 sx={{ display: "flex", textDecoration: "none !important" }}
               >
                 <ListItemIcon sx={{ height: "24px" }}>

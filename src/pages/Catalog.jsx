@@ -23,7 +23,7 @@ const Catalog = ({ title, data, onFilterSubmit }) => {
         {title}
       </Typography>
       <Filters data={data} onFilterSubmit={onFilterSubmit} />
-      <DocumentsList data={data} isFavourites={false} />
+      <DocumentsList data={data} isFavorites={false} />
     </Container>
   );
 };

@@ -13,7 +13,7 @@ const Popup = ({ isPopupOpen, children }) => {
           left: "0",
           right: "0",
           margin: "auto",
-          maxWidth: { xs: "90%", md: "580px" },
+          maxWidth: { xs: "90%", sm: "580px" },
           height: "fit-content",
           bgcolor: "background.paper",
           p: { xs: 2, md: 4 },

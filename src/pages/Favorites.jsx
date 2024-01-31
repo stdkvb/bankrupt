@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Typography } from "@mui/material";
 import Container from "@mui/material/Container";
-import Skeleton from "@mui/material/Skeleton";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
@@ -11,16 +10,16 @@ import DocumentsList from "../components/DocumentsList";
 
 import api from "../utils/Api";
 
-const Favourites = ({ title }) => {
-  const [favourites, setFavourites] = useState([]);
+const Favorites = ({ title }) => {
+  const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const getFavourites = () => {
+  const getFavorites = () => {
     api
-      .getFavourites()
+      .getFavorites()
       .then((data) => {
         if (data.status === "success") {
-          setFavourites(data.data);
+          setFavorites(data.data);
         }
         setLoading(false);
       })
@@ -28,7 +27,7 @@ const Favourites = ({ title }) => {
         console.log(error);
       });
   };
-  useEffect(getFavourites, [loading]);
+  useEffect(getFavorites, [loading]);
 
   const handleFilterSubmit = (event) => {
     if (event) {
@@ -37,10 +36,10 @@ const Favourites = ({ title }) => {
       const filters = Array.from(new FormData(event.currentTarget));
       console.log(filters);
       api
-        .getFavourites(filters)
+        .getFavorites(filters)
         .then((data) => {
           if (data.status === "success") {
-            setFavourites(data.data);
+            setFavorites(data.data);
           }
         })
         .catch((error) => {
@@ -49,10 +48,10 @@ const Favourites = ({ title }) => {
     } else {
       //if filters form reset
       api
-        .getFavourites()
+        .getFavorites()
         .then((data) => {
           if (data.status === "success") {
-            setFavourites(data.data);
+            setFavorites(data.data);
           }
         })
         .catch((error) => {
@@ -88,7 +87,7 @@ const Favourites = ({ title }) => {
             margin: "auto",
           }}
         />
-      ) : favourites.documentsList.length == 0 ? (
+      ) : favorites.documentsList.length == 0 ? (
         <Box
           sx={{
             position: "absolute",
@@ -113,12 +112,12 @@ const Favourites = ({ title }) => {
         </Box>
       ) : (
         <>
-          <Filters data={favourites} onFilterSubmit={handleFilterSubmit} />
-          <DocumentsList data={favourites} isFavourites={true} />
+          <Filters data={favorites} onFilterSubmit={handleFilterSubmit} />
+          <DocumentsList data={favorites} isFavorites={true} />
         </>
       )}
     </Container>
   );
 };
 
-export default Favourites;
+export default Favorites;

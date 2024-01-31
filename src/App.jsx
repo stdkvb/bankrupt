@@ -11,7 +11,7 @@ import NewPassword from "./pages/NewPassword";
 import Rates from "./pages/Rates";
 import Profile from "./pages/Profile";
 import Catalog from "./pages/Catalog";
-import Favourites from "./pages/Favourites";
+import Favorites from "./pages/Favorites";
 import QA from "./pages/QA";
 import Contacts from "./pages/Contacts";
 import PageNotFound from "./pages/PageNotFound";
@@ -147,10 +147,10 @@ export default function App() {
       />
       <Route
         exact
-        path="/favourites"
+        path="/favorites"
         element={
           <PrivateRoute loggedIn={loggedIn} loading={loading}>
-            <Favourites title={"Избранное"} />
+            <Favorites title={"Избранное"} />
           </PrivateRoute>
         }
       />

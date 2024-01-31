@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { Paper, Typography, Stack, Link, Button } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
@@ -15,12 +16,11 @@ import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import Popup from "./Popup";
 import api from "../utils/Api";
 
-const DocumentsList = ({ data, isFavourites }) => {
-  const [currentDocument, setCurrentDocument] = React.useState(null);
-  const [isSuccess, setIsSuccess] = React.useState(false);
+const DocumentsList = ({ data, isFavorites }) => {
+  const [currentDocument, setCurrentDocument] = useState(null);
 
   //row menu
-  const [isDocumentMenuOpen, setIsDocumentMenuOpen] = React.useState(null);
+  const [isDocumentMenuOpen, setIsDocumentMenuOpen] = useState(null);
   const openDocumentMenu = Boolean(isDocumentMenuOpen);
   const handleDocumentMenuClick = (event, document) => {
     setIsDocumentMenuOpen(event.currentTarget);
@@ -31,7 +31,7 @@ const DocumentsList = ({ data, isFavourites }) => {
   };
 
   // document detail modal controller
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = (document) => {
     setCurrentDocument(document);
     setOpen(true);
@@ -41,17 +41,35 @@ const DocumentsList = ({ data, isFavourites }) => {
   };
 
   //add to favorites
+  const [isInFavorites, setIsInFavorites] = useState(false);
   const handleAddToFavorites = (currentDocument) => {
     api
       .addToFavorites(currentDocument.id)
       .then((data) => {
         if (data.status === "success") {
-          setIsSuccess(!isSuccess);
+          setIsInFavorites(!isInFavorites);
         }
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  //send to mail
+  const [sendToMail, setSendToMail] = useState(false);
+  const [isSentToMail, setIsSentToMail] = useState(true);
+  const handleSendToMail = () => {
+    api
+      .sendToMail(currentDocument.id)
+      .then((data) => {
+        if (data.status === "success") {
+          setIsSentToMail(true);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setSendToMail(false);
   };
 
   return (
@@ -232,20 +250,21 @@ const DocumentsList = ({ data, isFavourites }) => {
         )}
         <MenuItem
           onClick={() => {
+            setSendToMail(true);
             handleDocumentMenuClose();
           }}
         >
           Отправить на почту
         </MenuItem>
-        <MenuItem
+        {/* <MenuItem
           onClick={() => {
             handleDocumentMenuClose();
           }}
         >
           Скачать
-        </MenuItem>
+        </MenuItem> */}
         <Divider />
-        {!isFavourites && (
+        {!isFavorites && (
           <MenuItem
             onClick={() => {
               handleDocumentMenuClose();
@@ -365,10 +384,10 @@ const DocumentsList = ({ data, isFavourites }) => {
           </Box>
         </Modal>
       )}
-      <Popup isPopupOpen={isSuccess}>
+      <Popup isPopupOpen={isInFavorites}>
         <IconButton
           onClick={() => {
-            setIsSuccess(false);
+            setIsInFavorites(false);
           }}
           sx={{
             position: "absolute",
@@ -391,6 +410,79 @@ const DocumentsList = ({ data, isFavourites }) => {
           sx={{ mt: 4 }}
           onClick={() => {
             setIsSuccess(false);
+          }}
+        >
+          Закрыть
+        </Button>
+      </Popup>
+      <Popup isPopupOpen={sendToMail}>
+        <IconButton
+          onClick={() => {
+            setSendToMail(false);
+          }}
+          sx={{
+            position: "absolute",
+            right: { xs: 1, md: 2 },
+            top: { xs: 1, md: 2 },
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <Typography variant="h4" mb={3}>
+          Отправить на почту
+        </Typography>
+        <Typography color="text.secondary">
+          Отправить документ на почту, указанную при регистрации?
+        </Typography>
+        <Stack
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            justifyContent: "space-between",
+            gap: 2,
+            mt: 4,
+          }}
+        >
+          <Button
+            variant="outlined"
+            fullWidth
+            onClick={() => {
+              setSendToMail(false);
+            }}
+          >
+            Отменить
+          </Button>
+          <Button variant="contained" fullWidth onClick={handleSendToMail}>
+            Отправить
+          </Button>
+        </Stack>
+      </Popup>
+      <Popup isPopupOpen={isSentToMail}>
+        <IconButton
+          onClick={() => {
+            setIsSentToMail(false);
+          }}
+          sx={{
+            position: "absolute",
+            right: { xs: 1, md: 2 },
+            top: { xs: 1, md: 2 },
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <Typography variant="h4" mb={3}>
+          Успешно
+        </Typography>
+
+        <Typography color="text.secondary">
+          Документ отправлен на почту, указанную при регистрации
+        </Typography>
+        <Button
+          variant="contained"
+          fullWidth
+          sx={{ mt: 4 }}
+          onClick={() => {
+            setIsSentToMail(false);
           }}
         >
           Закрыть
