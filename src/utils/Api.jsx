@@ -58,6 +58,16 @@ class Api {
     }).then(Api.handleResponse);
   }
 
+  sendToMail(params) {
+    return fetch(`${this._url}/send?` + `${new URLSearchParams(params)}`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      credentials: "include",
+    }).then(Api.handleResponse);
+  }
+
   // createUser(surname, name, middleName, phone, email, password) {
   //   console.log(surname, name, middleName, phone, email, password);
   //   return fetch(`${this._url}/register`, {

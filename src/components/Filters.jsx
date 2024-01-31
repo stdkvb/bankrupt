@@ -17,11 +17,13 @@ const Filters = ({ onFilterSubmit, data }) => {
   const [filtersClear, setFiltersClear] = useState(false);
 
   //date picker clear
-  const [dateValue, setDateValue] = React.useState(null);
+  const [dateFromValue, setDateFromValue] = useState(null);
+  const [dateToValue, setDateToValue] = useState(null);
 
   const handleResetFilters = () => {
     setFiltersClear(!filtersClear);
-    setDateValue(null);
+    setDateFromValue(null);
+    setDateToValue(null);
     onFilterSubmit();
   };
 
@@ -60,12 +62,28 @@ const Filters = ({ onFilterSubmit, data }) => {
         })}
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
           <DatePicker
-            value={dateValue}
+            value={dateFromValue}
             onChange={(newValue) => {
-              setDateValue(newValue);
+              setDateFromValue(newValue);
             }}
-            label="Дата"
-            name="date"
+            label="От даты"
+            name="dateFrom"
+            sx={{ width: "100%" }}
+            slotProps={{
+              textField: {
+                variant: "standard",
+                InputLabelProps: { shrink: true },
+                size: "small",
+              },
+            }}
+          />
+          <DatePicker
+            value={dateToValue}
+            onChange={(newValue) => {
+              setDateToValue(newValue);
+            }}
+            label="До даты"
+            name="dateTo"
             sx={{ width: "100%" }}
             slotProps={{
               textField: {
