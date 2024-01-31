@@ -57,7 +57,7 @@ const DocumentsList = ({ data, isFavorites }) => {
 
   //send to mail
   const [sendToMail, setSendToMail] = useState(false);
-  const [isSentToMail, setIsSentToMail] = useState(true);
+  const [isSentToMail, setIsSentToMail] = useState(false);
   const handleSendToMail = () => {
     api
       .sendToMail(currentDocument.id)
