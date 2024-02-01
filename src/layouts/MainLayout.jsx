@@ -1,5 +1,10 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
+import {
+  Outlet,
+  useLocation,
+  Link as RouterLink,
+  useNavigate,
+} from "react-router-dom";
 import { useState } from "react";
 import { styled } from "@mui/material/styles";
 import { Avatar, Stack, Link } from "@mui/material";
@@ -39,18 +44,20 @@ import AddIcon from "@mui/icons-material/Add";
 import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
+import api from "../utils/Api";
+
 import logo from "../assets/images/logo.svg";
 
-const folders = [
-  "Название папки 1",
-  "Название папки 2",
-  "Название папки 3",
-  "Название папки 4",
-  "Название папки 5",
-  "Название папки 6",
-  "Название папки 7",
-  "Название папки 8",
-];
+// const folders = [
+//   "Название папки 1",
+//   "Название папки 2",
+//   "Название папки 3",
+//   "Название папки 4",
+//   "Название папки 5",
+//   "Название папки 6",
+//   "Название папки 7",
+//   "Название папки 8",
+// ];
 
 //check window width
 let mobile;
@@ -108,7 +115,25 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-export default function MainLayout({ children, loading }) {
+export default function MainLayout({ loading, onLogout }) {
+  const navigate = useNavigate();
+  //get favorites folders
+  const [folders, setFolders] = useState([]);
+  const getFolders = () => {
+    api
+      .getFolders()
+      .then((data) => {
+        if (data.status === "success") {
+          setFolders(data.data);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(getFolders, []);
+
   //current page
   let location = useLocation();
   const pathName = location.pathname;
@@ -140,11 +165,6 @@ export default function MainLayout({ children, loading }) {
   };
   const handleProfileMenuClose = () => {
     setIsProfileMenuOpen(null);
-  };
-  //logout
-  const handleLogout = () => {
-    setIsProfileMenuOpen(null);
-    localStorage.clear();
   };
 
   //folder menu
@@ -183,7 +203,7 @@ export default function MainLayout({ children, loading }) {
             borderRight: { xs: "none", md: "1px solid rgba(0, 0, 0, 0.12);" },
           }}
         >
-          <Link href="#">
+          <Link href="https://банкротный-вестник.рф" target="_blank">
             <Box
               component="img"
               sx={{ height: { xs: "44px", md: "47px" } }}
@@ -222,15 +242,15 @@ export default function MainLayout({ children, loading }) {
             <CloseIcon />
           </IconButton>
           <IconButton
-            component={Link}
-            href={"/"}
+            component={RouterLink}
+            to={"/"}
             sx={{ display: { xs: "none", md: "flex", height: "40px" } }}
           >
             <SearchOutlinedIcon />
           </IconButton>
           <IconButton
-            component={Link}
-            href={"/qa"}
+            component={RouterLink}
+            to={"/qa"}
             sx={{ display: { xs: "none", md: "flex", height: "40px" } }}
           >
             <HelpOutlineOutlinedIcon />
@@ -297,13 +317,13 @@ export default function MainLayout({ children, loading }) {
             <Divider />
             <MenuItem
               onClick={handleProfileMenuClose}
-              component={Link}
-              href={"/profile"}
+              component={RouterLink}
+              to={"/profile"}
             >
               <PersonIcon /> Профиль
             </MenuItem>
             <Divider />
-            <MenuItem onClick={handleLogout} component={Link} href={"/login"}>
+            <MenuItem onClick={onLogout}>
               <ListItemIcon>
                 <LogoutOutlinedIcon />
               </ListItemIcon>
@@ -327,7 +347,7 @@ export default function MainLayout({ children, loading }) {
           <ListItemButton
             className={activateMenuItem("/profile")}
             sx={{ my: [3], px: [4], py: 0, display: { md: "none" } }}
-            component={Link}
+            component={RouterLink}
             to={"/profile"}
           >
             <ListItemIcon>
@@ -344,7 +364,7 @@ export default function MainLayout({ children, loading }) {
           <ListItemButton
             className={activateMenuItem("/")}
             sx={{ px: [4] }}
-            component={Link}
+            component={RouterLink}
             to={"/"}
           >
             <ListItemIcon>
@@ -364,7 +384,8 @@ export default function MainLayout({ children, loading }) {
               }}
             >
               <Link
-                href="/wiki"
+                component={RouterLink}
+                to="/wiki"
                 sx={{ display: "flex", textDecoration: "none !important" }}
               >
                 <ListItemIcon sx={{ height: "24px" }}>
@@ -397,7 +418,7 @@ export default function MainLayout({ children, loading }) {
           <ListItemButton
             className={activateMenuItem("/favorites")}
             sx={{ px: [4] }}
-            component={Link}
+            component={RouterLink}
             to={"/favorites"}
           >
             <ListItemIcon>
@@ -417,7 +438,8 @@ export default function MainLayout({ children, loading }) {
               }}
             >
               <Link
-                href="/favorites"
+              component={RouterLink}
+                to="/favorites"
                 sx={{ display: "flex", textDecoration: "none !important" }}
               >
                 <ListItemIcon sx={{ height: "24px" }}>
@@ -452,7 +474,7 @@ export default function MainLayout({ children, loading }) {
                       <ListItemIcon sx={{ minWidth: "40px" }}>
                         <FolderOutlinedIcon />
                       </ListItemIcon>
-                      <ListItemText primary={folder} />
+                      <ListItemText primary={folder.name} />
                       <IconButton
                         onClick={handleFolderMenuClick}
                         sx={{
@@ -519,7 +541,7 @@ export default function MainLayout({ children, loading }) {
           <ListItemButton
             className={activateMenuItem("/news")}
             sx={{ px: [4] }}
-            component={Link}
+            component={RouterLink}
             to={"/news"}
           >
             <ListItemIcon>
@@ -530,7 +552,7 @@ export default function MainLayout({ children, loading }) {
           <ListItemButton
             className={activateMenuItem("/rates")}
             sx={{ px: [4] }}
-            component={Link}
+            component={RouterLink}
             to={"/rates"}
           >
             <ListItemIcon>
@@ -541,7 +563,7 @@ export default function MainLayout({ children, loading }) {
           <ListItemButton
             className={activateMenuItem("/qa")}
             sx={{ px: [4] }}
-            component={Link}
+            component={RouterLink}
             to={"/qa"}
           >
             <ListItemIcon>
@@ -552,7 +574,7 @@ export default function MainLayout({ children, loading }) {
           <ListItemButton
             className={activateMenuItem("/contacts")}
             sx={{ px: [4] }}
-            component={Link}
+            component={RouterLink}
             to={"/contacts"}
           >
             <ListItemIcon>
@@ -562,9 +584,7 @@ export default function MainLayout({ children, loading }) {
           </ListItemButton>
           <ListItemButton
             sx={{ px: [4], mt: [5], display: { md: "none" } }}
-            onClick={handleLogout}
-            component={Link}
-            href={"/login"}
+            onClick={onLogout}
           >
             <ListItemIcon>
               <LogoutOutlinedIcon />
@@ -595,7 +615,7 @@ export default function MainLayout({ children, loading }) {
             }}
           />
         ) : (
-          <> {children}</>
+          <Outlet />
         )}
       </Box>
     </Box>

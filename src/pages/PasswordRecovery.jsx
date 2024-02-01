@@ -1,4 +1,5 @@
 import React from "react";
+import { Link as RouterLink } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -20,7 +21,9 @@ const PasswordRecovery = () => {
       onSubmit={handleSubmit}
       sx={{
         maxWidth: "400px",
+        width: "100%",
       }}
+      fullWidth
     >
       <Typography
         variant="h4"
@@ -40,7 +43,7 @@ const PasswordRecovery = () => {
         }}
       >
         Уже есть аккаунт?
-        <Link href="/login" color="primary.main">
+        <Link component={RouterLink} to="/" color="primary.main">
           Войти
         </Link>
       </Typography>

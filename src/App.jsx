@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import PrivateRoute from "./utils/PrivateRoute";
 import AuthLayout from "./layouts/AuthLayout";
@@ -21,6 +22,8 @@ import Wiki from "./pages/Wiki";
 
 import api from "./utils/Api";
 
+import MainLayout from "./layouts/MainLayout";
+
 export default function App() {
   const navigate = useNavigate();
   const pathName = useLocation().pathname;
@@ -29,6 +32,7 @@ export default function App() {
   const [catalog, setCatalog] = useState([]);
   const [errors, setErrors] = useState([]);
 
+  //load catalog
   const getAccess = () => {
     api
       .getCatalog()
@@ -47,6 +51,7 @@ export default function App() {
   };
   useEffect(getAccess, []);
 
+  //login
   const handleLoginSubmit = ({ login, password }) => {
     api
       .loginUser(login, password)
@@ -67,6 +72,15 @@ export default function App() {
       });
   };
 
+  //logout
+  const handleLogout = () => {
+    setLoggedIn(false);
+    localStorage.clear();
+    navigate("/");
+    console.log(loggedIn);
+  };
+
+  //filter catalog
   const handleFilterSubmit = (event) => {
     if (event) {
       //if filters form submit
@@ -100,117 +114,62 @@ export default function App() {
 
   return (
     <Routes>
-      <Route
-        path="/login"
-        element={
-          <AuthLayout>
-            <Login onLoginSubmit={handleLoginSubmit} errors={errors} />
-          </AuthLayout>
-        }
-      />
-      <Route
-        path="/sign-up"
-        element={
-          <AuthLayout>
-            <Registration />
-          </AuthLayout>
-        }
-      />
-      <Route
-        path="/password-recovery"
-        element={
-          <AuthLayout>
-            <PasswordRecovery />
-          </AuthLayout>
-        }
-      />
-      <Route
-        path="/new-password"
-        element={
-          <AuthLayout>
-            <NewPassword />
-          </AuthLayout>
-        }
-      />
-      <Route
-        exact
-        path="/"
-        element={
-          <PrivateRoute loggedIn={loggedIn} loading={loading}>
-            <Catalog
-              title={"Каталог"}
-              data={catalog}
-              onFilterSubmit={handleFilterSubmit}
-              loading={loading}
+      {loading ? (
+        <Route
+          path="/"
+          element={
+            <CircularProgress
+              sx={{
+                position: "absolute",
+                top: "0",
+                bottom: "0",
+                left: "0",
+                right: "0",
+                margin: "auto",
+              }}
             />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        exact
-        path="/favorites"
-        element={
-          <PrivateRoute loggedIn={loggedIn} loading={loading}>
-            <Favorites title={"Избранное"} />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/profile"
-        element={
-          <PrivateRoute loggedIn={true}>
-            <Profile />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/rates"
-        element={
-          <PrivateRoute loggedIn={true}>
-            <Rates />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/wiki"
-        element={
-          <PrivateRoute loggedIn={true}>
-            <Wiki />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/news"
-        element={
-          <PrivateRoute loggedIn={true}>
-            <News />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/news/:id"
-        element={
-          <PrivateRoute loggedIn={true}>
-            <Article />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/contacts"
-        element={
-          <PrivateRoute loggedIn={true}>
-            <Contacts />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/qa"
-        element={
-          <PrivateRoute loggedIn={true}>
-            <QA />
-          </PrivateRoute>
-        }
-      />
+          }
+        />
+      ) : loggedIn ? (
+        <Route
+          path="/"
+          element={<MainLayout loading={loading} onLogout={handleLogout} />}
+        >
+          <Route
+            index
+            path="/"
+            element={
+              <Catalog
+                title={"Каталог"}
+                data={catalog}
+                onFilterSubmit={handleFilterSubmit}
+                loading={loading}
+              />
+            }
+          />
+          <Route path="favorites" element={<Favorites />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="rates" element={<Rates />} />
+          <Route path="wiki" element={<Wiki />} />
+          <Route path="news" element={<News />} />
+          <Route path="news/:id" element={<Article />} />
+          <Route path="contacts" element={<Contacts />} />
+          <Route path="qa" element={<QA />} />
+        </Route>
+      ) : (
+        <Route path="/" element={<AuthLayout />}>
+          <Route
+            index
+            path="/"
+            element={
+              <Login onLoginSubmit={handleLoginSubmit} errors={errors} />
+            }
+          />
+          <Route path="sign-up" element={<Registration />} />
+          <Route path="password-recovery" element={<PasswordRecovery />} />
+          <Route path="new-password" element={<NewPassword />} />
+        </Route>
+      )}
       <Route
         path="*"
         element={

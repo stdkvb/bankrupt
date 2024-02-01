@@ -1,4 +1,5 @@
 import React from "react";
+import { Link as RouterLink } from "react-router-dom";
 import { useState } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -13,9 +14,9 @@ import api from "../utils/Api";
 const Registration = () => {
   //inputs values
   const [formValue, setFormValue] = useState({
-    surname: "",
+    lastName: "",
     name: "",
-    middleName: "",
+    secondName: "",
     phone: "",
     email: "",
     password: "",
@@ -37,22 +38,17 @@ const Registration = () => {
     event.preventDefault();
 
     if (formValue.password === formValue.confirmPassword) {
-      const { surname, name, middleName, phone, email, password } = formValue;
+      const { lastName, firstName, secondName, phone, email, password } =
+        formValue;
+      console.log({ lastName, firstName, secondName, phone, email, password });
       api
-        .createUser(surname, name, middleName, phone, email, password)
-        .then((response) => {
-          try {
-            if (response.status === 200) {
-              return response.json();
-            }
-          } catch (e) {
-            return e;
-          }
+        .createUser(lastName, firstName, secondName, phone, email, password)
+        .then((data) => {
+          console.log(data);
         })
-        .then((res) => {
-          return res;
-        })
-        .catch((err) => console.log(err));
+        .catch((error) => {
+          console.log(error);
+        });
     }
   };
 
@@ -62,7 +58,7 @@ const Registration = () => {
       onSubmit={handleSubmit}
       noValidate
       sx={{
-        maxWidth: "400px",
+        maxWidth: "420px",
         width: "100%",
         display: "flex",
         flexDirection: "column",
@@ -81,7 +77,7 @@ const Registration = () => {
         sx={{ mb: 3, textAlign: { xs: "center", md: "left" } }}
       >
         Уже есть аккаунт?{" "}
-        <Link href="/login" color="primary.main">
+        <Link component={RouterLink} to="/" color="primary.main">
           Войти
         </Link>
       </Typography>
@@ -91,8 +87,8 @@ const Registration = () => {
         size="medium"
         required
         fullWidth
-        id="surname"
-        name="surname"
+        id="lastName"
+        name="lastName"
         value={formValue.surname}
         onChange={handleChange}
         sx={{ mb: 2 }}
@@ -113,10 +109,9 @@ const Registration = () => {
         label="Отчество"
         variant="standard"
         size="medium"
-        required
         fullWidth
-        id="middleName"
-        name="middleName"
+        id="secondName"
+        name="secondName"
         value={formValue.middleName}
         onChange={handleChange}
         sx={{ mb: 2 }}
@@ -174,12 +169,16 @@ const Registration = () => {
         sx={{ mb: 2 }}
       />
       <FormControlLabel
-        control={<Checkbox value="policy" />}
+        control={<Checkbox value="policy" checked required />}
         label={
-          <Typography display="inline" color="text.secondary">
-            Я соглашаюсь с
-            <Link href="#" target="_blank" color="primary.main">
-              {" "}
+          <Typography display="inline" color="text.secondary" fontSize={"15px"}>
+            Я соглашаюсь с&nbsp;
+            <Link
+              component={RouterLink}
+              to="/policy"
+              target="_blank"
+              color="primary.main"
+            >
               политикой конфиденциальности
             </Link>
           </Typography>

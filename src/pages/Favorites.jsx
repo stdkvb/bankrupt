@@ -10,7 +10,7 @@ import DocumentsList from "../components/DocumentsList";
 
 import api from "../utils/Api";
 
-const Favorites = ({ title }) => {
+const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isFiltered, setIsFiltered] = useState(false);
@@ -77,7 +77,7 @@ const Favorites = ({ title }) => {
       }}
     >
       <Typography variant="h4" component="h1">
-        {title}
+        Избранное
       </Typography>
       {loading ? (
         <CircularProgress

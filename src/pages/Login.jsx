@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import { Button, Link } from "@mui/material";
@@ -59,7 +60,7 @@ const Login = ({ onLoginSubmit, errors }) => {
         }}
       >
         Новый пользователь?
-        <Link href="/sign-up" color="primary.main">
+        <Link component={RouterLink} to="/sign-up" color="primary.main">
           Создать аккаунт
         </Link>
       </Typography>
@@ -106,7 +107,7 @@ const Login = ({ onLoginSubmit, errors }) => {
           </Typography>
         );
       })}
-      <Link href="/password-recovery" color="primary.main">
+      <Link component={RouterLink} to="/password-recovery" color="primary.main">
         Забыли пароль?
       </Link>
       <Button type="submit" fullWidth variant="contained" sx={{ mt: 3 }}>

@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 
 import logo from "../assets/images/logo.svg";
 
-const AuthLayout = ({ children }) => {
+const AuthLayout = () => {
   return (
     <>
       <AppBar
@@ -20,7 +20,6 @@ const AuthLayout = ({ children }) => {
         <Toolbar>
           <Link
             href="https://банкротный-вестник.рф"
-            to="route"
             target="_blank"
             rel="noopener noreferrer"
             sx={{ ml: { md: "126px" } }}
@@ -50,7 +49,7 @@ const AuthLayout = ({ children }) => {
             justifyContent: "center",
           }}
         >
-          {children}
+          <Outlet />
         </Container>
       </Box>
       <Box

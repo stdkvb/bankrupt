@@ -20,6 +20,7 @@ const NewPassword = () => {
       onSubmit={handleSubmit}
       sx={{
         maxWidth: "400px",
+        width: "100%",
       }}
     >
       <Typography

@@ -10,6 +10,21 @@ class Api {
     return response.ok ? response.json() : Promise.reject(response);
   }
 
+  createUser(lastName, firstName, secondName, phone, email, password) {
+    const body = new FormData();
+    body.set("lastName", lastName);
+    body.set("firstName", firstName);
+    body.set("secondName", secondName);
+    body.set("phone", phone);
+    body.set("email", email);
+    body.set("password", password);
+    return fetch(`${this._url}/auth/reg-start`, {
+      method: "POST",
+      credentials: "include",
+      body,
+    }).then(Api.handleResponse);
+  }
+
   loginUser(login, password) {
     const body = new FormData();
     body.set("login", login);
@@ -60,6 +75,16 @@ class Api {
 
   sendToMail(params) {
     return fetch(`${this._url}/send?` + `${"id=" + params}`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      credentials: "include",
+    }).then(Api.handleResponse);
+  }
+
+  getFolders() {
+    return fetch(`${this._url}/favourites/menu`, {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("token")}`,
