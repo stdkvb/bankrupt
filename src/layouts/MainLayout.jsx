@@ -48,17 +48,6 @@ import api from "../utils/Api";
 
 import logo from "../assets/images/logo.svg";
 
-// const folders = [
-//   "Название папки 1",
-//   "Название папки 2",
-//   "Название папки 3",
-//   "Название папки 4",
-//   "Название папки 5",
-//   "Название папки 6",
-//   "Название папки 7",
-//   "Название папки 8",
-// ];
-
 //check window width
 let mobile;
 if (window.innerWidth < 900) {
@@ -115,24 +104,8 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-export default function MainLayout({ loading, onLogout }) {
+export default function MainLayout({ loading, onLogout, folders }) {
   const navigate = useNavigate();
-  //get favorites folders
-  const [folders, setFolders] = useState([]);
-  const getFolders = () => {
-    api
-      .getFolders()
-      .then((data) => {
-        if (data.status === "success") {
-          setFolders(data.data);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  useEffect(getFolders, []);
 
   //current page
   let location = useLocation();
@@ -415,7 +388,7 @@ export default function MainLayout({ loading, onLogout }) {
               </ListItemButton>
             </AccordionDetails>
           </Accordion>
-          <ListItemButton
+          {/* <ListItemButton
             className={activateMenuItem("/favorites")}
             sx={{ px: [4] }}
             component={RouterLink}
@@ -425,8 +398,8 @@ export default function MainLayout({ loading, onLogout }) {
               <DescriptionIcon />
             </ListItemIcon>
             <ListItemText primary="Избранное" />
-          </ListItemButton>
-          {/* <Accordion sx={{ boxShadow: "none", m: "0 !important" }}>
+          </ListItemButton> */}
+          <Accordion sx={{ boxShadow: "none", m: "0 !important" }}>
             <ListItemButton
               className={activateMenuItem("/favorites")}
               sx={{
@@ -438,7 +411,7 @@ export default function MainLayout({ loading, onLogout }) {
               }}
             >
               <Link
-              component={RouterLink}
+                component={RouterLink}
                 to="/favorites"
                 sx={{ display: "flex", textDecoration: "none !important" }}
               >
@@ -470,11 +443,31 @@ export default function MainLayout({ loading, onLogout }) {
               <Stack sx={{ maxHeight: "265px", overflowY: "scroll" }}>
                 {folders.map((folder, i) => {
                   return (
-                    <ListItemButton key={i} sx={{ pl: [4], pr: [1], gap: [1] }}>
-                      <ListItemIcon sx={{ minWidth: "40px" }}>
-                        <FolderOutlinedIcon />
-                      </ListItemIcon>
-                      <ListItemText primary={folder.name} />
+                    <ListItemButton key={i} sx={{ pl: [4], pr: [0], gap: [1] }}>
+                      <Link
+                        component={RouterLink}
+                        to={`/favorites/${folder.id}`}
+                        sx={{
+                          display: "flex",
+                          overflow: "hidden",
+                          alignItems: "center",
+                          textDecoration: "none !important",
+                        }}
+                      >
+                        <ListItemIcon sx={{ minWidth: "40px" }}>
+                          <FolderOutlinedIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary={folder.name}
+                          sx={{
+                            "& span": {
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                            },
+                          }}
+                          title={folder.name}
+                        />
+                      </Link>
                       <IconButton
                         onClick={handleFolderMenuClick}
                         sx={{
@@ -537,7 +530,7 @@ export default function MainLayout({ loading, onLogout }) {
                 </Menu>
               </Stack>
             </AccordionDetails>
-          </Accordion> */}
+          </Accordion>
           <ListItemButton
             className={activateMenuItem("/news")}
             sx={{ px: [4] }}

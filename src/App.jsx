@@ -3,7 +3,6 @@ import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import PrivateRoute from "./utils/PrivateRoute";
 import AuthLayout from "./layouts/AuthLayout";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
@@ -13,6 +12,7 @@ import Rates from "./pages/Rates";
 import Profile from "./pages/Profile";
 import Catalog from "./pages/Catalog";
 import Favorites from "./pages/Favorites";
+import Folder from "./pages/Folder";
 import QA from "./pages/QA";
 import Contacts from "./pages/Contacts";
 import PageNotFound from "./pages/PageNotFound";
@@ -26,11 +26,11 @@ import MainLayout from "./layouts/MainLayout";
 
 export default function App() {
   const navigate = useNavigate();
-  const pathName = useLocation().pathname;
   const [loading, setLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
   const [catalog, setCatalog] = useState([]);
   const [errors, setErrors] = useState([]);
+  const [folders, setFolders] = useState([]);
 
   //load catalog
   const getAccess = () => {
@@ -47,6 +47,16 @@ export default function App() {
       })
       .finally(() => {
         setLoading(false);
+      });
+    api
+      .getFolders()
+      .then((data) => {
+        if (data.status === "success") {
+          setFolders(data.data);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
   useEffect(getAccess, []);
@@ -133,7 +143,13 @@ export default function App() {
       ) : loggedIn ? (
         <Route
           path="/"
-          element={<MainLayout loading={loading} onLogout={handleLogout} />}
+          element={
+            <MainLayout
+              loading={loading}
+              onLogout={handleLogout}
+              folders={folders}
+            />
+          }
         >
           <Route
             index
@@ -148,6 +164,7 @@ export default function App() {
             }
           />
           <Route path="favorites" element={<Favorites />} />
+          <Route path="favorites/:id" element={<Folder folders={folders} />} />
           <Route path="profile" element={<Profile />} />
           <Route path="rates" element={<Rates />} />
           <Route path="wiki" element={<Wiki />} />
@@ -155,6 +172,7 @@ export default function App() {
           <Route path="news/:id" element={<Article />} />
           <Route path="contacts" element={<Contacts />} />
           <Route path="qa" element={<QA />} />
+          <Route path="*" element={<PageNotFound loggedIn={loggedIn} />} />
         </Route>
       ) : (
         <Route path="/" element={<AuthLayout />}>
@@ -168,16 +186,9 @@ export default function App() {
           <Route path="sign-up" element={<Registration />} />
           <Route path="password-recovery" element={<PasswordRecovery />} />
           <Route path="new-password" element={<NewPassword />} />
+          <Route path="*" element={<PageNotFound loggedIn={loggedIn} />} />
         </Route>
       )}
-      <Route
-        path="*"
-        element={
-          <AuthLayout>
-            <PageNotFound />
-          </AuthLayout>
-        }
-      />
     </Routes>
   );
 }

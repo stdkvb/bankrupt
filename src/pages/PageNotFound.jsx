@@ -1,15 +1,32 @@
 import React from "react";
+
+import { useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import { Button, Link, Stack } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import Container from "@mui/material/Container";
 
-const PageNotFound = () => {
+const PageNotFound = ({ loggedIn }) => {
   //for navigate to previous page
   const navigate = useNavigate();
 
   return (
     <Stack
-      sx={{ maxWidth: "640px", alignItems: "center", textAlign: "center" }}
+      sx={{
+        alignItems: "center",
+        textAlign: "center",
+        position: "absolute",
+        top: "0",
+        left: "0",
+        bottom: "0",
+        right: "0",
+        margin: "auto",
+        width: "100vw",
+        height: "100vh",
+        backgroundColor: "white",
+        zIndex: "10000",
+        justifyContent: "center",
+        px: 4,
+      }}
     >
       <Typography
         color="text.secondary"
@@ -29,13 +46,23 @@ const PageNotFound = () => {
         Страница, на которую вы пытаетесь попасть, не существует или была
         удалена.
       </Typography>
-      <Button
-        onClick={() => navigate(-1)}
-        variant="contained"
-        sx={{ mt: 4, width: { xs: "100%", md: "266px" } }}
-      >
-        Вернуться
-      </Button>
+      {loggedIn ? (
+        <Button
+          onClick={() => navigate(-1)}
+          variant="contained"
+          sx={{ mt: 4, width: { xs: "100%", sm: "266px" } }}
+        >
+          Вернуться
+        </Button>
+      ) : (
+        <Button
+          onClick={() => navigate("/")}
+          variant="contained"
+          sx={{ mt: 4, width: { xs: "100%", sm: "266px" } }}
+        >
+          На главную
+        </Button>
+      )}
     </Stack>
   );
 };
