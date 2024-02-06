@@ -73,6 +73,20 @@ class Api {
     }).then(Api.handleResponse);
   }
 
+  removeFromFavorites(id) {
+    const body = new FormData();
+    body.set("document_id", id);
+    body.set("folder_id", id);
+    return fetch(`${this._url}/favourites/remove`, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      credentials: "include",
+      body,
+    }).then(Api.handleResponse);
+  }
+
   sendToMail(params) {
     return fetch(`${this._url}/send?` + `${"id=" + params}`, {
       method: "GET",
@@ -93,30 +107,71 @@ class Api {
     }).then(Api.handleResponse);
   }
 
-  // createUser(surname, name, middleName, phone, email, password) {
-  //   console.log(surname, name, middleName, phone, email, password);
-  //   return fetch(`${this._url}/register`, {
-  //     method: "POST",
-  //     headers: this._headers,
-  //     credentials: "include",
-  //     body: JSON.stringify({
-  //       surname,
-  //       name,
-  //       middleName,
-  //       phone,
-  //       email,
-  //       password,
-  //     }),
-  //   }).then(Api.handleResponse);
-  // }
+  createFolder(folderName) {
+    const body = new FormData();
+    body.set("folderName", folderName);
+    return fetch(`${this._url}/favourites/menu`, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      credentials: "include",
+      body,
+    }).then(Api.handleResponse);
+  }
 
-  // logoutUser() {
-  //   return fetch(`${this._url}/signout`, {
-  //     method: "POST",
-  //     headers: this._headers,
-  //     credentials: "include",
-  //   }).then(Api.handleResponse);
-  // }
+  renameFolder(newFolderName, folderId) {
+    const body = new FormData();
+    body.set("folderId", folderId);
+    body.set("newFolderName", newFolderName);
+    return fetch(`${this._url}/favourites/menu`, {
+      method: "PATCH",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      credentials: "include",
+      body,
+    }).then(Api.handleResponse);
+  }
+
+  deleteFolder(folderId) {
+    const body = new FormData();
+    body.set("folderId", folderId);
+    return fetch(`${this._url}/favourites/menu`, {
+      method: "DELETE",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      credentials: "include",
+      body,
+    }).then(Api.handleResponse);
+  }
+
+  folderUp(folderId) {
+    const body = new FormData();
+    body.set("upFolderId", folderId);
+    return fetch(`${this._url}/favourites/menu`, {
+      method: "PATCH",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      credentials: "include",
+      body,
+    }).then(Api.handleResponse);
+  }
+
+  folderDown(folderId) {
+    const body = new FormData();
+    body.set("downFolderId", folderId);
+    return fetch(`${this._url}/favourites/menu`, {
+      method: "PATCH",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      credentials: "include",
+      body,
+    }).then(Api.handleResponse);
+  }
 
   // getUserInfo() {
   //   return fetch(`${this._url}/users/me`, {

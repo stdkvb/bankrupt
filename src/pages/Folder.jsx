@@ -12,13 +12,16 @@ import DocumentsList from "../components/DocumentsList";
 import api from "../utils/Api";
 
 const Folder = ({ folders }) => {
+  let { id } = useParams();
+  const folder = folders.find((folder) => folder.id == id);
+
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isFiltered, setIsFiltered] = useState(false);
 
   const getFavorites = () => {
     api
-      .getFavorites()
+      .getFavorites([["folderId", `${id}`]])
       .then((data) => {
         if (data.status === "success") {
           setFavorites(data.data);
@@ -29,17 +32,16 @@ const Folder = ({ folders }) => {
         console.log(error);
       });
   };
-  useEffect(getFavorites, [loading]);
 
-  let { id } = useParams();
-  const folder = folders.find((folder) => folder.id == id);
+  useEffect(getFavorites, [loading]);
 
   const handleFilterSubmit = (event) => {
     if (event) {
       //if filters form submit
       event.preventDefault();
       const filters = Array.from(new FormData(event.currentTarget));
-      console.log(filters);
+      filters.push(["folderId", `${id}`]);
+      // console.log(filters);
       api
         .getFavorites(filters)
         .then((data) => {
@@ -81,7 +83,7 @@ const Folder = ({ folders }) => {
       }}
     >
       <Typography variant="h4" component="h1">
-        {folder.name}
+        {folder && folder.name}
       </Typography>
       {loading ? (
         <CircularProgress

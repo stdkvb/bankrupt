@@ -16,7 +16,7 @@ import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import Popup from "./Popup";
 import api from "../utils/Api";
 
-const DocumentsList = ({ data, isFavorites }) => {
+const DocumentsList = ({ data, isFavorites, folders }) => {
   const [currentDocument, setCurrentDocument] = useState(null);
 
   //row menu
@@ -25,9 +25,6 @@ const DocumentsList = ({ data, isFavorites }) => {
   const handleDocumentMenuClick = (event, document) => {
     setIsDocumentMenuOpen(event.currentTarget);
     setCurrentDocument(document);
-  };
-  const handleDocumentMenuClose = () => {
-    setIsDocumentMenuOpen(null);
   };
 
   // document detail modal controller
@@ -211,8 +208,12 @@ const DocumentsList = ({ data, isFavorites }) => {
         anchorEl={isDocumentMenuOpen}
         id="folder-menu"
         open={openDocumentMenu}
-        onClose={handleDocumentMenuClose}
-        onClick={handleDocumentMenuClose}
+        onClose={() => {
+          setIsDocumentMenuOpen(null);
+        }}
+        onClick={() => {
+          setIsDocumentMenuOpen(null);
+        }}
         PaperProps={{
           elevation: 0,
           sx: {
@@ -241,7 +242,6 @@ const DocumentsList = ({ data, isFavorites }) => {
         {!open && (
           <MenuItem
             onClick={() => {
-              handleDocumentMenuClose();
               handleOpen(currentDocument);
             }}
           >
@@ -251,16 +251,13 @@ const DocumentsList = ({ data, isFavorites }) => {
         <MenuItem
           onClick={() => {
             setSendToMail(true);
-            handleDocumentMenuClose();
           }}
         >
           Отправить на почту
         </MenuItem>
         {currentDocument && (
           <MenuItem
-            onClick={() => {
-              handleDocumentMenuClose();
-            }}
+            onClick={() => {}}
             component={Link}
             href={currentDocument.file.url}
             download={currentDocument.file.title}
@@ -273,7 +270,6 @@ const DocumentsList = ({ data, isFavorites }) => {
         {!isFavorites && (
           <MenuItem
             onClick={() => {
-              handleDocumentMenuClose();
               handleAddToFavorites(currentDocument);
             }}
           >
@@ -390,6 +386,48 @@ const DocumentsList = ({ data, isFavorites }) => {
           </Box>
         </Modal>
       )}
+      <Popup isPopupOpen={addToFavorites}>
+        <IconButton
+          onClick={() => {
+            setSendToMail(false);
+          }}
+          sx={{
+            position: "absolute",
+            right: { xs: 1, md: 2 },
+            top: { xs: 1, md: 2 },
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <Typography variant="h4" mb={3}>
+          Отправить на почту
+        </Typography>
+        <Typography color="text.secondary">
+          Отправить документ на почту, указанную при регистрации?
+        </Typography>
+        <Stack
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            justifyContent: "space-between",
+            gap: 2,
+            mt: 4,
+          }}
+        >
+          <Button
+            variant="outlined"
+            fullWidth
+            onClick={() => {
+              setSendToMail(false);
+            }}
+          >
+            Отменить
+          </Button>
+          <Button variant="contained" fullWidth onClick={handleSendToMail}>
+            Отправить
+          </Button>
+        </Stack>
+      </Popup>
       <Popup isPopupOpen={isInFavorites}>
         <IconButton
           onClick={() => {

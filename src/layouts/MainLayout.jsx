@@ -1,13 +1,8 @@
-import React, { useEffect } from "react";
-import {
-  Outlet,
-  useLocation,
-  Link as RouterLink,
-  useNavigate,
-} from "react-router-dom";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Outlet, useLocation, Link as RouterLink } from "react-router-dom";
 import { styled } from "@mui/material/styles";
-import { Avatar, Stack, Link } from "@mui/material";
+import { Avatar, Stack, Link, Typography, Button } from "@mui/material";
+import TextField from "@mui/material/TextField";
 import MuiDrawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
@@ -45,6 +40,7 @@ import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import api from "../utils/Api";
+import Popup from "../components/Popup";
 
 import logo from "../assets/images/logo.svg";
 
@@ -104,9 +100,12 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-export default function MainLayout({ loading, onLogout, folders }) {
-  const navigate = useNavigate();
-
+export default function MainLayout({
+  loading,
+  onLogout,
+  folders,
+  updateFolders,
+}) {
   //current page
   let location = useLocation();
   const pathName = location.pathname;
@@ -141,476 +140,684 @@ export default function MainLayout({ loading, onLogout, folders }) {
   };
 
   //folder menu
+  const [currentFolder, setCurrentFolder] = useState(null);
   const [isFolderMenuOpen, setIsFolderMenuOpen] = useState(null);
   const openFolderMenu = Boolean(isFolderMenuOpen);
-  const handleFolderMenuClick = (event) => {
-    setIsFolderMenuOpen(event.currentTarget);
+
+  //create new folder
+  const [createFolder, setCreateFolder] = useState(false);
+  const [folderName, setFolderName] = useState("");
+
+  const handleCreateFolder = (event) => {
+    event.preventDefault();
+    api
+      .createFolder(folderName)
+      .then((data) => {
+        if (data.status === "success") {
+          updateFolders();
+        } else {
+          alert("Ошибка сервера, попробуйте позже");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setCreateFolder(false);
+    setFolderName("");
   };
-  const handleFolderMenuClose = () => {
-    setIsFolderMenuOpen(null);
+
+  //rename folder
+  const [renameFolder, setRenameFolder] = useState(false);
+
+  const handleRenameFolder = (event) => {
+    event.preventDefault();
+    api
+      .renameFolder(folderName, currentFolder)
+      .then((data) => {
+        if (data.status === "success") {
+          updateFolders();
+        } else {
+          alert("Ошибка сервера, попробуйте позже");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setRenameFolder(false);
+  };
+
+  //delete folder
+  const [deleteFolder, setDeleteFolder] = useState(false);
+
+  const handleDeleteFolder = () => {
+    api
+      .deleteFolder(currentFolder)
+      .then((data) => {
+        if (data.status === "success") {
+          updateFolders();
+        } else {
+          alert("Ошибка сервера, попробуйте позже");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setDeleteFolder(false);
+  };
+
+  //moving folders
+  const handleFolderUp = () => {
+    api
+      .folderUp(currentFolder)
+      .then((data) => {
+        if (data.status === "success") {
+          updateFolders();
+        } else {
+          alert("Ошибка сервера, попробуйте позже");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const handleFolderDown = () => {
+    api
+      .folderDown(currentFolder)
+      .then((data) => {
+        if (data.status === "success") {
+          updateFolders();
+        } else {
+          alert("Ошибка сервера, попробуйте позже");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <AppBar
-        position="fixed"
-        open={open}
-        sx={{
-          backgroundColor: "white",
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          boxShadow: {
-            xs: "0px 4px 4px 0px rgba(156, 156, 156, 0.25)",
-            md: "none",
-          },
-        }}
-      >
-        <Toolbar
+    <>
+      <Box sx={{ display: "flex" }}>
+        <AppBar
+          position="fixed"
+          open={open}
           sx={{
+            backgroundColor: "white",
             display: "flex",
-            alignItems: "center",
-            px: { xs: [2], md: [4] },
-            height: "76px",
-            width: "287px",
-            borderRight: { xs: "none", md: "1px solid rgba(0, 0, 0, 0.12);" },
+            flexDirection: "row",
+            justifyContent: "space-between",
+            boxShadow: {
+              xs: "0px 4px 4px 0px rgba(156, 156, 156, 0.25)",
+              md: "none",
+            },
           }}
         >
-          <Link href="https://банкротный-вестник.рф" target="_blank">
-            <Box
-              component="img"
-              sx={{ height: { xs: "44px", md: "47px" } }}
-              alt="Logo"
-              src={logo}
-            />
-          </Link>
-        </Toolbar>
-        <Toolbar
-          sx={{
-            pr: { xs: [2], md: [4] },
-            height: "76px",
-            justifyContent: "flex-end",
-          }}
+          <Toolbar
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              px: { xs: [2], md: [4] },
+              height: "76px",
+              width: "287px",
+              borderRight: { xs: "none", md: "1px solid rgba(0, 0, 0, 0.12);" },
+            }}
+          >
+            <Link href="https://банкротный-вестник.рф" target="_blank">
+              <Box
+                component="img"
+                sx={{ height: { xs: "44px", md: "47px" } }}
+                alt="Logo"
+                src={logo}
+              />
+            </Link>
+          </Toolbar>
+          <Toolbar
+            sx={{
+              pr: { xs: [2], md: [4] },
+              height: "76px",
+              justifyContent: "flex-end",
+            }}
+          >
+            <IconButton
+              edge="start"
+              aria-label="open drawer"
+              onClick={toggleDrawer}
+              sx={{
+                display: { md: "none" },
+                ...(open && { display: "none" }),
+              }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <IconButton
+              edge="start"
+              aria-label="close drawer"
+              onClick={toggleDrawer}
+              sx={{
+                display: { md: "none" },
+                ...(!open && { display: "none" }),
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+            <IconButton
+              component={RouterLink}
+              to={"/"}
+              sx={{ display: { xs: "none", md: "flex", height: "40px" } }}
+            >
+              <SearchOutlinedIcon />
+            </IconButton>
+            <IconButton
+              component={RouterLink}
+              to={"/qa"}
+              sx={{ display: { xs: "none", md: "flex", height: "40px" } }}
+            >
+              <HelpOutlineOutlinedIcon />
+            </IconButton>
+            <IconButton
+              onClick={handleProfileMenuClick}
+              size="small"
+              sx={{ ml: [2], display: { xs: "none", md: "block" } }}
+              aria-controls={open ? "account-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+            >
+              <Avatar {...stringAvatar("Kent Dodds")} />
+            </IconButton>
+            <Menu
+              anchorEl={isProfileMenuOpen}
+              id="account-menu"
+              open={openProfileMenu}
+              onClose={handleProfileMenuClose}
+              onClick={handleProfileMenuClose}
+              PaperProps={{
+                elevation: 0,
+                sx: {
+                  minWidth: "220px",
+                  overflow: "visible",
+                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                  mt: 1.5,
+                  "& .MuiAvatar-root": {
+                    width: 32,
+                    height: 32,
+                    ml: -0.5,
+                    mr: 1,
+                  },
+                  "&:before": {
+                    content: '""',
+                    display: "block",
+                    position: "absolute",
+                    top: 0,
+                    right: 20,
+                    width: 10,
+                    height: 10,
+                    bgcolor: "background.paper",
+                    transform: "translateY(-50%) rotate(45deg)",
+                    zIndex: 0,
+                  },
+                },
+              }}
+              transformOrigin={{ horizontal: "right", vertical: "top" }}
+              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+            >
+              <MenuItem sx={{ pointerEvents: "none", cursor: "default" }}>
+                <Stack>
+                  <ListItemText primary="Name" sx={{ m: 0 }} />
+                  <ListItemText
+                    primary="Company"
+                    sx={{ m: 0, color: "text.secondary" }}
+                  />
+                  <ListItemText
+                    primary="Email"
+                    sx={{ m: 0, color: "text.secondary" }}
+                  />
+                </Stack>
+              </MenuItem>
+              <Divider />
+              <MenuItem
+                onClick={handleProfileMenuClose}
+                component={RouterLink}
+                to={"/profile"}
+              >
+                <PersonIcon /> Профиль
+              </MenuItem>
+              <Divider />
+              <MenuItem onClick={onLogout}>
+                <ListItemIcon>
+                  <LogoutOutlinedIcon />
+                </ListItemIcon>
+                Выйти
+              </MenuItem>
+            </Menu>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          variant="permanent"
+          open={open}
+          sx={{ height: { xs: "fit-content", md: "unset" } }}
         >
-          <IconButton
-            edge="start"
-            aria-label="open drawer"
-            onClick={toggleDrawer}
+          <List
+            component="nav"
             sx={{
-              display: { md: "none" },
-              ...(open && { display: "none" }),
+              pt: "76px",
+              height: "100%",
             }}
           >
-            <MenuIcon />
-          </IconButton>
-          <IconButton
-            edge="start"
-            aria-label="close drawer"
-            onClick={toggleDrawer}
-            sx={{
-              display: { md: "none" },
-              ...(!open && { display: "none" }),
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-          <IconButton
-            component={RouterLink}
-            to={"/"}
-            sx={{ display: { xs: "none", md: "flex", height: "40px" } }}
-          >
-            <SearchOutlinedIcon />
-          </IconButton>
-          <IconButton
-            component={RouterLink}
-            to={"/qa"}
-            sx={{ display: { xs: "none", md: "flex", height: "40px" } }}
-          >
-            <HelpOutlineOutlinedIcon />
-          </IconButton>
-          <IconButton
-            onClick={handleProfileMenuClick}
-            size="small"
-            sx={{ ml: [2], display: { xs: "none", md: "block" } }}
-            aria-controls={open ? "account-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-          >
-            <Avatar {...stringAvatar("Kent Dodds")} />
-          </IconButton>
-          <Menu
-            anchorEl={isProfileMenuOpen}
-            id="account-menu"
-            open={openProfileMenu}
-            onClose={handleProfileMenuClose}
-            onClick={handleProfileMenuClose}
-            PaperProps={{
-              elevation: 0,
-              sx: {
-                minWidth: "220px",
-                overflow: "visible",
-                filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                mt: 1.5,
-                "& .MuiAvatar-root": {
-                  width: 32,
-                  height: 32,
-                  ml: -0.5,
-                  mr: 1,
-                },
-                "&:before": {
-                  content: '""',
-                  display: "block",
-                  position: "absolute",
-                  top: 0,
-                  right: 20,
-                  width: 10,
-                  height: 10,
-                  bgcolor: "background.paper",
-                  transform: "translateY(-50%) rotate(45deg)",
-                  zIndex: 0,
-                },
-              },
-            }}
-            transformOrigin={{ horizontal: "right", vertical: "top" }}
-            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-          >
-            <MenuItem sx={{ pointerEvents: "none", cursor: "default" }}>
+            <ListItemButton
+              className={activateMenuItem("/profile")}
+              sx={{ my: [3], px: [4], py: 0, display: { md: "none" } }}
+              component={RouterLink}
+              to={"/profile"}
+            >
+              <ListItemIcon>
+                <Avatar {...stringAvatar("Kent Dodds")} />
+              </ListItemIcon>
               <Stack>
                 <ListItemText primary="Name" sx={{ m: 0 }} />
-                <ListItemText
-                  primary="Company"
-                  sx={{ m: 0, color: "text.secondary" }}
-                />
                 <ListItemText
                   primary="Email"
                   sx={{ m: 0, color: "text.secondary" }}
                 />
               </Stack>
-            </MenuItem>
-            <Divider />
-            <MenuItem
-              onClick={handleProfileMenuClose}
+            </ListItemButton>
+            <ListItemButton
+              className={activateMenuItem("/")}
+              sx={{ px: [4] }}
               component={RouterLink}
-              to={"/profile"}
+              to={"/"}
             >
-              <PersonIcon /> Профиль
-            </MenuItem>
-            <Divider />
-            <MenuItem onClick={onLogout}>
+              <ListItemIcon>
+                <LayersIcon />
+              </ListItemIcon>
+              <ListItemText primary="Каталог" />
+            </ListItemButton>
+            <Accordion sx={{ boxShadow: "none", m: "0 !important" }}>
+              <ListItemButton
+                className={activateMenuItem("/wiki")}
+                sx={{
+                  px: [4],
+                  pr: [1],
+                  maxHeight: "48px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Link
+                  component={RouterLink}
+                  to="/wiki"
+                  sx={{ display: "flex", textDecoration: "none !important" }}
+                >
+                  <ListItemIcon sx={{ height: "24px" }}>
+                    <FolderIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="База знаний" sx={{ m: 0 }} />
+                </Link>
+                <AccordionSummary
+                  expandIcon={
+                    <IconButton>
+                      <ExpandMoreOutlinedIcon />
+                    </IconButton>
+                  }
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                  sx={{
+                    p: 0,
+                  }}
+                ></AccordionSummary>
+              </ListItemButton>
+              <AccordionDetails sx={{ p: 0 }}>
+                <ListItemButton sx={{ px: [4] }}>
+                  <ListItemIcon>
+                    <DescriptionOutlinedIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Купленные документы" />
+                </ListItemButton>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion sx={{ boxShadow: "none", m: "0 !important" }}>
+              <ListItemButton
+                className={activateMenuItem("/favorites")}
+                sx={{
+                  px: [4],
+                  pr: [1],
+                  maxHeight: "48px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Link
+                  component={RouterLink}
+                  to="/favorites"
+                  sx={{ display: "flex", textDecoration: "none !important" }}
+                >
+                  <ListItemIcon sx={{ height: "24px" }}>
+                    <BookmarkIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Избранное" sx={{ m: 0 }} />
+                </Link>
+                <AccordionSummary
+                  expandIcon={
+                    <IconButton>
+                      <ExpandMoreOutlinedIcon />
+                    </IconButton>
+                  }
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                  sx={{
+                    p: 0,
+                  }}
+                ></AccordionSummary>
+              </ListItemButton>
+              <AccordionDetails sx={{ p: 0 }}>
+                <ListItemButton
+                  sx={{ px: [4] }}
+                  onClick={() => {
+                    setCreateFolder(true);
+                  }}
+                >
+                  <ListItemIcon>
+                    <AddIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Создать папку" />
+                </ListItemButton>
+                <Stack
+                  sx={{
+                    maxHeight: "265px",
+                    overflowY: folders.length > 4 ? "scroll" : "unset",
+                  }}
+                >
+                  {folders.map((folder, i) => {
+                    return (
+                      <ListItemButton
+                        key={i}
+                        sx={{ pl: [4], pr: [0], gap: [1] }}
+                      >
+                        <Link
+                          component={RouterLink}
+                          to={`/favorites/${folder.id}`}
+                          sx={{
+                            display: "flex",
+                            overflow: "hidden",
+                            alignItems: "center",
+                            textDecoration: "none !important",
+                          }}
+                        >
+                          <ListItemIcon sx={{ minWidth: "40px" }}>
+                            <FolderOutlinedIcon />
+                          </ListItemIcon>
+                          <ListItemText
+                            primary={folder.name}
+                            sx={{
+                              "& span": {
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                              },
+                            }}
+                            title={folder.name}
+                          />
+                        </Link>
+                        <IconButton
+                          onClick={(event) => {
+                            setCurrentFolder(folder.id);
+                            setIsFolderMenuOpen(event.currentTarget);
+                          }}
+                          sx={{
+                            display: {
+                              xs: "none",
+                              md: "block",
+                              height: "40px",
+                            },
+                          }}
+                        >
+                          <MoreVertIcon />
+                        </IconButton>
+                      </ListItemButton>
+                    );
+                  })}
+                  <Menu
+                    anchorEl={isFolderMenuOpen}
+                    id="folder-menu"
+                    open={openFolderMenu}
+                    onClose={() => {
+                      setIsFolderMenuOpen(null);
+                    }}
+                    onClick={() => {
+                      setIsFolderMenuOpen(null);
+                    }}
+                    PaperProps={{
+                      elevation: 0,
+                      sx: {
+                        minWidth: "220px",
+                        overflow: "visible",
+                        boxShadow:
+                          "0px 5px 5px -3px rgba(0, 0, 0, 0.20), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12)",
+
+                        "& .MuiAvatar-root": {
+                          width: 32,
+                          height: 32,
+                          ml: -0.5,
+                          mr: 1,
+                        },
+                      },
+                    }}
+                    transformOrigin={{
+                      horizontal: "left",
+                      vertical: "top",
+                    }}
+                    anchorOrigin={{
+                      horizontal: "left",
+                      vertical: "bottom",
+                    }}
+                  >
+                    <MenuItem onClick={handleFolderUp}>
+                      Переместить вверх
+                    </MenuItem>
+                    <MenuItem onClick={handleFolderDown}>
+                      Переместить вниз
+                    </MenuItem>
+                    <Divider />
+                    <MenuItem
+                      onClick={() => {
+                        setRenameFolder(true);
+                        setIsFolderMenuOpen(null);
+                      }}
+                    >
+                      Переименовать папку
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        setDeleteFolder(true);
+                      }}
+                    >
+                      Удалить папку
+                    </MenuItem>
+                  </Menu>
+                </Stack>
+              </AccordionDetails>
+            </Accordion>
+            <ListItemButton
+              className={activateMenuItem("/news")}
+              sx={{ px: [4] }}
+              component={RouterLink}
+              to={"/news"}
+            >
+              <ListItemIcon>
+                <DescriptionIcon />
+              </ListItemIcon>
+              <ListItemText primary="Новости" />
+            </ListItemButton>
+            <ListItemButton
+              className={activateMenuItem("/rates")}
+              sx={{ px: [4] }}
+              component={RouterLink}
+              to={"/rates"}
+            >
+              <ListItemIcon>
+                <DashboardIcon />
+              </ListItemIcon>
+              <ListItemText primary="Тарифы" />
+            </ListItemButton>
+            <ListItemButton
+              className={activateMenuItem("/qa")}
+              sx={{ px: [4] }}
+              component={RouterLink}
+              to={"/qa"}
+            >
+              <ListItemIcon>
+                <HelpIcon />
+              </ListItemIcon>
+              <ListItemText primary="Вопросы и ответы" />
+            </ListItemButton>
+            <ListItemButton
+              className={activateMenuItem("/contacts")}
+              sx={{ px: [4] }}
+              component={RouterLink}
+              to={"/contacts"}
+            >
+              <ListItemIcon>
+                <MapIcon />
+              </ListItemIcon>
+              <ListItemText primary="Контакты" />
+            </ListItemButton>
+            <ListItemButton
+              sx={{ px: [4], mt: [5], display: { md: "none" } }}
+              onClick={onLogout}
+            >
               <ListItemIcon>
                 <LogoutOutlinedIcon />
               </ListItemIcon>
-              Выйти
-            </MenuItem>
-          </Menu>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="permanent"
-        open={open}
-        sx={{ height: { xs: "fit-content", md: "unset" } }}
-      >
-        <List
-          component="nav"
+              <ListItemText primary="Выйти" />
+            </ListItemButton>
+          </List>
+        </Drawer>
+        <Box
+          component="main"
           sx={{
+            backgroundColor: "rgba(240, 242, 245, 1)",
             pt: "76px",
-            height: "100%",
+            flexGrow: 1,
+            height: "100vh",
+            overflow: "auto",
           }}
         >
-          <ListItemButton
-            className={activateMenuItem("/profile")}
-            sx={{ my: [3], px: [4], py: 0, display: { md: "none" } }}
-            component={RouterLink}
-            to={"/profile"}
-          >
-            <ListItemIcon>
-              <Avatar {...stringAvatar("Kent Dodds")} />
-            </ListItemIcon>
-            <Stack>
-              <ListItemText primary="Name" sx={{ m: 0 }} />
-              <ListItemText
-                primary="Email"
-                sx={{ m: 0, color: "text.secondary" }}
-              />
-            </Stack>
-          </ListItemButton>
-          <ListItemButton
-            className={activateMenuItem("/")}
-            sx={{ px: [4] }}
-            component={RouterLink}
-            to={"/"}
-          >
-            <ListItemIcon>
-              <LayersIcon />
-            </ListItemIcon>
-            <ListItemText primary="Каталог" />
-          </ListItemButton>
-          <Accordion sx={{ boxShadow: "none", m: "0 !important" }}>
-            <ListItemButton
-              className={activateMenuItem("/wiki")}
+          {loading ? (
+            <CircularProgress
               sx={{
-                px: [4],
-                pr: [1],
-                maxHeight: "48px",
-                display: "flex",
-                justifyContent: "space-between",
+                position: "absolute",
+                top: "0",
+                bottom: "0",
+                left: "0",
+                right: "0",
+                margin: "auto",
               }}
-            >
-              <Link
-                component={RouterLink}
-                to="/wiki"
-                sx={{ display: "flex", textDecoration: "none !important" }}
-              >
-                <ListItemIcon sx={{ height: "24px" }}>
-                  <FolderIcon />
-                </ListItemIcon>
-                <ListItemText primary="База знаний" sx={{ m: 0 }} />
-              </Link>
-              <AccordionSummary
-                expandIcon={
-                  <IconButton>
-                    <ExpandMoreOutlinedIcon />
-                  </IconButton>
-                }
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-                sx={{
-                  p: 0,
-                }}
-              ></AccordionSummary>
-            </ListItemButton>
-            <AccordionDetails sx={{ p: 0 }}>
-              <ListItemButton sx={{ px: [4] }}>
-                <ListItemIcon>
-                  <DescriptionOutlinedIcon />
-                </ListItemIcon>
-                <ListItemText primary="Купленные документы" />
-              </ListItemButton>
-            </AccordionDetails>
-          </Accordion>
-          {/* <ListItemButton
-            className={activateMenuItem("/favorites")}
-            sx={{ px: [4] }}
-            component={RouterLink}
-            to={"/favorites"}
-          >
-            <ListItemIcon>
-              <DescriptionIcon />
-            </ListItemIcon>
-            <ListItemText primary="Избранное" />
-          </ListItemButton> */}
-          <Accordion sx={{ boxShadow: "none", m: "0 !important" }}>
-            <ListItemButton
-              className={activateMenuItem("/favorites")}
-              sx={{
-                px: [4],
-                pr: [1],
-                maxHeight: "48px",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Link
-                component={RouterLink}
-                to="/favorites"
-                sx={{ display: "flex", textDecoration: "none !important" }}
-              >
-                <ListItemIcon sx={{ height: "24px" }}>
-                  <BookmarkIcon />
-                </ListItemIcon>
-                <ListItemText primary="Избранное" sx={{ m: 0 }} />
-              </Link>
-              <AccordionSummary
-                expandIcon={
-                  <IconButton>
-                    <ExpandMoreOutlinedIcon />
-                  </IconButton>
-                }
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-                sx={{
-                  p: 0,
-                }}
-              ></AccordionSummary>
-            </ListItemButton>
-            <AccordionDetails sx={{ p: 0 }}>
-              <ListItemButton sx={{ px: [4] }}>
-                <ListItemIcon>
-                  <AddIcon />
-                </ListItemIcon>
-                <ListItemText primary="Создать папку" />
-              </ListItemButton>
-              <Stack sx={{ maxHeight: "265px", overflowY: "scroll" }}>
-                {folders.map((folder, i) => {
-                  return (
-                    <ListItemButton key={i} sx={{ pl: [4], pr: [0], gap: [1] }}>
-                      <Link
-                        component={RouterLink}
-                        to={`/favorites/${folder.id}`}
-                        sx={{
-                          display: "flex",
-                          overflow: "hidden",
-                          alignItems: "center",
-                          textDecoration: "none !important",
-                        }}
-                      >
-                        <ListItemIcon sx={{ minWidth: "40px" }}>
-                          <FolderOutlinedIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                          primary={folder.name}
-                          sx={{
-                            "& span": {
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                            },
-                          }}
-                          title={folder.name}
-                        />
-                      </Link>
-                      <IconButton
-                        onClick={handleFolderMenuClick}
-                        sx={{
-                          display: {
-                            xs: "none",
-                            md: "block",
-                            height: "40px",
-                          },
-                        }}
-                      >
-                        <MoreVertIcon />
-                      </IconButton>
-                    </ListItemButton>
-                  );
-                })}
-                <Menu
-                  anchorEl={isFolderMenuOpen}
-                  id="folder-menu"
-                  open={openFolderMenu}
-                  onClose={handleFolderMenuClose}
-                  onClick={handleFolderMenuClose}
-                  PaperProps={{
-                    elevation: 0,
-                    sx: {
-                      minWidth: "220px",
-                      overflow: "visible",
-                      boxShadow:
-                        "0px 5px 5px -3px rgba(0, 0, 0, 0.20), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12)",
-
-                      "& .MuiAvatar-root": {
-                        width: 32,
-                        height: 32,
-                        ml: -0.5,
-                        mr: 1,
-                      },
-                    },
-                  }}
-                  transformOrigin={{
-                    horizontal: "left",
-                    vertical: "top",
-                  }}
-                  anchorOrigin={{
-                    horizontal: "left",
-                    vertical: "bottom",
-                  }}
-                >
-                  <MenuItem onClick={handleFolderMenuClose}>
-                    Переместить вверх
-                  </MenuItem>
-                  <MenuItem onClick={handleFolderMenuClose}>
-                    Переместить вниз
-                  </MenuItem>
-                  <Divider />
-                  <MenuItem onClick={handleFolderMenuClose}>
-                    Переименовать папку
-                  </MenuItem>
-                  <MenuItem onClick={handleFolderMenuClose}>
-                    Удалить папку
-                  </MenuItem>
-                </Menu>
-              </Stack>
-            </AccordionDetails>
-          </Accordion>
-          <ListItemButton
-            className={activateMenuItem("/news")}
-            sx={{ px: [4] }}
-            component={RouterLink}
-            to={"/news"}
-          >
-            <ListItemIcon>
-              <DescriptionIcon />
-            </ListItemIcon>
-            <ListItemText primary="Новости" />
-          </ListItemButton>
-          <ListItemButton
-            className={activateMenuItem("/rates")}
-            sx={{ px: [4] }}
-            component={RouterLink}
-            to={"/rates"}
-          >
-            <ListItemIcon>
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Тарифы" />
-          </ListItemButton>
-          <ListItemButton
-            className={activateMenuItem("/qa")}
-            sx={{ px: [4] }}
-            component={RouterLink}
-            to={"/qa"}
-          >
-            <ListItemIcon>
-              <HelpIcon />
-            </ListItemIcon>
-            <ListItemText primary="Вопросы и ответы" />
-          </ListItemButton>
-          <ListItemButton
-            className={activateMenuItem("/contacts")}
-            sx={{ px: [4] }}
-            component={RouterLink}
-            to={"/contacts"}
-          >
-            <ListItemIcon>
-              <MapIcon />
-            </ListItemIcon>
-            <ListItemText primary="Контакты" />
-          </ListItemButton>
-          <ListItemButton
-            sx={{ px: [4], mt: [5], display: { md: "none" } }}
-            onClick={onLogout}
-          >
-            <ListItemIcon>
-              <LogoutOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText primary="Выйти" />
-          </ListItemButton>
-        </List>
-      </Drawer>
-      <Box
-        component="main"
-        sx={{
-          backgroundColor: "rgba(240, 242, 245, 1)",
-          pt: "76px",
-          flexGrow: 1,
-          height: "100vh",
-          overflow: "auto",
-        }}
-      >
-        {loading ? (
-          <CircularProgress
-            sx={{
-              position: "absolute",
-              top: "0",
-              bottom: "0",
-              left: "0",
-              right: "0",
-              margin: "auto",
-            }}
-          />
-        ) : (
-          <Outlet />
-        )}
+            />
+          ) : (
+            <Outlet />
+          )}
+        </Box>
       </Box>
-    </Box>
+      <Popup isPopupOpen={createFolder} component="form">
+        <IconButton
+          onClick={() => {
+            setCreateFolder(false);
+          }}
+          sx={{
+            position: "absolute",
+            right: { xs: 1, md: 2 },
+            top: { xs: 1, md: 2 },
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <Typography variant="h4" mb={3}>
+          Создать папку
+        </Typography>
+        <Box component="form" onSubmit={handleCreateFolder}>
+          <TextField
+            label="Название папки"
+            variant="standard"
+            size="medium"
+            fullWidth
+            id="folderName"
+            name="folderName"
+            sx={{ mb: 2 }}
+            required
+            value={folderName}
+            onChange={(e) => setFolderName(e.target.value)}
+          />
+          <Button variant="contained" fullWidth sx={{ mt: 4 }} type="submit">
+            Создать
+          </Button>
+        </Box>
+      </Popup>
+      <Popup isPopupOpen={renameFolder} component="form">
+        <IconButton
+          onClick={() => {
+            setRenameFolder(false);
+          }}
+          sx={{
+            position: "absolute",
+            right: { xs: 1, md: 2 },
+            top: { xs: 1, md: 2 },
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <Typography variant="h4" mb={3}>
+          Переименовать папку
+        </Typography>
+        <Box component="form" onSubmit={handleRenameFolder}>
+          <TextField
+            label="Название папки"
+            variant="standard"
+            size="medium"
+            fullWidth
+            id="folderName"
+            name="folderName"
+            sx={{ mb: 2 }}
+            required
+            value={folderName}
+            onChange={(e) => setFolderName(e.target.value)}
+          />
+          <Button variant="contained" fullWidth sx={{ mt: 4 }} type="submit">
+            Применить
+          </Button>
+        </Box>
+      </Popup>
+      <Popup isPopupOpen={deleteFolder} component="form">
+        <IconButton
+          onClick={() => {
+            setDeleteFolder(false);
+          }}
+          sx={{
+            position: "absolute",
+            right: { xs: 1, md: 2 },
+            top: { xs: 1, md: 2 },
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <Typography variant="h4" mb={3}>
+          Удалить папку
+        </Typography>
+        <Typography color="text.secondary" mb={3}>
+          Вы уверены, что хотите удалить папку?
+        </Typography>
+        <Box sx={{ mt: 4, display: "flex", gap: 2 }}>
+          <Button
+            variant="outlined"
+            fullWidth
+            onClick={() => {
+              setDeleteFolder(false);
+            }}
+          >
+            Отменить
+          </Button>
+          <Button variant="contained" fullWidth onClick={handleDeleteFolder}>
+            Удалить
+          </Button>
+        </Box>
+      </Popup>
+    </>
   );
 }

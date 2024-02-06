@@ -48,6 +48,11 @@ export default function App() {
       .finally(() => {
         setLoading(false);
       });
+  };
+  useEffect(getAccess, []);
+
+  //load folders
+  const getFolders = () => {
     api
       .getFolders()
       .then((data) => {
@@ -59,7 +64,7 @@ export default function App() {
         console.log(error);
       });
   };
-  useEffect(getAccess, []);
+  useEffect(getFolders, []);
 
   //login
   const handleLoginSubmit = ({ login, password }) => {
@@ -87,7 +92,6 @@ export default function App() {
     setLoggedIn(false);
     localStorage.clear();
     navigate("/");
-    console.log(loggedIn);
   };
 
   //filter catalog
@@ -148,6 +152,7 @@ export default function App() {
               loading={loading}
               onLogout={handleLogout}
               folders={folders}
+              updateFolders={getFolders}
             />
           }
         >
@@ -160,6 +165,7 @@ export default function App() {
                 data={catalog}
                 onFilterSubmit={handleFilterSubmit}
                 loading={loading}
+                folders={folders}
               />
             }
           />

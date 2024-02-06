@@ -35,7 +35,7 @@ const Favorites = () => {
       //if filters form submit
       event.preventDefault();
       const filters = Array.from(new FormData(event.currentTarget));
-      console.log(filters);
+      // console.log(filters);
       api
         .getFavorites(filters)
         .then((data) => {
