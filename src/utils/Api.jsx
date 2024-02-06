@@ -73,12 +73,26 @@ class Api {
     }).then(Api.handleResponse);
   }
 
-  removeFromFavorites(id) {
+  removeFromFavorites(documentId, folderId) {
     const body = new FormData();
-    body.set("document_id", id);
-    body.set("folder_id", id);
-    return fetch(`${this._url}/favourites/remove`, {
-      method: "POST",
+    body.set("document_id", documentId);
+    body.set("folder_id", folderId);
+    return fetch(`${this._url}/favourites`, {
+      method: "DELETE",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      credentials: "include",
+      body,
+    }).then(Api.handleResponse);
+  }
+
+  moveToFolder(documentId, folderId) {
+    const body = new FormData();
+    body.set("document_id", documentId);
+    body.set("folder_id", folderId);
+    return fetch(`${this._url}/favourites`, {
+      method: "PATCH",
       headers: {
         authorization: `Bearer ${localStorage.getItem("token")}`,
       },

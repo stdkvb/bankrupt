@@ -122,7 +122,12 @@ const Folder = ({ folders }) => {
       ) : (
         <>
           <Filters data={favorites} onFilterSubmit={handleFilterSubmit} />
-          <DocumentsList data={favorites} isFavorites={true} />
+          <DocumentsList
+            data={favorites}
+            inFavorites={true}
+            folderId={id}
+            folders={folders}
+          />
         </>
       )}
     </Container>

@@ -41,6 +41,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 import api from "../utils/Api";
 import Popup from "../components/Popup";
+import CreateFolder from "../components/CreateFolder";
 
 import logo from "../assets/images/logo.svg";
 
@@ -148,23 +149,27 @@ export default function MainLayout({
   const [createFolder, setCreateFolder] = useState(false);
   const [folderName, setFolderName] = useState("");
 
-  const handleCreateFolder = (event) => {
-    event.preventDefault();
-    api
-      .createFolder(folderName)
-      .then((data) => {
-        if (data.status === "success") {
-          updateFolders();
-        } else {
-          alert("Ошибка сервера, попробуйте позже");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const handleCloseCreateFolders = () => {
     setCreateFolder(false);
-    setFolderName("");
   };
+
+  // const handleCreateFolder = (event) => {
+  //   event.preventDefault();
+  //   api
+  //     .createFolder(folderName)
+  //     .then((data) => {
+  //       if (data.status === "success") {
+  //         updateFolders();
+  //       } else {
+  //         alert("Ошибка сервера, попробуйте позже");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  //   setCreateFolder(false);
+  //   setFolderName("");
+  // };
 
   //rename folder
   const [renameFolder, setRenameFolder] = useState(false);
@@ -716,7 +721,7 @@ export default function MainLayout({
           )}
         </Box>
       </Box>
-      <Popup isPopupOpen={createFolder} component="form">
+      {/* <Popup isPopupOpen={createFolder} component="form">
         <IconButton
           onClick={() => {
             setCreateFolder(false);
@@ -749,7 +754,11 @@ export default function MainLayout({
             Создать
           </Button>
         </Box>
-      </Popup>
+      </Popup> */}
+      <CreateFolder
+        isPopupOpen={createFolder}
+        onClose={handleCloseCreateFolders}
+      />
       <Popup isPopupOpen={renameFolder} component="form">
         <IconButton
           onClick={() => {

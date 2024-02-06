@@ -14,11 +14,19 @@ import Checkbox from "@mui/material/Checkbox";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CloseIcon from "@mui/icons-material/Close";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
+import AddIcon from "@mui/icons-material/Add";
 
 import Popup from "./Popup";
+import CreateFolder from "./CreateFolder";
 import api from "../utils/Api";
 
-const DocumentsList = ({ data, isFavorites, folders }) => {
+const DocumentsList = ({
+  data,
+  inFavorites,
+  folders,
+  folderId,
+  updateFolders,
+}) => {
   const [currentDocument, setCurrentDocument] = useState(null);
 
   //row menu
@@ -29,7 +37,7 @@ const DocumentsList = ({ data, isFavorites, folders }) => {
     setCurrentDocument(document);
   };
 
-  // document detail modal controller
+  //document detail modal controller
   const [open, setOpen] = useState(false);
   const handleOpen = (document) => {
     setCurrentDocument(document);
@@ -61,6 +69,26 @@ const DocumentsList = ({ data, isFavorites, folders }) => {
     setCheckedFolders([]);
   };
 
+  //remove from favourites
+  const [isRemoved, setIsRemoved] = useState(false);
+  const handleRemoveFromFavorites = () => {
+    if (!folderId) {
+      folderId = 0;
+    }
+    api
+      .removeFromFavorites(currentDocument.id, folderId)
+      .then((data) => {
+        if (data.status === "success") {
+        } else {
+          alert("Ошибка сервера, попробуйте позже");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setIsRemoved(true);
+  };
+
   //send to mail
   const [sendToMail, setSendToMail] = useState(false);
   const [isSentToMail, setIsSentToMail] = useState(false);
@@ -78,6 +106,34 @@ const DocumentsList = ({ data, isFavorites, folders }) => {
         console.log(error);
       });
     setSendToMail(false);
+  };
+
+  //create new folder in menu
+  const [createFolder, setCreateFolder] = useState(false);
+
+  const handleCloseCreateFolders = () => {
+    setCreateFolder(false);
+  };
+
+  //move to another folder
+  const [moveToFolder, setMoveToFolder] = useState(false);
+  const [isMoved, setIsMoved] = useState(false);
+
+  const handleMoveToFolder = () => {
+    api
+      .moveToFolder(currentDocument.id, checkedFolders)
+      .then((data) => {
+        if (data.status === "success") {
+          setIsMoved(true);
+        } else {
+          alert("Ошибка сервера, попробуйте позже");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setMoveToFolder(false);
+    setCheckedFolders([]);
   };
 
   return (
@@ -278,7 +334,27 @@ const DocumentsList = ({ data, isFavorites, folders }) => {
           </MenuItem>
         )}
         <Divider />
-        {!isFavorites && (
+        {inFavorites ? (
+          <div>
+            <MenuItem
+              onClick={() => {
+                setMoveToFolder(true);
+              }}
+            >
+              Переместить в папку
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                setAddToFavorites(true);
+              }}
+            >
+              Добавить в другую папку
+            </MenuItem>
+            <MenuItem onClick={handleRemoveFromFavorites}>
+              Удалить из избранного
+            </MenuItem>
+          </div>
+        ) : (
           <MenuItem
             onClick={() => {
               setAddToFavorites(true);
@@ -410,12 +486,15 @@ const DocumentsList = ({ data, isFavorites, folders }) => {
         >
           <CloseIcon />
         </IconButton>
-        <Typography variant="h4" mb={3}>
+        <Typography variant="h4" mb={3} sx={{ maxWidth: "90%" }}>
           Добавить документ в избранное
         </Typography>
         <Typography mb={1}>Выберите папку</Typography>
         <Stack sx={{ display: "flex", flexDirection: "column" }}>
           <FormControlLabel
+            sx={{
+              maxWidth: "fit-content",
+            }}
             control={
               <Checkbox
                 value="0"
@@ -428,6 +507,9 @@ const DocumentsList = ({ data, isFavorites, folders }) => {
             return (
               <FormControlLabel
                 key={folder.id}
+                sx={{
+                  maxWidth: "fit-content",
+                }}
                 control={
                   <Checkbox
                     value={folder.id}
@@ -438,6 +520,26 @@ const DocumentsList = ({ data, isFavorites, folders }) => {
               />
             );
           })}
+          <Stack
+            onClick={() => {
+              setCreateFolder(true);
+            }}
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              mt: 1,
+              ml: "-11px",
+              mr: 2,
+              cursor: "pointer",
+              width: "fit-content",
+            }}
+          >
+            <IconButton>
+              <AddIcon />
+            </IconButton>
+            <Typography display="inline">Добавить папку</Typography>
+          </Stack>
         </Stack>
         <Stack
           sx={{
@@ -475,9 +577,8 @@ const DocumentsList = ({ data, isFavorites, folders }) => {
         >
           <CloseIcon />
         </IconButton>
-        <Typography variant="h4" mb={3}>
-          Документ добавлен
-          <br />в избранное
+        <Typography variant="h4" mb={3} sx={{ maxWidth: "90%" }}>
+          Документ добавлен в избранное
         </Typography>
         <Typography color="text.secondary">
           Документ добавлен в папку Избранное
@@ -506,7 +607,7 @@ const DocumentsList = ({ data, isFavorites, folders }) => {
         >
           <CloseIcon />
         </IconButton>
-        <Typography variant="h4" mb={3}>
+        <Typography variant="h4" mb={3} sx={{ maxWidth: "90%" }}>
           Отправить на почту
         </Typography>
         <Typography color="text.secondary">
@@ -566,6 +667,156 @@ const DocumentsList = ({ data, isFavorites, folders }) => {
           Закрыть
         </Button>
       </Popup>
+      <Popup isPopupOpen={isRemoved}>
+        <IconButton
+          onClick={() => {
+            setIsRemoved(false);
+          }}
+          sx={{
+            position: "absolute",
+            right: { xs: 1, md: 2 },
+            top: { xs: 1, md: 2 },
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <Typography variant="h4" mb={3} sx={{ maxWidth: "90%" }}>
+          Документ удален из избранного
+        </Typography>
+        <Button
+          variant="contained"
+          fullWidth
+          sx={{ mt: 4 }}
+          onClick={() => {
+            setIsRemoved(false);
+          }}
+        >
+          Закрыть
+        </Button>
+      </Popup>
+      <Popup isPopupOpen={moveToFolder}>
+        <IconButton
+          onClick={() => {
+            setMoveToFolder(false);
+          }}
+          sx={{
+            position: "absolute",
+            right: { xs: 1, md: 2 },
+            top: { xs: 1, md: 2 },
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <Typography variant="h4" mb={3} sx={{ maxWidth: "90%" }}>
+          Переместить документ
+        </Typography>
+        <Typography mb={1}>Выберите папку</Typography>
+        <Stack sx={{ display: "flex", flexDirection: "column" }}>
+          <FormControlLabel
+            sx={{
+              maxWidth: "fit-content",
+            }}
+            control={
+              <Checkbox
+                value="0"
+                onChange={(e) => checkedFolders.push(e.target.value)}
+              />
+            }
+            label={<Typography display="inline">Общая папка</Typography>}
+          />
+          {folders.map((folder) => {
+            return (
+              <FormControlLabel
+                key={folder.id}
+                sx={{
+                  maxWidth: "fit-content",
+                }}
+                control={
+                  <Checkbox
+                    value={folder.id}
+                    onChange={(e) => checkedFolders.push(e.target.value)}
+                  />
+                }
+                label={<Typography display="inline">{folder.name}</Typography>}
+              />
+            );
+          })}
+          <Stack
+            onClick={() => {
+              setCreateFolder(true);
+            }}
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              mt: 1,
+              ml: "-11px",
+              mr: 2,
+              cursor: "pointer",
+              width: "fit-content",
+            }}
+          >
+            <IconButton>
+              <AddIcon />
+            </IconButton>
+            <Typography display="inline">Добавить папку</Typography>
+          </Stack>
+        </Stack>
+        <Stack
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            justifyContent: "space-between",
+            gap: 2,
+            mt: 4,
+          }}
+        >
+          <Button
+            variant="outlined"
+            fullWidth
+            onClick={() => {
+              setMoveToFolder(false);
+            }}
+          >
+            Отменить
+          </Button>
+          <Button variant="contained" fullWidth onClick={handleMoveToFolder}>
+            Переместить
+          </Button>
+        </Stack>
+      </Popup>
+      <Popup isPopupOpen={isMoved}>
+        <IconButton
+          onClick={() => {
+            setIsMoved(false);
+          }}
+          sx={{
+            position: "absolute",
+            right: { xs: 1, md: 2 },
+            top: { xs: 1, md: 2 },
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <Typography variant="h4" mb={3} sx={{ maxWidth: "90%" }}>
+          Документ перемещен
+        </Typography>
+        <Button
+          variant="contained"
+          fullWidth
+          sx={{ mt: 4 }}
+          onClick={() => {
+            setIsMoved(false);
+          }}
+        >
+          Закрыть
+        </Button>
+      </Popup>
+      <CreateFolder
+        isPopupOpen={createFolder}
+        onClose={handleCloseCreateFolders}
+        updateFolders={updateFolders}
+      />
     </>
   );
 };

@@ -166,10 +166,11 @@ export default function App() {
                 onFilterSubmit={handleFilterSubmit}
                 loading={loading}
                 folders={folders}
+                updateFolders={getFolders}
               />
             }
           />
-          <Route path="favorites" element={<Favorites />} />
+          <Route path="favorites" element={<Favorites folders={folders} />} />
           <Route path="favorites/:id" element={<Folder folders={folders} />} />
           <Route path="profile" element={<Profile />} />
           <Route path="rates" element={<Rates />} />

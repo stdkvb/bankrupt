@@ -10,7 +10,7 @@ import DocumentsList from "../components/DocumentsList";
 
 import api from "../utils/Api";
 
-const Favorites = () => {
+const Favorites = ({ folders }) => {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isFiltered, setIsFiltered] = useState(false);
@@ -116,7 +116,11 @@ const Favorites = () => {
       ) : (
         <>
           <Filters data={favorites} onFilterSubmit={handleFilterSubmit} />
-          <DocumentsList data={favorites} isFavorites={true} />
+          <DocumentsList
+            data={favorites}
+            inFavorites={true}
+            folders={folders}
+          />
         </>
       )}
     </Container>
