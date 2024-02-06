@@ -8,6 +8,8 @@ import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CloseIcon from "@mui/icons-material/Close";
@@ -38,18 +40,25 @@ const DocumentsList = ({ data, isFavorites, folders }) => {
   };
 
   //add to favorites
+  const [addToFavorites, setAddToFavorites] = useState(false);
   const [isInFavorites, setIsInFavorites] = useState(false);
-  const handleAddToFavorites = (currentDocument) => {
+  const [checkedFolders, setCheckedFolders] = useState([]);
+
+  const handleAddToFavorites = () => {
     api
-      .addToFavorites(currentDocument.id)
+      .addToFavorites(currentDocument.id, checkedFolders)
       .then((data) => {
         if (data.status === "success") {
           setIsInFavorites(!isInFavorites);
+        } else {
+          alert("Ошибка сервера, попробуйте позже");
         }
       })
       .catch((error) => {
         console.log(error);
       });
+    setAddToFavorites(false);
+    setCheckedFolders([]);
   };
 
   //send to mail
@@ -61,6 +70,8 @@ const DocumentsList = ({ data, isFavorites, folders }) => {
       .then((data) => {
         if (data.status === "success") {
           setIsSentToMail(true);
+        } else {
+          alert("Ошибка сервера, попробуйте позже");
         }
       })
       .catch((error) => {
@@ -270,7 +281,7 @@ const DocumentsList = ({ data, isFavorites, folders }) => {
         {!isFavorites && (
           <MenuItem
             onClick={() => {
-              handleAddToFavorites(currentDocument);
+              setAddToFavorites(true);
             }}
           >
             Добавить в избранное
@@ -389,7 +400,7 @@ const DocumentsList = ({ data, isFavorites, folders }) => {
       <Popup isPopupOpen={addToFavorites}>
         <IconButton
           onClick={() => {
-            setSendToMail(false);
+            setAddToFavorites(false);
           }}
           sx={{
             position: "absolute",
@@ -400,11 +411,34 @@ const DocumentsList = ({ data, isFavorites, folders }) => {
           <CloseIcon />
         </IconButton>
         <Typography variant="h4" mb={3}>
-          Отправить на почту
+          Добавить документ в избранное
         </Typography>
-        <Typography color="text.secondary">
-          Отправить документ на почту, указанную при регистрации?
-        </Typography>
+        <Typography mb={1}>Выберите папку</Typography>
+        <Stack sx={{ display: "flex", flexDirection: "column" }}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                value="0"
+                onChange={(e) => checkedFolders.push(e.target.value)}
+              />
+            }
+            label={<Typography display="inline">Общая папка</Typography>}
+          />
+          {folders.map((folder) => {
+            return (
+              <FormControlLabel
+                key={folder.id}
+                control={
+                  <Checkbox
+                    value={folder.id}
+                    onChange={(e) => checkedFolders.push(e.target.value)}
+                  />
+                }
+                label={<Typography display="inline">{folder.name}</Typography>}
+              />
+            );
+          })}
+        </Stack>
         <Stack
           sx={{
             display: "flex",
@@ -418,13 +452,13 @@ const DocumentsList = ({ data, isFavorites, folders }) => {
             variant="outlined"
             fullWidth
             onClick={() => {
-              setSendToMail(false);
+              setAddToFavorites(false);
             }}
           >
             Отменить
           </Button>
-          <Button variant="contained" fullWidth onClick={handleSendToMail}>
-            Отправить
+          <Button variant="contained" fullWidth onClick={handleAddToFavorites}>
+            Добавить
           </Button>
         </Stack>
       </Popup>

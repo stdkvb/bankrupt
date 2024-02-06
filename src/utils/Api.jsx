@@ -59,10 +59,10 @@ class Api {
     ).then(Api.handleResponse);
   }
 
-  addToFavorites(id) {
+  addToFavorites(documentId, folderId) {
     const body = new FormData();
-    body.set("document_id", id);
-    body.set("folder_id", id);
+    body.set("document_id", documentId);
+    body.set("folder_id", folderId);
     return fetch(`${this._url}/favourites/add`, {
       method: "POST",
       headers: {
