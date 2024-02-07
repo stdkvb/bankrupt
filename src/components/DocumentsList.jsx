@@ -69,7 +69,7 @@ const DocumentsList = ({
     setCheckedFolders([]);
   };
 
-  //remove from favourites
+  //remove from favorites
   const [isRemoved, setIsRemoved] = useState(false);
   const handleRemoveFromFavorites = () => {
     if (!folderId) {
@@ -497,6 +497,7 @@ const DocumentsList = ({
             }}
             control={
               <Checkbox
+                defaultChecked
                 value="0"
                 onChange={(e) => checkedFolders.push(e.target.value)}
               />

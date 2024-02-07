@@ -1,11 +1,12 @@
 import * as React from "react";
-import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import AuthLayout from "./layouts/AuthLayout";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
+import Confirm from "./pages/Confirm";
 import PasswordRecovery from "./pages/PasswordRecovery";
 import NewPassword from "./pages/NewPassword";
 import Rates from "./pages/Rates";
@@ -77,6 +78,7 @@ export default function App() {
           setLoading(true);
           setErrors([]);
           getAccess();
+          getFolders();
           navigate("/");
         } else {
           setErrors(data.errors);
@@ -191,6 +193,10 @@ export default function App() {
             }
           />
           <Route path="sign-up" element={<Registration />} />
+          <Route
+            path="confirm/:userId/:registrationCode"
+            element={<Confirm />}
+          />
           <Route path="password-recovery" element={<PasswordRecovery />} />
           <Route path="new-password" element={<NewPassword />} />
           <Route path="*" element={<PageNotFound loggedIn={loggedIn} />} />

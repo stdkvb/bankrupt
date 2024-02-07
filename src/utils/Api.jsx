@@ -25,6 +25,27 @@ class Api {
     }).then(Api.handleResponse);
   }
 
+  confirmUser(userId, registrationCode) {
+    const body = new FormData();
+    body.set("userID", userId);
+    body.set("registrationCode", registrationCode);
+    return fetch(`${this._url}/auth/reg-check-code`, {
+      method: "POST",
+      credentials: "include",
+      body,
+    }).then(Api.handleResponse);
+  }
+
+  resendCode(userId) {
+    const body = new FormData();
+    body.set("userID", userId);
+    return fetch(`${this._url}/auth/reg-check-code`, {
+      method: "POST",
+      credentials: "include",
+      body,
+    }).then(Api.handleResponse);
+  }
+
   loginUser(login, password) {
     const body = new FormData();
     body.set("login", login);
