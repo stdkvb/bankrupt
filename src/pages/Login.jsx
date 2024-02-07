@@ -16,10 +16,31 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const Login = ({ onLoginSubmit, errors }) => {
   const [login, setLogin] = useState("");
-  const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState(false);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleLoginChange = (e) => {
+    setLogin(e.target.value);
+    if (e.target.validity.valid) {
+      setLoginError(false);
+    } else {
+      setLoginError(true);
+    }
+  };
+
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    if (e.target.validity.valid) {
+      setPasswordError(false);
+    } else {
+      setPasswordError(true);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     onLoginSubmit({ login, password });
   };
 
@@ -34,6 +55,7 @@ const Login = ({ onLoginSubmit, errors }) => {
     <Box
       component="form"
       onSubmit={handleSubmit}
+      noValidate
       sx={{
         maxWidth: "400px",
         width: "100%",
@@ -73,10 +95,12 @@ const Login = ({ onLoginSubmit, errors }) => {
         name="login"
         sx={{ mb: 2 }}
         required
+        error={loginError}
+        helperText={loginError ? "Введите логин" : ""}
         value={login}
-        onChange={(e) => setLogin(e.target.value)}
+        onChange={handleLoginChange}
       />
-      <FormControl sx={{ mb: 1 }} variant="standard" fullWidth>
+      <FormControl variant="standard" fullWidth error={passwordError}>
         <InputLabel htmlFor="password">Пароль</InputLabel>
         <Input
           id="password"
@@ -84,8 +108,9 @@ const Login = ({ onLoginSubmit, errors }) => {
           size="medium"
           required
           name="password"
+          error={passwordError}
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={handlePasswordChange}
           type={showPassword ? "text" : "password"}
           endAdornment={
             <InputAdornment position="end">
@@ -100,6 +125,11 @@ const Login = ({ onLoginSubmit, errors }) => {
           }
         />
       </FormControl>
+      {passwordError && (
+        <Typography color="error.main" sx={{ fontSize: "0.75rem", mt: "3px" }}>
+          Введите пароль
+        </Typography>
+      )}
       {errors.map((error, i) => {
         return (
           <Typography color="error.main" sx={{ my: 2 }} key={i}>
@@ -107,10 +137,21 @@ const Login = ({ onLoginSubmit, errors }) => {
           </Typography>
         );
       })}
-      <Link component={RouterLink} to="/password-recovery" color="primary.main">
+      <Link
+        sx={{ mt: 1 }}
+        component={RouterLink}
+        to="/password-recovery"
+        color="primary.main"
+      >
         Забыли пароль?
       </Link>
-      <Button type="submit" fullWidth variant="contained" sx={{ mt: 3 }}>
+      <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        sx={{ mt: 3 }}
+        disabled={!(login && password)}
+      >
         Войти
       </Button>
     </Box>

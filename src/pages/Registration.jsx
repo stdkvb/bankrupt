@@ -17,7 +17,7 @@ import Popup from "../components/Popup";
 
 const Registration = () => {
   //reg confirmation
-  const [isRegistered, setIsRegistered] = useState(true);
+  const [isRegistered, setIsRegistered] = useState(false);
 
   //inputs values
   const [formValue, setFormValue] = useState({
@@ -51,7 +51,9 @@ const Registration = () => {
       api
         .createUser(lastName, firstName, secondName, phone, email, password)
         .then((data) => {
-          console.log(data);
+          if (data.status === "success") {
+            setIsRegistered(true);
+          }
         })
         .catch((error) => {
           console.log(error);
