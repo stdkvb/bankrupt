@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TextField } from "@mui/material";
 
-const ValidatedTextField = ({ label, validator, onChange }) => {
+const ValidatedTextField = ({ label, validator }) => {
   const [value, setValue] = useState("");
   const [error, setError] = useState(false);
   const handleChange = (e) => {
@@ -9,7 +9,6 @@ const ValidatedTextField = ({ label, validator, onChange }) => {
     const errorMessage = validator(newValue);
     setValue(newValue);
     setError(errorMessage);
-    onChange(!errorMessage);
   };
   return (
     <TextField
@@ -18,8 +17,12 @@ const ValidatedTextField = ({ label, validator, onChange }) => {
       onChange={handleChange}
       error={!!error}
       helperText={error}
+      variant="standard"
+      size="medium"
+      fullWidth
+      sx={{ mb: 2 }}
     />
   );
 };
 
-export default ValidatedTextfield;
+export default ValidatedTextField;

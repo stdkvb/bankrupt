@@ -22,7 +22,7 @@ const Registration = () => {
   //inputs values
   const [formValue, setFormValue] = useState({
     lastName: "",
-    name: "",
+    firstName: "",
     secondName: "",
     phone: "",
     email: "",
@@ -40,25 +40,118 @@ const Registration = () => {
     });
   };
 
+  const [lastNameError, setLastNameError] = useState(false);
+  const lastNameValidator = (e) => {
+    const { name, value } = e.target;
+    setFormValue({
+      ...formValue,
+      [name]: value,
+    });
+    if (e.target.validity.valid) {
+      setLastNameError(false);
+    } else {
+      setLastNameError(true);
+    }
+  };
+
+  const [firstNameError, setFirstNameError] = useState(false);
+  const firstNameValidator = (e) => {
+    const { name, value } = e.target;
+    setFormValue({
+      ...formValue,
+      [name]: value,
+    });
+    if (e.target.validity.valid) {
+      setFirstNameError(false);
+    } else {
+      setFirstNameError(true);
+    }
+  };
+
+  const [emailError, setEmailError] = useState(false);
+  const emailValidator = (e) => {
+    const { name, value } = e.target;
+    setFormValue({
+      ...formValue,
+      [name]: value,
+    });
+    if (
+      !/^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/.test(e.target.value)
+    ) {
+      setEmailError(true);
+    } else {
+      setEmailError(false);
+    }
+  };
+
+  const [phoneError, setPhoneError] = useState(false);
+  const phoneValidator = (e) => {
+    const { name, value } = e.target;
+    setFormValue({
+      ...formValue,
+      [name]: value,
+    });
+    if (e.target.validity.valid) {
+      setPhoneError(false);
+    } else {
+      setPhoneError(true);
+    }
+  };
+
+  const [passwordError, setPasswordError] = useState(false);
+  const passwordValidator = (e) => {
+    const { name, value } = e.target;
+    setFormValue({
+      ...formValue,
+      [name]: value,
+    });
+    if (e.target.value.length < 6) {
+      setPasswordError(true);
+    } else {
+      setPasswordError(false);
+    }
+  };
+
+  const [confirmPasswordError, setConfirmPasswordErrorError] = useState(false);
+  const confirmPasswordValidator = (e) => {
+    const { name, value } = e.target;
+    setFormValue({
+      ...formValue,
+      [name]: value,
+    });
+    if (e.target.value !== formValue.password) {
+      setConfirmPasswordErrorError(true);
+    } else {
+      setConfirmPasswordErrorError(false);
+    }
+  };
+
+  const [policyError, setPolicyError] = useState(false);
+  const policyValidator = (e) => {
+    if (e.target.validity.valid) {
+      setPolicyError(false);
+    } else {
+      setPolicyError(true);
+    }
+    console.log(policyError);
+  };
+
   //form submit
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    if (formValue.password === formValue.confirmPassword) {
-      const { lastName, firstName, secondName, phone, email, password } =
-        formValue;
-      console.log({ lastName, firstName, secondName, phone, email, password });
-      api
-        .createUser(lastName, firstName, secondName, phone, email, password)
-        .then((data) => {
-          if (data.status === "success") {
-            setIsRegistered(true);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+    const { lastName, firstName, secondName, phone, email, password } =
+      formValue;
+    console.log({ lastName, firstName, secondName, phone, email, password });
+    api
+      .createUser(lastName, firstName, secondName, phone, email, password)
+      .then((data) => {
+        if (data.status === "success") {
+          setIsRegistered(true);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   //resend confirmation code
@@ -99,7 +192,8 @@ const Registration = () => {
             </Typography>
             <Typography sx={{ mb: 2, textAlign: "center" }}>
               На указанную электронную почту навправлено письмо, для
-              подтверждения регистрации, пожалуйста, пройдите по ссылке.
+              подтверждения регистрации, пожалуйста, пройдите по ссылке в
+              письме.
             </Typography>
             <Stack sx={{ display: "flex", flexDirection: "row", gap: 1 }}>
               <Typography color="text.secondary">Письмо не пришло?</Typography>
@@ -176,8 +270,10 @@ const Registration = () => {
             fullWidth
             id="lastName"
             name="lastName"
-            value={formValue.surname}
-            onChange={handleChange}
+            error={lastNameError}
+            helperText={lastNameError ? "Введите фамилию" : ""}
+            value={formValue.lastName}
+            onChange={lastNameValidator}
             sx={{ mb: 2 }}
           />
           <TextField
@@ -186,10 +282,12 @@ const Registration = () => {
             size="medium"
             required
             fullWidth
-            id="name"
-            name="name"
-            value={formValue.name}
-            onChange={handleChange}
+            id="firstName"
+            name="firstName"
+            error={firstNameError}
+            helperText={firstNameError ? "Введите имя" : ""}
+            value={formValue.firstName}
+            onChange={firstNameValidator}
             sx={{ mb: 2 }}
           />
           <TextField
@@ -199,14 +297,14 @@ const Registration = () => {
             fullWidth
             id="secondName"
             name="secondName"
-            value={formValue.middleName}
+            value={formValue.secondName}
             onChange={handleChange}
             sx={{ mb: 2 }}
           />
           <InputMask
             mask="+7 (999) 999 99 99"
             value={formValue.phone}
-            onChange={handleChange}
+            onChange={phoneValidator}
           >
             <TextField
               label="Телефон"
@@ -216,6 +314,8 @@ const Registration = () => {
               fullWidth
               id="phone"
               name="phone"
+              error={phoneError}
+              helperText={phoneError ? "Введите телефон" : ""}
               sx={{ mb: 2 }}
             />
           </InputMask>
@@ -227,8 +327,10 @@ const Registration = () => {
             fullWidth
             id="email"
             name="email"
+            error={emailError}
+            helperText={emailError ? "Email не корректный" : ""}
             value={formValue.email}
-            onChange={handleChange}
+            onChange={emailValidator}
             sx={{ mb: 2 }}
           />
           <TextField
@@ -239,8 +341,12 @@ const Registration = () => {
             fullWidth
             id="password"
             name="password"
+            error={passwordError}
+            helperText={
+              passwordError ? "Пароль должен содержать минимум 6 символов" : ""
+            }
             value={formValue.password}
-            onChange={handleChange}
+            onChange={passwordValidator}
             sx={{ mb: 2 }}
           />
           <TextField
@@ -251,12 +357,23 @@ const Registration = () => {
             fullWidth
             id="confirmPassword"
             name="confirmPassword"
+            error={confirmPasswordError}
+            helperText={
+              confirmPasswordError ? "Введенные пароли не совпадают" : ""
+            }
             value={formValue.confirmPassword}
-            onChange={handleChange}
+            onChange={confirmPasswordValidator}
             sx={{ mb: 2 }}
           />
           <FormControlLabel
-            control={<Checkbox value="policy" defaultChecked required />}
+            control={
+              <Checkbox
+                value="policy"
+                defaultChecked
+                required
+                onChange={policyValidator}
+              />
+            }
             label={
               <Typography
                 display="inline"
@@ -275,7 +392,29 @@ const Registration = () => {
               </Typography>
             }
           />
-          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3 }}>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3 }}
+            disabled={
+              !(
+                formValue.lastName &&
+                formValue.firstName &&
+                formValue.email &&
+                formValue.phone &&
+                formValue.password &&
+                formValue.confirmPassword &&
+                !lastNameError &&
+                !firstNameError &&
+                !phoneError &&
+                !emailError &&
+                !passwordError &&
+                !confirmPasswordError &&
+                !policyError
+              )
+            }
+          >
             Зарегистрироваться
           </Button>
         </Box>

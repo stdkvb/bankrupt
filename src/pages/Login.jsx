@@ -126,7 +126,10 @@ const Login = ({ onLoginSubmit, errors }) => {
         />
       </FormControl>
       {passwordError && (
-        <Typography color="error.main" sx={{ fontSize: "0.75rem", mt: "3px" }}>
+        <Typography
+          color="error.main"
+          sx={{ width: "100%", fontSize: "0.75rem", mt: "3px" }}
+        >
           Введите пароль
         </Typography>
       )}
