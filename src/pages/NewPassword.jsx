@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -11,8 +11,9 @@ import api from "../utils/Api";
 const NewPassword = () => {
   const navigate = useNavigate();
   //get params from url
-  let { userId, checkword } = useParams();
-  console.log(userId, checkword);
+  const [urlParams, setUrlParams] = useSearchParams();
+  let userId = urlParams.get("user_id");
+  let checkword = urlParams.get("checkword");
   //query errors
   const [errors, setErrors] = useState([]);
 

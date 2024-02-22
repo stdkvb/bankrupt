@@ -469,6 +469,21 @@ const DocumentsList = ({
                   </Link>
                 );
               })}
+              {currentDocument.kadarbitr && (
+                <Link
+                  href={currentDocument.kadarbitr.url}
+                  sx={{
+                    display: "flex",
+                    maxWidth: "430px",
+                    alignItems: "center",
+                    gap: "12px",
+                  }}
+                  target="_blank"
+                >
+                  <DescriptionOutlinedIcon />
+                  <Typography>{currentDocument.kadarbitr.title}</Typography>
+                </Link>
+              )}
             </Stack>
           </Box>
         </Modal>

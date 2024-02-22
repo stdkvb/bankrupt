@@ -198,10 +198,7 @@ export default function App() {
             element={<Confirm />}
           />
           <Route path="password-recovery" element={<PasswordRecovery />} />
-          <Route
-            path="new-password/:userId/:checkword"
-            element={<NewPassword />}
-          />
+          <Route path="recovery" element={<NewPassword />} />
           <Route path="*" element={<PageNotFound loggedIn={loggedIn} />} />
         </Route>
       )}
