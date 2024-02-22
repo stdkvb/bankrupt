@@ -133,7 +133,6 @@ const Registration = () => {
     } else {
       setPolicyError(true);
     }
-    console.log(policyError);
   };
 
   //form submit

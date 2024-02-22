@@ -384,7 +384,10 @@ export default function MainLayout({
                 component={RouterLink}
                 to={"/profile"}
               >
-                <PersonIcon /> Профиль
+                <ListItemIcon>
+                  <PersonIcon />
+                </ListItemIcon>
+                Профиль
               </MenuItem>
               <Divider />
               <MenuItem onClick={onLogout}>

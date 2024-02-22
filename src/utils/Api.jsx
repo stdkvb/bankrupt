@@ -57,6 +57,28 @@ class Api {
     }).then(Api.handleResponse);
   }
 
+  recoveryPassword(email) {
+    const body = new FormData();
+    body.set("email", email);
+    return fetch(`${this._url}/auth/recovery-pass-start`, {
+      method: "POST",
+      credentials: "include",
+      body,
+    }).then(Api.handleResponse);
+  }
+
+  newPassword(userId, password, checkword) {
+    const body = new FormData();
+    body.set("userId", userId);
+    body.set("password", password);
+    body.set("checkword", checkword);
+    return fetch(`${this._url}/auth/recovery-pass-finish`, {
+      method: "POST",
+      credentials: "include",
+      body,
+    }).then(Api.handleResponse);
+  }
+
   getCatalog(params) {
     return fetch(`${this._url}/catalog?` + `${new URLSearchParams(params)}`, {
       method: "GET",
@@ -203,6 +225,19 @@ class Api {
       headers: {
         authorization: `Bearer ${localStorage.getItem("token")}`,
       },
+      credentials: "include",
+      body,
+    }).then(Api.handleResponse);
+  }
+
+  sendQuestion(name, phone, email, question) {
+    const body = new FormData();
+    body.set("name", name);
+    body.set("phone", phone);
+    body.set("email", email);
+    body.set("question", question);
+    return fetch(`${this._url}/question`, {
+      method: "POST",
       credentials: "include",
       body,
     }).then(Api.handleResponse);
