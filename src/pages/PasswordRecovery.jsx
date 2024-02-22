@@ -12,6 +12,9 @@ import api from "../utils/Api";
 import Popup from "../components/Popup";
 
 const PasswordRecovery = () => {
+  //query errors
+  const [errors, setErrors] = useState([]);
+
   //success popup
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -37,6 +40,8 @@ const PasswordRecovery = () => {
       .then((data) => {
         if (data.status === "success") {
           setIsSuccess(true);
+        } else {
+          setErrors(data.errors);
         }
       })
       .catch((error) => {
@@ -101,6 +106,13 @@ const PasswordRecovery = () => {
           helperText={emailError ? "Введите электронную почту" : ""}
           onChange={emailValidator}
         />
+        {errors.map((error, i) => {
+          return (
+            <Typography color="error.main" sx={{ my: 2 }} key={i}>
+              {error.message}
+            </Typography>
+          );
+        })}
         <Button
           type="submit"
           fullWidth
