@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Outlet, useLocation, Link as RouterLink } from "react-router-dom";
+import {
+  Outlet,
+  useLocation,
+  useNavigate,
+  Link as RouterLink,
+} from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import { Avatar, Stack, Link, Typography, Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
@@ -107,6 +112,7 @@ export default function MainLayout({
   folders,
   updateFolders,
 }) {
+  const navigate = useNavigate();
   //current page
   let location = useLocation();
   const pathName = location.pathname;
@@ -199,6 +205,7 @@ export default function MainLayout({
       .deleteFolder(currentFolder)
       .then((data) => {
         if (data.status === "success") {
+          navigate("/favorites");
           updateFolders();
         } else {
           alert("Ошибка сервера, попробуйте позже");
@@ -538,7 +545,12 @@ export default function MainLayout({
                     return (
                       <ListItemButton
                         key={i}
-                        sx={{ pl: [4], pr: [0], gap: [1] }}
+                        sx={{
+                          pl: [4],
+                          pr: [0],
+                          gap: [1],
+                          justifyContent: "space-between",
+                        }}
                       >
                         <Link
                           component={RouterLink}
@@ -761,6 +773,7 @@ export default function MainLayout({
       <CreateFolder
         isPopupOpen={createFolder}
         onClose={handleCloseCreateFolders}
+        updateFolders={updateFolders}
       />
       <Popup isPopupOpen={renameFolder} component="form">
         <IconButton

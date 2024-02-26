@@ -104,8 +104,8 @@ class Api {
 
   addToFavorites(documentId, folderId) {
     const body = new FormData();
-    body.set("document_id", documentId);
-    body.set("folder_id", folderId);
+    body.set("documentId", documentId);
+    body.set("folderId", folderId);
     return fetch(`${this._url}/favourites/add`, {
       method: "POST",
       headers: {
@@ -118,10 +118,10 @@ class Api {
 
   removeFromFavorites(documentId, folderId) {
     const body = new FormData();
-    body.set("document_id", documentId);
-    body.set("folder_id", folderId);
-    return fetch(`${this._url}/favourites`, {
-      method: "DELETE",
+    body.set("documentId", documentId);
+    body.set("folderId", folderId);
+    return fetch(`${this._url}/favourites/delete`, {
+      method: "POST",
       headers: {
         authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -132,10 +132,10 @@ class Api {
 
   moveToFolder(documentId, folderId) {
     const body = new FormData();
-    body.set("document_id", documentId);
-    body.set("folder_id", folderId);
-    return fetch(`${this._url}/favourites`, {
-      method: "PATCH",
+    body.set("documentId", documentId);
+    body.set("folderId", folderId);
+    return fetch(`${this._url}/favourites/replace`, {
+      method: "POST",
       headers: {
         authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -166,8 +166,8 @@ class Api {
 
   createFolder(folderName) {
     const body = new FormData();
-    body.set("folderName", folderName);
-    return fetch(`${this._url}/favourites/menu`, {
+    body.set("name", folderName);
+    return fetch(`${this._url}/favourites/folder`, {
       method: "POST",
       headers: {
         authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -180,9 +180,9 @@ class Api {
   renameFolder(newFolderName, folderId) {
     const body = new FormData();
     body.set("folderId", folderId);
-    body.set("newFolderName", newFolderName);
-    return fetch(`${this._url}/favourites/menu`, {
-      method: "PATCH",
+    body.set("name", newFolderName);
+    return fetch(`${this._url}/favourites/folder/rename`, {
+      method: "POST",
       headers: {
         authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -194,8 +194,8 @@ class Api {
   deleteFolder(folderId) {
     const body = new FormData();
     body.set("folderId", folderId);
-    return fetch(`${this._url}/favourites/menu`, {
-      method: "DELETE",
+    return fetch(`${this._url}/favourites/folder/delete`, {
+      method: "POST",
       headers: {
         authorization: `Bearer ${localStorage.getItem("token")}`,
       },

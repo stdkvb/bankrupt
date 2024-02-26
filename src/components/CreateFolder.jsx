@@ -29,6 +29,7 @@ const CreateFolder = ({ isPopupOpen, onClose, updateFolders }) => {
     onClose();
     setFolderName("");
   };
+
   return (
     <Popup isPopupOpen={isPopupOpen} component="form">
       <IconButton

@@ -17,6 +17,8 @@ const Folder = ({ folders }) => {
 
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  //filters (feature for backlog)
   const [isFiltered, setIsFiltered] = useState(false);
 
   const getFavorites = () => {
@@ -33,41 +35,42 @@ const Folder = ({ folders }) => {
       });
   };
 
-  useEffect(getFavorites, [loading]);
+  useEffect(getFavorites, [folder]);
 
-  const handleFilterSubmit = (event) => {
-    if (event) {
-      //if filters form submit
-      event.preventDefault();
-      const filters = Array.from(new FormData(event.currentTarget));
-      filters.push(["folderId", `${id}`]);
-      // console.log(filters);
-      api
-        .getFavorites(filters)
-        .then((data) => {
-          if (data.status === "success") {
-            setFavorites(data.data);
-            setIsFiltered(true);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      //if filters form reset
-      api
-        .getFavorites()
-        .then((data) => {
-          if (data.status === "success") {
-            setFavorites(data.data);
-            setIsFiltered(true);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  };
+  //filters (feature for backlog)
+  // const handleFilterSubmit = (event) => {
+  //   if (event) {
+  //     //if filters form submit
+  //     event.preventDefault();
+  //     const filters = Array.from(new FormData(event.currentTarget));
+  //     filters.push(["folderId", `${id}`]);
+  //     // console.log(filters);
+  //     api
+  //       .getFavorites(filters)
+  //       .then((data) => {
+  //         if (data.status === "success") {
+  //           setFavorites(data.data);
+  //           setIsFiltered(true);
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   } else {
+  //     //if filters form reset
+  //     api
+  //       .getFavorites()
+  //       .then((data) => {
+  //         if (data.status === "success") {
+  //           setFavorites(data.data);
+  //           setIsFiltered(true);
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   }
+  // };
 
   return (
     <Container
@@ -121,7 +124,8 @@ const Folder = ({ folders }) => {
         </Box>
       ) : (
         <>
-          <Filters data={favorites} onFilterSubmit={handleFilterSubmit} />
+          {/* filters (feature for backlog) */}
+          {/* <Filters data={favorites} onFilterSubmit={handleFilterSubmit} /> */}
           <DocumentsList
             data={favorites}
             inFavorites={true}

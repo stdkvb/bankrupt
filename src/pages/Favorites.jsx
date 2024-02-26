@@ -63,6 +63,11 @@ const Favorites = ({ folders }) => {
     }
   };
 
+  //update data after delete from favorites
+  const updateFavorites = () => {
+    getFavorites;
+  };
+
   return (
     <Container
       maxWidth="false"
@@ -115,11 +120,14 @@ const Favorites = ({ folders }) => {
         </Box>
       ) : (
         <>
-          <Filters data={favorites} onFilterSubmit={handleFilterSubmit} />
+          {favorites.filterParamsList && (
+            <Filters data={favorites} onFilterSubmit={handleFilterSubmit} />
+          )}
           <DocumentsList
             data={favorites}
             inFavorites={true}
             folders={folders}
+            updateFavorites={updateFavorites}
           />
         </>
       )}

@@ -26,6 +26,7 @@ const DocumentsList = ({
   folders,
   folderId,
   updateFolders,
+  updateFavorites,
 }) => {
   const [currentDocument, setCurrentDocument] = useState(null);
 
@@ -79,6 +80,10 @@ const DocumentsList = ({
       .removeFromFavorites(currentDocument.id, folderId)
       .then((data) => {
         if (data.status === "success") {
+          setIsRemoved(true);
+          () => {
+            updateFavorites;
+          };
         } else {
           alert("Ошибка сервера, попробуйте позже");
         }
@@ -86,7 +91,6 @@ const DocumentsList = ({
       .catch((error) => {
         console.log(error);
       });
-    setIsRemoved(true);
   };
 
   //send to mail
@@ -333,9 +337,9 @@ const DocumentsList = ({
             Скачать
           </MenuItem>
         )}
-        <Divider />
         {inFavorites ? (
           <div>
+            <Divider />
             <MenuItem
               onClick={() => {
                 setMoveToFolder(true);
@@ -355,13 +359,19 @@ const DocumentsList = ({
             </MenuItem>
           </div>
         ) : (
-          <MenuItem
-            onClick={() => {
-              setAddToFavorites(true);
-            }}
-          >
-            Добавить в избранное
-          </MenuItem>
+          currentDocument &&
+          !currentDocument.inFavourite && (
+            <div>
+              <Divider />
+              <MenuItem
+                onClick={() => {
+                  setAddToFavorites(true);
+                }}
+              >
+                Добавить в избранное
+              </MenuItem>
+            </div>
+          )
         )}
       </Menu>
 
@@ -512,9 +522,22 @@ const DocumentsList = ({
             }}
             control={
               <Checkbox
-                defaultChecked
                 value="0"
-                onChange={(e) => checkedFolders.push(e.target.value)}
+                onChange={(e) => {
+                  // Check if the element exists in the array
+                  let index = checkedFolders.indexOf(e.target.value);
+
+                  if (index !== -1) {
+                    // If element exists, remove it from the array
+                    checkedFolders.splice(index, 1);
+                    console.log("Element deleted from array:", e.target.value);
+                  } else {
+                    // If element doesn't exist, add it to the array
+                    checkedFolders.push(e.target.value);
+                    console.log("Element added to array:", e.target.value);
+                  }
+                  console.log(checkedFolders);
+                }}
               />
             }
             label={<Typography display="inline">Общая папка</Typography>}
@@ -529,7 +552,32 @@ const DocumentsList = ({
                 control={
                   <Checkbox
                     value={folder.id}
-                    onChange={(e) => checkedFolders.push(e.target.value)}
+                    onChange={(e) => {
+                      // Check if the element exists in the array
+                      let index = checkedFolders.indexOf(e.target.value);
+
+                      if (index !== -1) {
+                        // If element exists, remove it from the array
+                        checkedFolders.splice(index, 1);
+                        console.log(
+                          "Element deleted from array:",
+                          e.target.value
+                        );
+                      } else {
+                        // If element doesn't exist, add it to the array
+                        checkedFolders.push(e.target.value);
+                        console.log("Element added to array:", e.target.value);
+                      }
+                      console.log(checkedFolders.length);
+                    }}
+                    disabled={
+                      currentDocument &&
+                      currentDocument.favouriteFolderId == folder.id
+                    }
+                    defaultChecked={
+                      currentDocument &&
+                      currentDocument.favouriteFolderId == folder.id
+                    }
                   />
                 }
                 label={<Typography display="inline">{folder.name}</Typography>}
