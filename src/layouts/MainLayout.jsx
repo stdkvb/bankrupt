@@ -541,59 +541,61 @@ export default function MainLayout({
                     overflowY: folders.length > 4 ? "scroll" : "unset",
                   }}
                 >
-                  {folders.map((folder, i) => {
-                    return (
-                      <ListItemButton
-                        key={i}
-                        sx={{
-                          pl: [4],
-                          pr: [0],
-                          gap: [1],
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <Link
-                          component={RouterLink}
-                          to={`/favorites/${folder.id}`}
+                  {folders
+                    .filter((folder) => folder.main == false)
+                    .map((folder, i) => {
+                      return (
+                        <ListItemButton
+                          key={i}
                           sx={{
-                            display: "flex",
-                            overflow: "hidden",
-                            alignItems: "center",
-                            textDecoration: "none !important",
+                            pl: [4],
+                            pr: [0],
+                            gap: [1],
+                            justifyContent: "space-between",
                           }}
                         >
-                          <ListItemIcon sx={{ minWidth: "40px" }}>
-                            <FolderOutlinedIcon />
-                          </ListItemIcon>
-                          <ListItemText
-                            primary={folder.name}
+                          <Link
+                            component={RouterLink}
+                            to={`/favorites/${folder.id}`}
                             sx={{
-                              "& span": {
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
+                              display: "flex",
+                              overflow: "hidden",
+                              alignItems: "center",
+                              textDecoration: "none !important",
+                            }}
+                          >
+                            <ListItemIcon sx={{ minWidth: "40px" }}>
+                              <FolderOutlinedIcon />
+                            </ListItemIcon>
+                            <ListItemText
+                              primary={folder.name}
+                              sx={{
+                                "& span": {
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                },
+                              }}
+                              title={folder.name}
+                            />
+                          </Link>
+                          <IconButton
+                            onClick={(event) => {
+                              setCurrentFolder(folder.id);
+                              setIsFolderMenuOpen(event.currentTarget);
+                            }}
+                            sx={{
+                              display: {
+                                xs: "none",
+                                md: "block",
+                                height: "40px",
                               },
                             }}
-                            title={folder.name}
-                          />
-                        </Link>
-                        <IconButton
-                          onClick={(event) => {
-                            setCurrentFolder(folder.id);
-                            setIsFolderMenuOpen(event.currentTarget);
-                          }}
-                          sx={{
-                            display: {
-                              xs: "none",
-                              md: "block",
-                              height: "40px",
-                            },
-                          }}
-                        >
-                          <MoreVertIcon />
-                        </IconButton>
-                      </ListItemButton>
-                    );
-                  })}
+                          >
+                            <MoreVertIcon />
+                          </IconButton>
+                        </ListItemButton>
+                      );
+                    })}
                   <Menu
                     anchorEl={isFolderMenuOpen}
                     id="folder-menu"
@@ -736,40 +738,6 @@ export default function MainLayout({
           )}
         </Box>
       </Box>
-      {/* <Popup isPopupOpen={createFolder} component="form">
-        <IconButton
-          onClick={() => {
-            setCreateFolder(false);
-          }}
-          sx={{
-            position: "absolute",
-            right: { xs: 1, md: 2 },
-            top: { xs: 1, md: 2 },
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-        <Typography variant="h4" mb={3}>
-          Создать папку
-        </Typography>
-        <Box component="form" onSubmit={handleCreateFolder}>
-          <TextField
-            label="Название папки"
-            variant="standard"
-            size="medium"
-            fullWidth
-            id="folderName"
-            name="folderName"
-            sx={{ mb: 2 }}
-            required
-            value={folderName}
-            onChange={(e) => setFolderName(e.target.value)}
-          />
-          <Button variant="contained" fullWidth sx={{ mt: 4 }} type="submit">
-            Создать
-          </Button>
-        </Box>
-      </Popup> */}
       <CreateFolder
         isPopupOpen={createFolder}
         onClose={handleCloseCreateFolders}

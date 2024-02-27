@@ -131,6 +131,7 @@ const Folder = ({ folders }) => {
             inFavorites={true}
             folderId={id}
             folders={folders}
+            updateFavorites={getFavorites}
           />
         </>
       )}

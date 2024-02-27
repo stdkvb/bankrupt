@@ -105,7 +105,7 @@ class Api {
   addToFavorites(documentId, folderId) {
     const body = new FormData();
     body.set("documentId", documentId);
-    body.set("folderId", folderId);
+    folderId.forEach((item) => body.append("folders[]", item));
     return fetch(`${this._url}/favourites/add`, {
       method: "POST",
       headers: {
@@ -119,7 +119,9 @@ class Api {
   removeFromFavorites(documentId, folderId) {
     const body = new FormData();
     body.set("documentId", documentId);
-    body.set("folderId", folderId);
+    if (folderId) {
+      body.set("folderId", folderId);
+    }
     return fetch(`${this._url}/favourites/delete`, {
       method: "POST",
       headers: {
@@ -130,10 +132,11 @@ class Api {
     }).then(Api.handleResponse);
   }
 
-  moveToFolder(documentId, folderId) {
+  moveToFolder(documentId, folderId, toFolders) {
     const body = new FormData();
     body.set("documentId", documentId);
-    body.set("folderId", folderId);
+    body.append("fromFolders[]", folderId);
+    toFolders.forEach((item) => body.append("toFolders[]", item));
     return fetch(`${this._url}/favourites/replace`, {
       method: "POST",
       headers: {
@@ -242,23 +245,6 @@ class Api {
       body,
     }).then(Api.handleResponse);
   }
-
-  // getUserInfo() {
-  //   return fetch(`${this._url}/users/me`, {
-  //     method: "GET",
-  //     headers: this._headers,
-  //     credentials: "include",
-  //   }).then(Api.handleResponse);
-  // }
-
-  // updateUser(name, email) {
-  //   return fetch(`${this._url}/users/me`, {
-  //     method: "PATCH",
-  //     headers: this._headers,
-  //     credentials: "include",
-  //     body: JSON.stringify({ name, email }),
-  //   }).then(Api.handleResponse);
-  // }
 }
 
 const api = new Api({

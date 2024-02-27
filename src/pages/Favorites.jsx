@@ -15,9 +15,12 @@ const Favorites = ({ folders }) => {
   const [loading, setLoading] = useState(true);
   const [isFiltered, setIsFiltered] = useState(false);
 
+  //find main folder
+  let mainFolder = folders.find((folder) => folder.main == true);
+
   const getFavorites = () => {
     api
-      .getFavorites()
+      .getFavorites([["folderId", mainFolder.id]])
       .then((data) => {
         if (data.status === "success") {
           setFavorites(data.data);
@@ -61,11 +64,6 @@ const Favorites = ({ folders }) => {
           console.log(error);
         });
     }
-  };
-
-  //update data after delete from favorites
-  const updateFavorites = () => {
-    getFavorites;
   };
 
   return (
@@ -127,7 +125,8 @@ const Favorites = ({ folders }) => {
             data={favorites}
             inFavorites={true}
             folders={folders}
-            updateFavorites={updateFavorites}
+            folderId={mainFolder.id}
+            updateFavorites={getFavorites}
           />
         </>
       )}

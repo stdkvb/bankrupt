@@ -74,8 +74,8 @@ const AuthLayout = () => {
             flexDirection: { xs: "column", md: "row" },
           }}
         >
-          <Typography>Техническая поддержка:</Typography>
-          <Link href="mailto:info@example.ru">info@example.ru</Link>
+          <Typography>Техническая поддержка:&nbsp;</Typography>
+          <Link href="mailto:support@bvestnik.ru">support@bvestnik.ru</Link>
         </Box>
 
         <Box sx={{ display: "flex", gap: 1 }}>

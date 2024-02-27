@@ -169,6 +169,7 @@ export default function App() {
                 loading={loading}
                 folders={folders}
                 updateFolders={getFolders}
+                updateCatalog={getAccess}
               />
             }
           />

@@ -148,7 +148,7 @@ const PasswordRecovery = () => {
           fullWidth
           sx={{ mt: 4 }}
           onClick={() => {
-            setIsSucccess(false);
+            setIsSuccess(false);
           }}
         >
           Закрыть

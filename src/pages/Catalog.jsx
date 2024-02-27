@@ -5,7 +5,14 @@ import Container from "@mui/material/Container";
 import Filters from "../components/Filters";
 import DocumentsList from "../components/DocumentsList";
 
-const Catalog = ({ title, data, onFilterSubmit, folders, updateFolders }) => {
+const Catalog = ({
+  title,
+  data,
+  onFilterSubmit,
+  folders,
+  updateFolders,
+  updateCatalog,
+}) => {
   return (
     <Container
       maxWidth="false"
@@ -26,6 +33,7 @@ const Catalog = ({ title, data, onFilterSubmit, folders, updateFolders }) => {
         inFavorites={false}
         folders={folders}
         updateFolders={updateFolders}
+        updateCatalog={updateCatalog}
       />
     </Container>
   );

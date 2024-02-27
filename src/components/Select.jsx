@@ -1,7 +1,7 @@
 import * as React from "react";
 import Input from "@mui/material/Input";
 import FormControl from "@mui/material/FormControl";
-import Autocomplete from "@mui/material/Autocomplete";
+import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import { matchSorter } from "match-sorter";
 import TextField from "@mui/material/TextField";
 
@@ -13,10 +13,6 @@ export default function Select({ name, title, tags, onReset }) {
   };
   React.useEffect(resetFilters, [onReset]);
 
-  //sort tags
-  const filterOptions = (options, { inputValue }) =>
-    matchSorter(options, inputValue);
-
   return (
     <FormControl sx={{ width: "100%" }}>
       <Autocomplete
@@ -25,8 +21,7 @@ export default function Select({ name, title, tags, onReset }) {
         multiple
         limitTags={1}
         size="small"
-        filterOptions={filterOptions}
-        options={tags}
+        options={tags.sort()}
         getOptionLabel={(option) => option}
         renderInput={(params) => (
           <TextField
