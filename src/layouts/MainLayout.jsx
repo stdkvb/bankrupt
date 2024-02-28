@@ -565,6 +565,9 @@ export default function MainLayout({
                     .map((folder, i) => {
                       return (
                         <ListItemButton
+                          className={activateMenuItem(
+                            `/favorites/${folder.id}`
+                          )}
                           key={i}
                           sx={{
                             pl: [4],
