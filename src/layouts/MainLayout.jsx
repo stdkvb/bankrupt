@@ -568,7 +568,7 @@ export default function MainLayout({
                           key={i}
                           sx={{
                             pl: [4],
-                            pr: [0],
+                            pr: [1],
                             gap: [1],
                             justifyContent: "space-between",
                           }}
@@ -612,11 +612,8 @@ export default function MainLayout({
                               }
                             }}
                             sx={{
-                              display: {
-                                xs: "none",
-                                md: "block",
-                                height: "40px",
-                              },
+                              display: "block",
+                              height: "40px",
                             }}
                           >
                             <MoreVertIcon />
