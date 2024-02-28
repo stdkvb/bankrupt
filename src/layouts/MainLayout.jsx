@@ -818,7 +818,13 @@ export default function MainLayout({
             value={folderName}
             onChange={(e) => setFolderName(e.target.value)}
           />
-          <Button variant="contained" fullWidth sx={{ mt: 4 }} type="submit">
+          <Button
+            variant="contained"
+            fullWidth
+            sx={{ mt: 4 }}
+            type="submit"
+            disabled={!folderName}
+          >
             Применить
           </Button>
         </Box>
