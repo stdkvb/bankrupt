@@ -91,6 +91,15 @@ let theme = createTheme({
         },
       },
     },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          ".Mui-disabled": {
+            pointerEvents: "none",
+          },
+        },
+      },
+    },
   },
 });
 

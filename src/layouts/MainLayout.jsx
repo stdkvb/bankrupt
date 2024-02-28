@@ -203,7 +203,7 @@ export default function MainLayout({
   const [foldersList, setFoldersList] = useState(
     folders.filter((folder) => folder.main == true)
   );
-  // console.log(folders);
+
   //moving folders up and down in list
   const handleFolderUp = (id) => {
     setFoldersList(folders);
@@ -256,6 +256,10 @@ export default function MainLayout({
         console.log(error);
       });
   };
+
+  //disable up down button
+  const [isFolderFirst, setIsFolderFirst] = useState(false);
+  const [isFolderLast, setIsFolderLast] = useState(false);
 
   return (
     <>
@@ -600,6 +604,14 @@ export default function MainLayout({
                             onClick={(event) => {
                               setCurrentFolder(folder.id);
                               setIsFolderMenuOpen(event.currentTarget);
+                              //disable buttons up/down for first and last folder
+                              if (i == 0) {
+                                console.log(i);
+                                setIsFolderFirst(true);
+                              }
+                              if (i == folders.length - 2) {
+                                setIsFolderLast(true);
+                              }
                             }}
                             sx={{
                               display: {
@@ -620,9 +632,13 @@ export default function MainLayout({
                     open={openFolderMenu}
                     onClose={() => {
                       setIsFolderMenuOpen(null);
+                      setIsFolderFirst(false);
+                      setIsFolderLast(false);
                     }}
                     onClick={() => {
                       setIsFolderMenuOpen(null);
+                      setIsFolderFirst(false);
+                      setIsFolderLast(false);
                     }}
                     PaperProps={{
                       elevation: 0,
@@ -653,6 +669,7 @@ export default function MainLayout({
                       onClick={() => {
                         handleFolderUp(currentFolder);
                       }}
+                      disabled={isFolderFirst}
                     >
                       Переместить вверх
                     </MenuItem>
@@ -660,6 +677,7 @@ export default function MainLayout({
                       onClick={() => {
                         handleFolderDown(currentFolder);
                       }}
+                      disabled={isFolderLast}
                     >
                       Переместить вниз
                     </MenuItem>
