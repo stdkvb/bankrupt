@@ -207,24 +207,12 @@ class Api {
     }).then(Api.handleResponse);
   }
 
-  folderUp(folderId) {
+  sendFolders(foldersList) {
     const body = new FormData();
-    body.set("upFolderId", folderId);
-    return fetch(`${this._url}/favourites/menu`, {
-      method: "PATCH",
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      credentials: "include",
-      body,
-    }).then(Api.handleResponse);
-  }
-
-  folderDown(folderId) {
-    const body = new FormData();
-    body.set("downFolderId", folderId);
-    return fetch(`${this._url}/favourites/menu`, {
-      method: "PATCH",
+    // console.log(foldersList);
+    foldersList.forEach((item) => body.append("folders[]", item.id));
+    return fetch(`${this._url}/favourites/folders/order`, {
+      method: "POST",
       headers: {
         authorization: `Bearer ${localStorage.getItem("token")}`,
       },

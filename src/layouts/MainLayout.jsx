@@ -113,10 +113,10 @@ export default function MainLayout({
   updateFolders,
 }) {
   const navigate = useNavigate();
+
   //current page
   let location = useLocation();
   const pathName = location.pathname;
-  // console.log(pathName);
   function activateMenuItem(pathname) {
     if (pathname === pathName) {
       return "active";
@@ -159,24 +159,6 @@ export default function MainLayout({
     setCreateFolder(false);
   };
 
-  // const handleCreateFolder = (event) => {
-  //   event.preventDefault();
-  //   api
-  //     .createFolder(folderName)
-  //     .then((data) => {
-  //       if (data.status === "success") {
-  //         updateFolders();
-  //       } else {
-  //         alert("Ошибка сервера, попробуйте позже");
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  //   setCreateFolder(false);
-  //   setFolderName("");
-  // };
-
   //rename folder
   const [renameFolder, setRenameFolder] = useState(false);
 
@@ -217,13 +199,29 @@ export default function MainLayout({
     setDeleteFolder(false);
   };
 
-  //moving folders
-  const handleFolderUp = () => {
+  //folders list
+  const [foldersList, setFoldersList] = useState(
+    folders.filter((folder) => folder.main == true)
+  );
+  // console.log(folders);
+  //moving folders up and down in list
+  const handleFolderUp = (id) => {
+    setFoldersList(folders);
+    for (let i = 1; i < foldersList.length; i++) {
+      if (foldersList[i].id === id) {
+        // Swap objects
+        let temp = foldersList[i - 1];
+        foldersList[i - 1] = foldersList[i];
+        foldersList[i] = temp;
+        break; // Stop loop after swapping
+      }
+    }
+
     api
-      .folderUp(currentFolder)
+      .sendFolders(foldersList)
       .then((data) => {
         if (data.status === "success") {
-          updateFolders();
+          setFoldersList(foldersList);
         } else {
           alert("Ошибка сервера, попробуйте позже");
         }
@@ -232,12 +230,24 @@ export default function MainLayout({
         console.log(error);
       });
   };
-  const handleFolderDown = () => {
+
+  const handleFolderDown = (id) => {
+    setFoldersList(folders);
+    for (let i = 0; i < foldersList.length - 1; i++) {
+      if (foldersList[i].id === id) {
+        // Swap objects
+        let temp = foldersList[i + 1];
+        foldersList[i + 1] = foldersList[i];
+        foldersList[i] = temp;
+        break; // Stop loop after swapping
+      }
+    }
+
     api
-      .folderDown(currentFolder)
+      .sendFolders(foldersList)
       .then((data) => {
         if (data.status === "success") {
-          updateFolders();
+          setFoldersList(foldersList);
         } else {
           alert("Ошибка сервера, попробуйте позже");
         }
@@ -423,7 +433,7 @@ export default function MainLayout({
               sx={{ my: [3], px: [4], py: 0, display: { md: "none" } }}
               component={RouterLink}
               to={"/profile"}
-              onClick={mobile && toggleDrawer}
+              onClick={mobile ? toggleDrawer : () => {}}
             >
               <ListItemIcon>
                 <Avatar {...stringAvatar("Kent Dodds")} />
@@ -441,7 +451,7 @@ export default function MainLayout({
               sx={{ px: [4] }}
               component={RouterLink}
               to={"/"}
-              onClick={mobile && toggleDrawer}
+              onClick={mobile ? toggleDrawer : () => {}}
             >
               <ListItemIcon>
                 <LayersIcon />
@@ -463,7 +473,7 @@ export default function MainLayout({
                   component={RouterLink}
                   to="/wiki"
                   sx={{ display: "flex", textDecoration: "none !important" }}
-                  onClick={mobile && toggleDrawer}
+                  onClick={mobile ? toggleDrawer : () => {}}
                 >
                   <ListItemIcon sx={{ height: "24px" }}>
                     <FolderIcon />
@@ -486,7 +496,7 @@ export default function MainLayout({
               <AccordionDetails sx={{ p: 0 }}>
                 <ListItemButton
                   sx={{ px: [4] }}
-                  onClick={mobile && toggleDrawer}
+                  onClick={mobile ? toggleDrawer : () => {}}
                 >
                   <ListItemIcon>
                     <DescriptionOutlinedIcon />
@@ -510,7 +520,7 @@ export default function MainLayout({
                   component={RouterLink}
                   to="/favorites"
                   sx={{ display: "flex", textDecoration: "none !important" }}
-                  onClick={mobile && toggleDrawer}
+                  onClick={mobile ? toggleDrawer : () => {}}
                 >
                   <ListItemIcon sx={{ height: "24px" }}>
                     <BookmarkIcon />
@@ -570,7 +580,7 @@ export default function MainLayout({
                               alignItems: "center",
                               textDecoration: "none !important",
                             }}
-                            onClick={mobile && toggleDrawer}
+                            onClick={mobile ? toggleDrawer : () => {}}
                           >
                             <ListItemIcon sx={{ minWidth: "40px" }}>
                               <FolderOutlinedIcon />
@@ -639,10 +649,18 @@ export default function MainLayout({
                       vertical: "bottom",
                     }}
                   >
-                    <MenuItem onClick={handleFolderUp}>
+                    <MenuItem
+                      onClick={() => {
+                        handleFolderUp(currentFolder);
+                      }}
+                    >
                       Переместить вверх
                     </MenuItem>
-                    <MenuItem onClick={handleFolderDown}>
+                    <MenuItem
+                      onClick={() => {
+                        handleFolderDown(currentFolder);
+                      }}
+                    >
                       Переместить вниз
                     </MenuItem>
                     <Divider />
@@ -670,7 +688,7 @@ export default function MainLayout({
               sx={{ px: [4] }}
               component={RouterLink}
               to={"/news"}
-              onClick={mobile && toggleDrawer}
+              onClick={mobile ? toggleDrawer : () => {}}
             >
               <ListItemIcon>
                 <DescriptionIcon />
@@ -682,7 +700,7 @@ export default function MainLayout({
               sx={{ px: [4] }}
               component={RouterLink}
               to={"/rates"}
-              onClick={mobile && toggleDrawer}
+              onClick={mobile ? toggleDrawer : () => {}}
             >
               <ListItemIcon>
                 <DashboardIcon />
@@ -694,7 +712,7 @@ export default function MainLayout({
               sx={{ px: [4] }}
               component={RouterLink}
               to={"/qa"}
-              onClick={mobile && toggleDrawer}
+              onClick={mobile ? toggleDrawer : () => {}}
             >
               <ListItemIcon>
                 <HelpIcon />
@@ -706,7 +724,7 @@ export default function MainLayout({
               sx={{ px: [4] }}
               component={RouterLink}
               to={"/contacts"}
-              onClick={mobile && toggleDrawer}
+              onClick={mobile ? toggleDrawer : () => {}}
             >
               <ListItemIcon>
                 <MapIcon />

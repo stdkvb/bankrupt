@@ -32,10 +32,21 @@ export default function App() {
   const [catalog, setCatalog] = useState([]);
   const [errors, setErrors] = useState([]);
   const [folders, setFolders] = useState([]);
-  const [mainFolder, setMainFolder] = useState();
+  const [mainFolder, setMainFolder] = useState({});
 
   //load catalog
   const getAccess = () => {
+    api
+      .getFolders()
+      .then((data) => {
+        if (data.status === "success") {
+          setFolders(data.data);
+          setMainFolder(data.data.filter((folder) => folder.main == true)[0]);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     api
       .getCatalog()
       .then((data) => {
@@ -53,21 +64,20 @@ export default function App() {
   };
   useEffect(getAccess, []);
 
-  //load folders
-  const getFolders = () => {
+  //update folders
+  const updateFolders = () => {
     api
       .getFolders()
       .then((data) => {
         if (data.status === "success") {
           setFolders(data.data);
-          setMainFolder(data.data[0]);
+          setMainFolder(data.data.filter((folder) => folder.main == true)[0]);
         }
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  useEffect(getFolders, []);
 
   //login
   const handleLoginSubmit = ({ login, password }) => {
@@ -156,7 +166,7 @@ export default function App() {
               loading={loading}
               onLogout={handleLogout}
               folders={folders}
-              updateFolders={getFolders}
+              updateFolders={updateFolders}
             />
           }
         >
@@ -170,14 +180,20 @@ export default function App() {
                 onFilterSubmit={handleFilterSubmit}
                 loading={loading}
                 folders={folders}
-                updateFolders={getFolders}
+                updateFolders={updateFolders}
                 updateCatalog={getAccess}
               />
             }
           />
           <Route
             path="favorites"
-            element={<Favorites folders={folders} mainFolder={mainFolder} />}
+            element={
+              <Favorites
+                loading={loading}
+                folders={folders}
+                mainFolder={mainFolder}
+              />
+            }
           />
           <Route path="favorites/:id" element={<Folder folders={folders} />} />
           <Route path="profile" element={<Profile />} />

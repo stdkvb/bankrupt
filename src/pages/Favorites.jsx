@@ -12,8 +12,8 @@ import api from "../utils/Api";
 
 const Favorites = ({ folders, mainFolder }) => {
   const [favorites, setFavorites] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [isFiltered, setIsFiltered] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const getFavorites = () => {
     api
@@ -21,14 +21,14 @@ const Favorites = ({ folders, mainFolder }) => {
       .then((data) => {
         if (data.status === "success") {
           setFavorites(data.data);
+          setLoading(false);
         }
-        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  useEffect(getFavorites, [loading]);
+  useEffect(getFavorites, []);
 
   const handleFilterSubmit = (event) => {
     if (event) {
