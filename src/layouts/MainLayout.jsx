@@ -200,9 +200,7 @@ export default function MainLayout({
   };
 
   //folders list
-  const [foldersList, setFoldersList] = useState(
-    folders.filter((folder) => folder.main == true)
-  );
+  const [foldersList, setFoldersList] = useState(folders);
 
   //moving folders up and down in list
   const handleFolderUp = (id) => {
