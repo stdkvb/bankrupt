@@ -10,13 +10,10 @@ import DocumentsList from "../components/DocumentsList";
 
 import api from "../utils/Api";
 
-const Favorites = ({ folders }) => {
+const Favorites = ({ folders, mainFolder }) => {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isFiltered, setIsFiltered] = useState(false);
-
-  //find main folder
-  let mainFolder = folders.find((folder) => folder.main == true);
 
   const getFavorites = () => {
     api

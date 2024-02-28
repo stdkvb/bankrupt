@@ -32,6 +32,7 @@ export default function App() {
   const [catalog, setCatalog] = useState([]);
   const [errors, setErrors] = useState([]);
   const [folders, setFolders] = useState([]);
+  const [mainFolder, setMainFolder] = useState();
 
   //load catalog
   const getAccess = () => {
@@ -59,6 +60,7 @@ export default function App() {
       .then((data) => {
         if (data.status === "success") {
           setFolders(data.data);
+          setMainFolder(data.data[0]);
         }
       })
       .catch((error) => {
@@ -173,7 +175,10 @@ export default function App() {
               />
             }
           />
-          <Route path="favorites" element={<Favorites folders={folders} />} />
+          <Route
+            path="favorites"
+            element={<Favorites folders={folders} mainFolder={mainFolder} />}
+          />
           <Route path="favorites/:id" element={<Folder folders={folders} />} />
           <Route path="profile" element={<Profile />} />
           <Route path="rates" element={<Rates />} />

@@ -423,6 +423,7 @@ export default function MainLayout({
               sx={{ my: [3], px: [4], py: 0, display: { md: "none" } }}
               component={RouterLink}
               to={"/profile"}
+              onClick={mobile && toggleDrawer}
             >
               <ListItemIcon>
                 <Avatar {...stringAvatar("Kent Dodds")} />
@@ -440,6 +441,7 @@ export default function MainLayout({
               sx={{ px: [4] }}
               component={RouterLink}
               to={"/"}
+              onClick={mobile && toggleDrawer}
             >
               <ListItemIcon>
                 <LayersIcon />
@@ -461,6 +463,7 @@ export default function MainLayout({
                   component={RouterLink}
                   to="/wiki"
                   sx={{ display: "flex", textDecoration: "none !important" }}
+                  onClick={mobile && toggleDrawer}
                 >
                   <ListItemIcon sx={{ height: "24px" }}>
                     <FolderIcon />
@@ -481,7 +484,10 @@ export default function MainLayout({
                 ></AccordionSummary>
               </ListItemButton>
               <AccordionDetails sx={{ p: 0 }}>
-                <ListItemButton sx={{ px: [4] }}>
+                <ListItemButton
+                  sx={{ px: [4] }}
+                  onClick={mobile && toggleDrawer}
+                >
                   <ListItemIcon>
                     <DescriptionOutlinedIcon />
                   </ListItemIcon>
@@ -504,6 +510,7 @@ export default function MainLayout({
                   component={RouterLink}
                   to="/favorites"
                   sx={{ display: "flex", textDecoration: "none !important" }}
+                  onClick={mobile && toggleDrawer}
                 >
                   <ListItemIcon sx={{ height: "24px" }}>
                     <BookmarkIcon />
@@ -563,6 +570,7 @@ export default function MainLayout({
                               alignItems: "center",
                               textDecoration: "none !important",
                             }}
+                            onClick={mobile && toggleDrawer}
                           >
                             <ListItemIcon sx={{ minWidth: "40px" }}>
                               <FolderOutlinedIcon />
@@ -662,6 +670,7 @@ export default function MainLayout({
               sx={{ px: [4] }}
               component={RouterLink}
               to={"/news"}
+              onClick={mobile && toggleDrawer}
             >
               <ListItemIcon>
                 <DescriptionIcon />
@@ -673,6 +682,7 @@ export default function MainLayout({
               sx={{ px: [4] }}
               component={RouterLink}
               to={"/rates"}
+              onClick={mobile && toggleDrawer}
             >
               <ListItemIcon>
                 <DashboardIcon />
@@ -684,6 +694,7 @@ export default function MainLayout({
               sx={{ px: [4] }}
               component={RouterLink}
               to={"/qa"}
+              onClick={mobile && toggleDrawer}
             >
               <ListItemIcon>
                 <HelpIcon />
@@ -695,6 +706,7 @@ export default function MainLayout({
               sx={{ px: [4] }}
               component={RouterLink}
               to={"/contacts"}
+              onClick={mobile && toggleDrawer}
             >
               <ListItemIcon>
                 <MapIcon />

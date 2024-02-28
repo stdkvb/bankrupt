@@ -96,7 +96,6 @@ const DocumentsList = ({
   const [isMoved, setIsMoved] = useState(false);
 
   const handleMoveToFolder = () => {
-    console.log(folderId);
     api
       .moveToFolder(currentDocument.id, folderId, checkedFolders)
       .then((data) => {
@@ -144,9 +143,6 @@ const DocumentsList = ({
 
   //disable form
   const [folderChecked, setFolderChecked] = useState(false);
-
-  //find main folder and make default check
-  let mainFolder = folders.find((folder) => folder.main == true);
 
   return (
     <>
