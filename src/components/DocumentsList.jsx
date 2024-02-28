@@ -144,6 +144,16 @@ const DocumentsList = ({
   //disable form
   const [folderChecked, setFolderChecked] = useState(false);
 
+  //sort folder list
+  function moveMainFolderToTop(array) {
+    const index = array.findIndex((element) => element.main === true);
+    if (index !== -1) {
+      const element = array.splice(index, 1)[0];
+      array.unshift(element);
+    }
+    return array;
+  }
+
   return (
     <>
       <Paper
@@ -524,7 +534,7 @@ const DocumentsList = ({
             flexDirection: "column",
           }}
         >
-          {folders.map((folder) => {
+          {moveMainFolderToTop(folders).map((folder) => {
             return (
               <FormControlLabel
                 key={folder.id}
@@ -673,7 +683,7 @@ const DocumentsList = ({
             flexDirection: "column",
           }}
         >
-          {folders.map((folder) => {
+          {moveMainFolderToTop(folders).map((folder) => {
             return (
               <FormControlLabel
                 key={folder.id}
