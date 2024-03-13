@@ -192,10 +192,14 @@ export default function App() {
                 loading={loading}
                 folders={folders}
                 mainFolder={mainFolder}
+                updateFolders={updateFolders}
               />
             }
           />
-          <Route path="favorites/:id" element={<Folder folders={folders} />} />
+          <Route
+            path="favorites/:id"
+            element={<Folder folders={folders} updateFolders={updateFolders} />}
+          />
           <Route path="profile" element={<Profile />} />
           <Route path="rates" element={<Rates />} />
           <Route path="wiki" element={<Wiki />} />

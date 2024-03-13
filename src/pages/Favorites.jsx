@@ -10,7 +10,7 @@ import DocumentsList from "../components/DocumentsList";
 
 import api from "../utils/Api";
 
-const Favorites = ({ folders, mainFolder }) => {
+const Favorites = ({ folders, mainFolder, updateFolders }) => {
   const [favorites, setFavorites] = useState([]);
   const [isFiltered, setIsFiltered] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -123,6 +123,7 @@ const Favorites = ({ folders, mainFolder }) => {
             inFavorites={true}
             folders={folders}
             folderId={mainFolder.id}
+            updateFolders={updateFolders}
             updateFavorites={getFavorites}
           />
         </>

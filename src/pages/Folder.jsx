@@ -11,7 +11,7 @@ import DocumentsList from "../components/DocumentsList";
 
 import api from "../utils/Api";
 
-const Folder = ({ folders }) => {
+const Folder = ({ folders, updateFolders }) => {
   let { id } = useParams();
   const folder = folders.find((folder) => folder.id == id);
 
@@ -132,6 +132,7 @@ const Folder = ({ folders }) => {
             folderId={id}
             folders={folders}
             updateFavorites={getFavorites}
+            updateFolders={updateFolders}
           />
         </>
       )}
