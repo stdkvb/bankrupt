@@ -193,12 +193,19 @@ export default function App() {
                 folders={folders}
                 mainFolder={mainFolder}
                 updateFolders={updateFolders}
+                updateCatalog={getAccess}
               />
             }
           />
           <Route
             path="favorites/:id"
-            element={<Folder folders={folders} updateFolders={updateFolders} />}
+            element={
+              <Folder
+                folders={folders}
+                updateFolders={updateFolders}
+                updateCatalog={getAccess}
+              />
+            }
           />
           <Route path="profile" element={<Profile />} />
           <Route path="rates" element={<Rates />} />

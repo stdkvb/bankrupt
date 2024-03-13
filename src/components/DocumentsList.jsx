@@ -61,7 +61,8 @@ const DocumentsList = ({
       .then((data) => {
         if (data.status === "success") {
           setIsInFavorites(!isInFavorites);
-          inFavorites ? updateFavorites() : updateCatalog();
+          updateCatalog();
+          updateFavorites();
         } else {
           alert("Ошибка сервера, попробуйте позже");
         }
@@ -82,6 +83,8 @@ const DocumentsList = ({
         if (data.status === "success") {
           //success notification
           setIsRemoved(true);
+          updateCatalog();
+          updateFavorites();
         } else {
           alert("Ошибка сервера, попробуйте позже");
         }
@@ -102,7 +105,8 @@ const DocumentsList = ({
         if (data.status === "success") {
           //success notification
           setIsMoved(true);
-          inFavorites ? updateFavorites() : updateCatalog();
+          updateCatalog();
+          updateFavorites();
         } else {
           alert("Ошибка сервера, попробуйте позже");
         }
