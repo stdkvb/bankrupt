@@ -473,7 +473,7 @@ const DocumentsList = ({
             <Typography variant="h5" color="text.secondary" sx={{ mb: 4 }}>
               Ссылка на первоисточник
             </Typography>
-            <Stack spacing={2}>
+            <Stack spacing={2} sx={{ pb: { xs: 10, md: 0 } }}>
               {currentDocument.acts.map((act, i) => {
                 return (
                   <Link
@@ -492,7 +492,7 @@ const DocumentsList = ({
                   </Link>
                 );
               })}
-              {currentDocument.kadarbitr && (
+              {currentDocument.kadarbitr.url !== "" && (
                 <Link
                   href={currentDocument.kadarbitr.url}
                   sx={{
