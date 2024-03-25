@@ -15,6 +15,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CloseIcon from "@mui/icons-material/Close";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import AddIcon from "@mui/icons-material/Add";
+import LanguageIcon from "@mui/icons-material/Language";
 
 import Popup from "./Popup";
 import CreateFolder from "./CreateFolder";
@@ -454,9 +455,6 @@ const DocumentsList = ({
               <Typography color="text.secondary">
                 {currentDocument.previewText}
               </Typography>
-              <Typography color="text.secondary">
-                ID {currentDocument.id}
-              </Typography>
             </Stack>
             <Typography color="text.secondary" sx={{ mb: 4 }}>
               {currentDocument.detailText}
@@ -507,11 +505,14 @@ const DocumentsList = ({
                   }}
                   target="_blank"
                 >
-                  <DescriptionOutlinedIcon />
+                  <LanguageIcon />
                   <Typography>{currentDocument.kadarbitr.title}</Typography>
                 </Link>
               )}
             </Stack>
+            <Typography color="text.secondary" textAlign="right" sx={{ mt: 1 }}>
+              ID {currentDocument.id}
+            </Typography>
           </Box>
         </Modal>
       )}

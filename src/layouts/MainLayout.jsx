@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   Outlet,
   useLocation,
@@ -43,6 +43,7 @@ import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import AddIcon from "@mui/icons-material/Add";
 import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
 
 import api from "../utils/Api";
 import Popup from "../components/Popup";
@@ -258,6 +259,29 @@ export default function MainLayout({
   //disable up down button
   const [isFolderFirst, setIsFolderFirst] = useState(false);
   const [isFolderLast, setIsFolderLast] = useState(false);
+
+  //scroll to top
+  const refScrollUp = useRef();
+  const [showGoTop, setshowGoTop] = useState(true);
+
+  const handleVisibleButton = () => {
+    const position = document.querySelector("main").scrollTop;
+    if (position > 50) {
+      return setshowGoTop(false);
+    } else if (position < 50) {
+      return setshowGoTop(true);
+    }
+  };
+
+  useEffect(() => {
+    document
+      .querySelector("main")
+      .addEventListener("scroll", handleVisibleButton);
+  }, []);
+
+  const handleScrollUp = () => {
+    refScrollUp.current.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <>
@@ -766,6 +790,7 @@ export default function MainLayout({
             flexGrow: 1,
             height: "100vh",
             overflow: "auto",
+            position: "relative",
           }}
         >
           {loading ? (
@@ -780,9 +805,32 @@ export default function MainLayout({
               }}
             />
           ) : (
-            <Outlet />
+            <>
+              <div
+                ref={refScrollUp}
+                style={{ position: "absolute", top: "-100px" }}
+              ></div>
+              <Outlet />
+            </>
           )}
         </Box>
+        {/* scroll to top button */}
+        <IconButton
+          sx={{
+            position: "absolute",
+            right: { xs: "15px", md: "40px" },
+            bottom: { xs: "100px", md: "40px" },
+            ...(showGoTop && { display: "none" }),
+          }}
+          onClick={handleScrollUp}
+        >
+          <ExpandCircleDownIcon
+            fontSize="large"
+            sx={{
+              transform: "rotate(180deg)",
+            }}
+          />
+        </IconButton>
       </Box>
       <CreateFolder
         isPopupOpen={createFolder}
