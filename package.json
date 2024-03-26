@@ -17,6 +17,7 @@
     "dayjs": "^1.11.10",
     "match-sorter": "^6.3.3",
     "react": "latest",
+    "react-dadata": "^2.23.1",
     "react-dom": "latest",
     "react-hook-form": "^7.49.3",
     "react-input-mask": "^3.0.0-alpha.2",
