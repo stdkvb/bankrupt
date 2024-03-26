@@ -11,6 +11,7 @@ import PasswordRecovery from "./pages/PasswordRecovery";
 import NewPassword from "./pages/NewPassword";
 import Rates from "./pages/Rates";
 import Profile from "./pages/Profile";
+import ChangePassword from "./pages/ChangePassword";
 import Catalog from "./pages/Catalog";
 import Favorites from "./pages/Favorites";
 import Folder from "./pages/Folder";
@@ -208,6 +209,7 @@ export default function App() {
             }
           />
           <Route path="profile" element={<Profile />} />
+          <Route path="change-password" element={<ChangePassword />} />
           <Route path="rates" element={<Rates />} />
           <Route path="wiki" element={<Wiki />} />
           <Route path="news" element={<News />} />

@@ -40,7 +40,7 @@ const Questions = () => {
         </Typography>
         <Button
           variant="contained"
-          sx={{ width: { xs: "100%", md: "200px" } }}
+          sx={{ width: { xs: "100%", md: "300px" } }}
           onClick={handleOpen}
         >
           Задать вопрос

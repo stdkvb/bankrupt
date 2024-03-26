@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
 import { Paper, Typography, Button, Stack } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
@@ -88,7 +89,7 @@ const PersonalData = () => {
         <Button
           type={readOnly ? "button" : "submit"}
           variant="contained"
-          sx={{ width: "180px" }}
+          sx={{ minWidth: { xs: "100%", md: "300px" } }}
           onClick={(e) => {
             if (readOnly) {
               e.preventDefault();
@@ -100,7 +101,9 @@ const PersonalData = () => {
         </Button>
         <Button
           variant="outlined"
-          sx={{ minWidth: { xs: "100%", md: "200px" } }}
+          sx={{ minWidth: { xs: "100%", md: "300px" } }}
+          component={RouterLink}
+          to={"/change-password"}
         >
           Сменить пароль
         </Button>

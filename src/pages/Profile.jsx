@@ -36,14 +36,14 @@ const Profile = () => {
           <Button
             type="submit"
             variant="contained"
-            sx={{ minWidth: { xs: "100%", md: "200px" } }}
+            sx={{ minWidth: { xs: "100%", md: "300px" } }}
           >
             Оплатить тариф
           </Button>
           <Button
             type="submit"
             variant="outlined"
-            sx={{ minWidth: { xs: "100%", md: "200px" } }}
+            sx={{ minWidth: { xs: "100%", md: "300px" } }}
           >
             Активировать демо-доступ
           </Button>
