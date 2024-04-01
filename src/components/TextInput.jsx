@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TextField } from "@mui/material";
 import InputMask from "react-input-mask";
 
@@ -10,9 +10,17 @@ const TextInput = ({
   readOnly,
   multiline,
   required,
+  reset,
 }) => {
   const [value, setValue] = useState(defaultValue ? defaultValue : "");
   const [error, setError] = useState(false);
+
+  //reset value
+  useEffect(() => {
+    if (reset == true) {
+      setValue("");
+    }
+  }, [reset]);
 
   //default validator
   const defaultValidator = (value) => {

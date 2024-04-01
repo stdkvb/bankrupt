@@ -233,6 +233,28 @@ class Api {
       body,
     }).then(Api.handleResponse);
   }
+
+  changePassword(userId, password, newPassword) {
+    const body = new FormData();
+    body.set("userId", userId);
+    body.set("password", password);
+    body.set("newPassword", newPassword);
+    return fetch(`${this._url}/change-password`, {
+      method: "POST",
+      credentials: "include",
+      body,
+    }).then(Api.handleResponse);
+  }
+
+  getUser(params) {
+    return fetch(`${this._url}/catalog?` + `${new URLSearchParams(params)}`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      credentials: "include",
+    }).then(Api.handleResponse);
+  }
 }
 
 const api = new Api({

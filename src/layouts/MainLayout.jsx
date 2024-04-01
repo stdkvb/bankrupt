@@ -5,6 +5,7 @@ import {
   useNavigate,
   Link as RouterLink,
 } from "react-router-dom";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { styled } from "@mui/material/styles";
 import { Avatar, Stack, Link, Typography, Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
@@ -52,20 +53,20 @@ import CreateFolder from "../components/CreateFolder";
 import logo from "../assets/images/logo.svg";
 
 //check window width
-let mobile;
-if (window.innerWidth < 900) {
-  mobile = true;
-} else {
-  mobile = false;
-}
+// let mobile;
+// if (window.innerWidth < 900) {
+//   mobile = true;
+// } else {
+//   mobile = false;
+// }
 
 //left menu depends of window width
-let drawerWidth;
-if (mobile) {
-  drawerWidth = "100vw";
-} else {
-  drawerWidth = 287;
-}
+// let drawerWidth;
+// if (mobile) {
+//   drawerWidth = "100vw";
+// } else {
+//   drawerWidth = 287;
+// }
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -90,7 +91,6 @@ const Drawer = styled(MuiDrawer, {
   "& .MuiDrawer-paper": {
     position: "relative",
     whiteSpace: "nowrap",
-    width: drawerWidth,
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -125,7 +125,15 @@ export default function MainLayout({
   }
 
   //drawer control
+  const mobile = useMediaQuery("(max-width:900px)");
   const [open, setOpen] = useState(!mobile);
+  useEffect(() => {
+    if (mobile) {
+      setOpen(false);
+    } else {
+      setOpen(true);
+    }
+  }, [mobile]);
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -445,7 +453,11 @@ export default function MainLayout({
         <Drawer
           variant="permanent"
           open={open}
-          sx={{ height: { xs: "fit-content", md: "unset" } }}
+          sx={{
+            height: { xs: "fit-content", md: "unset" },
+            width: open ? (mobile ? "100vw" : "287px") : "0",
+            "& .MuiDrawer-paper": {},
+          }}
         >
           <List
             component="nav"
@@ -494,18 +506,14 @@ export default function MainLayout({
                   display: "flex",
                   justifyContent: "space-between",
                 }}
+                component={RouterLink}
+                to="/wiki"
+                onClick={mobile ? toggleDrawer : () => {}}
               >
-                <Link
-                  component={RouterLink}
-                  to="/wiki"
-                  sx={{ display: "flex", textDecoration: "none !important" }}
-                  onClick={mobile ? toggleDrawer : () => {}}
-                >
-                  <ListItemIcon sx={{ height: "24px" }}>
-                    <FolderIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="База знаний" sx={{ m: 0 }} />
-                </Link>
+                <ListItemIcon sx={{ height: "24px" }}>
+                  <FolderIcon />
+                </ListItemIcon>
+                <ListItemText primary="База знаний" sx={{ m: 0 }} />
                 <AccordionSummary
                   expandIcon={
                     <IconButton>
@@ -541,18 +549,14 @@ export default function MainLayout({
                   display: "flex",
                   justifyContent: "space-between",
                 }}
+                component={RouterLink}
+                to="/favorites"
+                onClick={mobile ? toggleDrawer : () => {}}
               >
-                <Link
-                  component={RouterLink}
-                  to="/favorites"
-                  sx={{ display: "flex", textDecoration: "none !important" }}
-                  onClick={mobile ? toggleDrawer : () => {}}
-                >
-                  <ListItemIcon sx={{ height: "24px" }}>
-                    <BookmarkIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Избранное" sx={{ m: 0 }} />
-                </Link>
+                <ListItemIcon sx={{ height: "24px" }}>
+                  <BookmarkIcon />
+                </ListItemIcon>
+                <ListItemText primary="Избранное" sx={{ m: 0 }} />
                 <AccordionSummary
                   expandIcon={
                     <IconButton>
@@ -599,32 +603,23 @@ export default function MainLayout({
                             gap: [1],
                             justifyContent: "space-between",
                           }}
+                          component={RouterLink}
+                          to={`/favorites/${folder.id}`}
+                          onClick={mobile ? toggleDrawer : () => {}}
                         >
-                          <Link
-                            component={RouterLink}
-                            to={`/favorites/${folder.id}`}
+                          <ListItemIcon sx={{ minWidth: "40px" }}>
+                            <FolderOutlinedIcon />
+                          </ListItemIcon>
+                          <ListItemText
+                            primary={folder.name}
                             sx={{
-                              display: "flex",
-                              overflow: "hidden",
-                              alignItems: "center",
-                              textDecoration: "none !important",
+                              "& span": {
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                              },
                             }}
-                            onClick={mobile ? toggleDrawer : () => {}}
-                          >
-                            <ListItemIcon sx={{ minWidth: "40px" }}>
-                              <FolderOutlinedIcon />
-                            </ListItemIcon>
-                            <ListItemText
-                              primary={folder.name}
-                              sx={{
-                                "& span": {
-                                  overflow: "hidden",
-                                  textOverflow: "ellipsis",
-                                },
-                              }}
-                              title={folder.name}
-                            />
-                          </Link>
+                            title={folder.name}
+                          />
                           <IconButton
                             onClick={(event) => {
                               setCurrentFolder(folder.id);

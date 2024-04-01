@@ -68,6 +68,7 @@ const PersonalData = () => {
             onChange={() => {
               setIsCorporate(!isCorporate);
             }}
+            disabled={readOnly}
           />
         }
         label={
