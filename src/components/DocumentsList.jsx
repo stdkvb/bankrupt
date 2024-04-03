@@ -456,9 +456,14 @@ const DocumentsList = ({
                 {currentDocument.previewText}
               </Typography>
             </Stack>
-            <Typography color="text.secondary" sx={{ mb: 4 }}>
-              {currentDocument.detailText}
-            </Typography>
+            <Typography
+              color="text.secondary"
+              sx={{ mb: 4 }}
+              dangerouslySetInnerHTML={{
+                __html: currentDocument.detailText,
+              }}
+            ></Typography>
+
             <Stack
               direction="row"
               sx={{

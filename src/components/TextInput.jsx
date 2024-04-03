@@ -12,8 +12,12 @@ const TextInput = ({
   required,
   reset,
 }) => {
-  const [value, setValue] = useState(defaultValue ? defaultValue : "");
+  const [value, setValue] = useState("");
   const [error, setError] = useState(false);
+
+  useEffect(() => {
+    setValue(defaultValue);
+  }, [defaultValue]);
 
   //reset value
   useEffect(() => {

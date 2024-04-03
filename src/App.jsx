@@ -1,6 +1,5 @@
-import * as React from "react";
+import { useEffect, useState, useContext } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import AuthLayout from "./layouts/AuthLayout";
@@ -23,6 +22,7 @@ import Article from "./pages/Article";
 import Wiki from "./pages/Wiki";
 
 import api from "./utils/Api";
+import { UserContext } from "./utils/context";
 
 import MainLayout from "./layouts/MainLayout";
 
@@ -30,6 +30,7 @@ export default function App() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
+  const { user, setUser } = useContext(UserContext);
   const [catalog, setCatalog] = useState([]);
   const [errors, setErrors] = useState([]);
   const [folders, setFolders] = useState([]);
@@ -37,6 +38,16 @@ export default function App() {
 
   //load catalog
   const getAccess = () => {
+    // api
+    //   .getUser()
+    //   .then((data) => {
+    //     if (data.status === "success") {
+    //       setUser(data.data);
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
     api
       .getFolders()
       .then((data) => {

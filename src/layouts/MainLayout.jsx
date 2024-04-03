@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import {
   Outlet,
   useLocation,
@@ -7,24 +7,30 @@ import {
 } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { styled } from "@mui/material/styles";
-import { Avatar, Stack, Link, Typography, Button } from "@mui/material";
-import TextField from "@mui/material/TextField";
-import MuiDrawer from "@mui/material/Drawer";
-import Box from "@mui/material/Box";
-import MuiAppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import CircularProgress from "@mui/material/CircularProgress";
+import {
+  Drawer as MuiDrawer,
+  AppBar as MuiAppBar,
+  Avatar,
+  Stack,
+  Link,
+  Typography,
+  Button,
+  TextField,
+  Box,
+  Toolbar,
+  List,
+  Divider,
+  IconButton,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  CircularProgress,
+} from "@mui/material";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -49,24 +55,9 @@ import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
 import api from "../utils/Api";
 import Popup from "../components/Popup";
 import CreateFolder from "../components/CreateFolder";
+import { UserContext } from "../utils/context";
 
 import logo from "../assets/images/logo.svg";
-
-//check window width
-// let mobile;
-// if (window.innerWidth < 900) {
-//   mobile = true;
-// } else {
-//   mobile = false;
-// }
-
-//left menu depends of window width
-// let drawerWidth;
-// if (mobile) {
-//   drawerWidth = "100vw";
-// } else {
-//   drawerWidth = 287;
-// }
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -124,6 +115,9 @@ export default function MainLayout({
     }
   }
 
+  //current user
+  const user = useContext(UserContext).user;
+
   //drawer control
   const mobile = useMediaQuery("(max-width:900px)");
   const [open, setOpen] = useState(!mobile);
@@ -139,9 +133,9 @@ export default function MainLayout({
   };
 
   //avatar letters
-  function stringAvatar(name) {
+  function stringAvatar(firstName, lastName) {
     return {
-      children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
+      children: `${firstName.split(" ")[0][0]}${lastName.split(" ")[0][0]}`,
     };
   }
 
@@ -378,7 +372,9 @@ export default function MainLayout({
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
             >
-              <Avatar {...stringAvatar("Kent Dodds")} />
+              <Avatar
+                {...stringAvatar(`${user.firstName}`, `${user.lastName}`)}
+              />
             </IconButton>
             <Menu
               anchorEl={isProfileMenuOpen}
@@ -418,13 +414,17 @@ export default function MainLayout({
             >
               <MenuItem sx={{ pointerEvents: "none", cursor: "default" }}>
                 <Stack>
-                  <ListItemText primary="Name" sx={{ m: 0 }} />
+                  <ListItemText primary={user.firstName} sx={{ m: 0 }} />
+                  <ListItemText primary={user.lastName} sx={{ m: 0 }} />
+                  {user.companyName && (
+                    <ListItemText
+                      primary={user.companyName}
+                      sx={{ m: 0, color: "text.secondary" }}
+                    />
+                  )}
+
                   <ListItemText
-                    primary="Company"
-                    sx={{ m: 0, color: "text.secondary" }}
-                  />
-                  <ListItemText
-                    primary="Email"
+                    primary={user.email}
                     sx={{ m: 0, color: "text.secondary" }}
                   />
                 </Stack>
@@ -434,6 +434,7 @@ export default function MainLayout({
                 onClick={handleProfileMenuClose}
                 component={RouterLink}
                 to={"/profile"}
+                disabled
               >
                 <ListItemIcon>
                   <PersonIcon />
@@ -474,7 +475,9 @@ export default function MainLayout({
               onClick={mobile ? toggleDrawer : () => {}}
             >
               <ListItemIcon>
-                <Avatar {...stringAvatar("Kent Dodds")} />
+                <Avatar
+                  {...stringAvatar(`${user.firstName}`, `${user.lastName}`)}
+                />
               </ListItemIcon>
               <Stack>
                 <ListItemText primary="Name" sx={{ m: 0 }} />

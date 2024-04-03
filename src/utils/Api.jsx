@@ -1,4 +1,5 @@
 const BASE_URL = "https://bankrotvestnik.ru/api";
+const dadataToken = "3c767e62c4d512110cb8e064f16a6d9c30c47974";
 
 class Api {
   constructor(configuration) {
@@ -246,14 +247,41 @@ class Api {
     }).then(Api.handleResponse);
   }
 
-  getUser(params) {
-    return fetch(`${this._url}/catalog?` + `${new URLSearchParams(params)}`, {
+  getUser() {
+    return fetch(`${this._url}/user`, {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       credentials: "include",
     }).then(Api.handleResponse);
+  }
+
+  changeUser(formData) {
+    return fetch(`${this._url}/change-user`, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      credentials: "include",
+      body: formData,
+    }).then(Api.handleResponse);
+  }
+
+  getDadata(word) {
+    return fetch(
+      "http://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party",
+      {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Token " + dadataToken,
+        },
+        body: JSON.stringify({ query: word }),
+      }
+    ).then(Api.handleResponse);
   }
 }
 

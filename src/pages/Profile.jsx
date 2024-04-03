@@ -1,9 +1,7 @@
-import { Typography, Button, Stack } from "@mui/material";
-import Container from "@mui/material/Container";
+import { Typography, Button, Stack, Container } from "@mui/material";
 
 import Tariff from "../components/Tariff";
 import PersonalData from "../components/PersonalData";
-import Requisites from "../components/Requisites";
 import Questions from "../components/Questions";
 import Notification from "../components/Notification";
 
