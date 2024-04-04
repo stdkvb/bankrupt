@@ -268,7 +268,7 @@ class Api {
     }).then(Api.handleResponse);
   }
 
-  getDadata(word) {
+  getDadataCompany(query) {
     return fetch(
       "http://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party",
       {
@@ -279,7 +279,23 @@ class Api {
           Accept: "application/json",
           Authorization: "Token " + dadataToken,
         },
-        body: JSON.stringify({ query: word }),
+        body: JSON.stringify({ query: query }),
+      }
+    ).then(Api.handleResponse);
+  }
+
+  getDadataAddress(query) {
+    return fetch(
+      "http://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address",
+      {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: "Token " + dadataToken,
+        },
+        body: JSON.stringify({ query: query }),
       }
     ).then(Api.handleResponse);
   }

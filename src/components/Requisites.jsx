@@ -17,6 +17,7 @@ const Requisites = ({ readOnly }) => {
       defaultValue: `${user.companyName}`,
       dadata: true,
     },
+    { label: "ИНН", name: "inn", defaultValue: `${user.inn}`, dadata: true },
     {
       label: "Юридический адрес",
       name: "companyAddress",
@@ -27,7 +28,6 @@ const Requisites = ({ readOnly }) => {
       name: "mailingAddress",
       defaultValue: `${user.mailingAddress}`,
     },
-    { label: "ИНН", name: "inn", defaultValue: `${user.inn}` },
     { label: "Расчетный счет", name: "rs", defaultValue: `${user.rs}` },
     { label: "Корреспондентский счет", name: "ks", defaultValue: `${user.ks}` },
     { label: "БИК", name: "bik", defaultValue: `${user.bik}` },
@@ -48,11 +48,18 @@ const Requisites = ({ readOnly }) => {
   const handleDadata = (data) => {
     const filledRequisitesInputs = requisitesInputs.map((input) => {
       const name = input.name;
-      if (data.hasOwnProperty(name)) {
-        return { ...input, defaultValue: data[name] };
+      if (data.data.hasOwnProperty(name)) {
+        return { ...input, defaultValue: data.data[name] };
+      }
+      if (input.name == "companyName") {
+        return { ...input, defaultValue: data.value };
+      }
+      if (input.name == "companyAddress") {
+        return { ...input, defaultValue: data.data.address.value };
       }
       return input;
     });
+
     setRequisitesInputs([...filledRequisitesInputs]);
   };
 
@@ -89,7 +96,7 @@ const Requisites = ({ readOnly }) => {
                 name={input.name}
                 defaultValue={input.defaultValue}
                 required={true}
-                multiline={false}
+                multiline={true}
                 readOnly={readOnly}
               />
             );

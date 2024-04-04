@@ -38,16 +38,16 @@ export default function App() {
 
   //load catalog
   const getAccess = () => {
-    // api
-    //   .getUser()
-    //   .then((data) => {
-    //     if (data.status === "success") {
-    //       setUser(data.data);
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    api
+      .getUser()
+      .then((data) => {
+        if (data.status === "success") {
+          setUser(data.data);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     api
       .getFolders()
       .then((data) => {

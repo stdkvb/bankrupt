@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { debounce } from "@mui/material/utils";
@@ -13,23 +13,39 @@ export default function AutocompleteDadata({
   defaultValue,
   handleDadata,
 }) {
-  const [value, setValue] = useState(defaultValue ? defaultValue : null);
+  const [value, setValue] = useState(null);
+
+  useEffect(() => {
+    setValue(defaultValue);
+  }, [defaultValue]);
+
   const [inputValue, setInputValue] = useState("");
   const [options, setOptions] = useState([]);
 
   const debouncedSave = useCallback(
-    debounce(
-      (newValue) =>
+    debounce((newValue) => {
+      if (name == "companyAddress") {
         api
-          .getDadata(newValue)
+          .getDadataAddress(newValue)
           .then((data) => {
             setOptions(data.suggestions);
           })
           .catch((error) => {
             console.log(error);
           }),
-      100
-    ),
+          100;
+      } else {
+        api
+          .getDadataCompany(newValue)
+          .then((data) => {
+            setOptions(data.suggestions);
+          })
+          .catch((error) => {
+            console.log(error);
+          }),
+          100;
+      }
+    }),
     []
   );
 
@@ -52,7 +68,7 @@ export default function AutocompleteDadata({
         }
       }}
       onChange={(event, newValue) => {
-        handleDadata(newValue.data);
+        handleDadata(newValue);
       }}
       renderInput={(params) => (
         <TextField
@@ -74,10 +90,13 @@ export default function AutocompleteDadata({
           <br />
           {option.data.inn}
           <br />
-          {option.data.address.value}
+          {option.data.address && option.data.address.value}
         </li>
       )}
-      getOptionLabel={(option) => option.value ?? option}
+      getOptionLabel={(option) =>
+        (name == "inn" && option.data ? option.data.inn : option.value) ??
+        option
+      }
     />
   );
 }
