@@ -458,7 +458,7 @@ const DocumentsList = ({
             </Stack>
             <Typography
               color="text.secondary"
-              sx={{ mb: 4 }}
+              sx={{ mb: 4, textIndent: "20px", textAlign: "justify" }}
               dangerouslySetInnerHTML={{
                 __html: currentDocument.detailText,
               }}
@@ -504,7 +504,6 @@ const DocumentsList = ({
                   href={currentDocument.kadarbitr.url}
                   sx={{
                     display: "flex",
-                    maxWidth: "430px",
                     alignItems: "center",
                     gap: "12px",
                   }}

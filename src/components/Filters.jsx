@@ -10,9 +10,6 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Select from "./Select";
 
 const Filters = ({ onFilterSubmit, data }) => {
-  //tags
-  const [tags, setTags] = useState([]);
-
   //tags filters clear
   const [filtersClear, setFiltersClear] = useState(false);
 

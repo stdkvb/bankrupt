@@ -23,6 +23,10 @@ const defaultUser = {
   okogu: "",
   okfs: "",
   okopf: "",
+  notification: {
+    type: "error",
+    message: "Действие вашего тарифа заканчивается 08.11.2023",
+  },
 };
 
 const UserProvider = ({ children }) => {

@@ -1,8 +1,7 @@
 import React from "react";
 
 import { useNavigate } from "react-router-dom";
-import Typography from "@mui/material/Typography";
-import { Button, Link, Stack } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 
 const PageNotFound = ({ loggedIn }) => {
   //for navigate to previous page

@@ -1,18 +1,19 @@
-import React from "react";
 import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import { Button, Link } from "@mui/material";
-import Box from "@mui/material/Box";
-import InputAdornment from "@mui/material/InputAdornment";
-import IconButton from "@mui/material/IconButton";
-import Input from "@mui/material/Input";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
+import {
+  Typography,
+  TextField,
+  Button,
+  Link,
+  Box,
+  InputAdornment,
+  IconButton,
+  Input,
+  InputLabel,
+  FormControl,
+} from "@mui/material";
 
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const Login = ({ onLoginSubmit, errors }) => {
   const [login, setLogin] = useState("");

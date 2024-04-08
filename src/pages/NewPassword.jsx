@@ -1,10 +1,6 @@
-import React from "react";
 import { useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import { Button, Link } from "@mui/material";
+import { Button, Typography, Box, TextField } from "@mui/material";
 
 import api from "../utils/Api";
 

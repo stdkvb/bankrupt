@@ -1,15 +1,17 @@
-import React, { useEffect } from "react";
-import { Link as RouterLink } from "react-router-dom";
 import { useState } from "react";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import { Button, Link, Stack } from "@mui/material";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import IconButton from "@mui/material/IconButton";
+import { Link as RouterLink } from "react-router-dom";
+import {
+  Button,
+  Link,
+  Stack,
+  Typography,
+  Box,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  IconButton,
+} from "@mui/material";
 import InputMask from "react-input-mask";
-
 import CloseIcon from "@mui/icons-material/Close";
 
 import api from "../utils/Api";

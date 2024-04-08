@@ -1,8 +1,11 @@
-import React from "react";
-import { Paper, Typography, Stack, Link } from "@mui/material";
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
-import Pagination from "@mui/material/Pagination";
+import {
+  Paper,
+  Typography,
+  Link,
+  Container,
+  Box,
+  Pagination,
+} from "@mui/material";
 
 export const news = [
   {

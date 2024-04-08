@@ -3,6 +3,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import AuthLayout from "./layouts/AuthLayout";
+import MainLayout from "./layouts/MainLayout";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import Confirm from "./pages/Confirm";
@@ -23,8 +24,6 @@ import Wiki from "./pages/Wiki";
 
 import api from "./utils/Api";
 import { UserContext } from "./utils/context";
-
-import MainLayout from "./layouts/MainLayout";
 
 export default function App() {
   const navigate = useNavigate();

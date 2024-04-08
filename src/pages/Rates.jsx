@@ -1,67 +1,26 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import { Paper, Typography, Stack, Link, Button, Alert } from "@mui/material";
-import Container from "@mui/material/Container";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import CircularProgress from "@mui/material/CircularProgress";
-
+import {
+  Paper,
+  Typography,
+  Stack,
+  Button,
+  Alert,
+  Container,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  CircularProgress,
+} from "@mui/material";
 import Tariff from "../components/Tariff";
 import Trial from "../components/Trial";
-
+import { UserContext } from "../utils/context";
 import api from "../utils/Api";
 
-// const rates = [
-//   {
-//     name: "Базовый",
-//     version: "Электронная версия",
-//     description: [
-//       "Печатная версия журнала",
-//       "Доступ к Базе знаний",
-//       "Доступ к закрытому телеграмм каналу",
-//     ],
-//     prices: [
-//       { duration: "1 день", price: "500" },
-//       { duration: "1 месяц", price: "980" },
-//       { duration: "6 месяцев", price: "17980" },
-//       { duration: "12 месяцев", price: "34980" },
-//     ],
-//   },
-//   {
-//     name: "Комбинированный",
-//     version: "Электронная версия + Печатная версия",
-//     description: [
-//       "Печатная версия журнала",
-//       "Доступ к Базе знаний",
-//       "Доступ к закрытому телеграмм каналу",
-//       "Доступ к Базе знаний",
-//       "Печатная версия журнала",
-//     ],
-//     prices: [
-//       { duration: "1 месяц", price: "980" },
-//       { duration: "6 месяцев", price: "17980" },
-//       { duration: "12 месяцев", price: "34980" },
-//     ],
-//   },
-//   {
-//     name: "Классический",
-//     version: "Печатная версия",
-//     description: [
-//       "Печатная версия журнала",
-//       "Доступ к Базе знаний",
-//       "Доступ к закрытому телеграмм каналу",
-//     ],
-//     prices: [
-//       { duration: "1 месяц", price: "980" },
-//       { duration: "6 месяцев", price: "17980" },
-//       { duration: "12 месяцев", price: "34980" },
-//     ],
-//   },
-// ];
-
 const Rates = () => {
+  //current user
+  const user = useContext(UserContext).user;
   const [rates, setRates] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -95,17 +54,19 @@ const Rates = () => {
       <Typography variant="h4" component="h1">
         Тарифы
       </Typography>
-      <Alert variant="filled" severity="warning">
-        <Typography>Действие вашего тарифа закончилось</Typography>
-        <Typography
-          component={RouterLink}
-          to="/rates"
-          color="text.white"
-          sx={{ fontSize: "14px" }}
-        >
-          Обновите подписку
-        </Typography>
-      </Alert>
+      {user.notification && (
+        <Alert variant="filled" severity={user.notification.type}>
+          <Typography>{user.notification.message}</Typography>
+          <Typography
+            component={RouterLink}
+            to="/rates"
+            color="text.white"
+            sx={{ fontSize: "14px" }}
+          >
+            Обновите подписку
+          </Typography>
+        </Alert>
+      )}
       <Tariff />
       <Stack
         sx={{

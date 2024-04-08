@@ -1,10 +1,14 @@
 import React from "react";
-import { Paper, Typography, Stack, Button } from "@mui/material";
-import Container from "@mui/material/Container";
-import IconButton from "@mui/material/IconButton";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
-
+import {
+  Paper,
+  Typography,
+  Stack,
+  Button,
+  Container,
+  IconButton,
+  Modal,
+  Box,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 import WikiFilters from "../components/WikiFilters";
