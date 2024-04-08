@@ -56,7 +56,6 @@ export default function AutocompleteDadata({
 
   return (
     <Autocomplete
-      sx={{ width: { xs: "100%", md: "300px" } }}
       disabled={readOnly}
       freeSolo
       disableClearable

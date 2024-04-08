@@ -512,6 +512,7 @@ export default function MainLayout({
                 component={RouterLink}
                 to="/wiki"
                 onClick={mobile ? toggleDrawer : () => {}}
+                disabled
               >
                 <ListItemIcon sx={{ height: "24px" }}>
                   <FolderIcon />
@@ -727,6 +728,7 @@ export default function MainLayout({
               component={RouterLink}
               to={"/news"}
               onClick={mobile ? toggleDrawer : () => {}}
+              disabled
             >
               <ListItemIcon>
                 <DescriptionIcon />
@@ -739,6 +741,7 @@ export default function MainLayout({
               component={RouterLink}
               to={"/rates"}
               onClick={mobile ? toggleDrawer : () => {}}
+              disabled
             >
               <ListItemIcon>
                 <DashboardIcon />
@@ -751,6 +754,7 @@ export default function MainLayout({
               component={RouterLink}
               to={"/qa"}
               onClick={mobile ? toggleDrawer : () => {}}
+              disabled
             >
               <ListItemIcon>
                 <HelpIcon />
@@ -763,6 +767,7 @@ export default function MainLayout({
               component={RouterLink}
               to={"/contacts"}
               onClick={mobile ? toggleDrawer : () => {}}
+              disabled
             >
               <ListItemIcon>
                 <MapIcon />

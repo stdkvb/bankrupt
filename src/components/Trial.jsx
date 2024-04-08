@@ -1,5 +1,5 @@
-import React from "react";
-import { Paper, Typography, Button, Link } from "@mui/material";
+import { useContext, useState } from "react";
+import { Paper, Typography, Button, Link, Stack } from "@mui/material";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
@@ -10,20 +10,47 @@ import IconButton from "@mui/material/IconButton";
 
 import CloseIcon from "@mui/icons-material/Close";
 
+import { UserContext } from "../utils/context";
+import TextInput from "./TextInput";
+import api from "../utils/Api";
+import Popup from "../components/Popup";
+
 const Trial = () => {
-  // modal controller
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  //modal controller
+  const [modalOpen, setModalOpen] = useState(false);
+
+  //current user
+  const user = useContext(UserContext).user;
+
+  const personalInputs = [
+    {
+      label: "Имя",
+      name: "name",
+      defaultValue: `${user.lastName} ${user.firstName} ${user.secondName}`,
+    },
+    { label: "Телефон", name: "phone", defaultValue: `${user.phone}` },
+    { label: "Email", name: "email", defaultValue: `${user.email}` },
+  ];
+
+  //success popup
+  const [isSuccess, setIsSuccess] = useState(false);
 
   //form submit
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("login"),
-      password: data.get("password"),
-    });
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    api
+      .requestDemoAccess(formData)
+      .then((data) => {
+        if (data.status === "success") {
+          setModalOpen(false);
+          setIsSuccess(true);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setIsReadOnly(true);
   };
 
   return (
@@ -46,33 +73,33 @@ const Trial = () => {
         <Button
           variant="contained"
           sx={{ width: { xs: "100%", md: "200px" }, mt: 2 }}
-          onClick={handleOpen}
+          onClick={() => setModalOpen(true)}
         >
           Активировать
         </Button>
       </Paper>
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box
           component="form"
-          onSubmit={handleSubmit}
-          noValidate
+          onSubmit={handleFormSubmit}
           sx={{
             position: "absolute",
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: { xs: "300px", md: "580px" },
+            width: "90%",
+            maxWidth: "580px",
             bgcolor: "background.paper",
             p: { xs: 2, md: 4 },
           }}
         >
           <IconButton
-            onClick={handleClose}
+            onClick={() => setModalOpen(false)}
             sx={{
               position: "absolute",
               right: { xs: "4px", md: "16px" },
@@ -88,40 +115,21 @@ const Trial = () => {
             Заполните форму для активации демо-доступа и наш специалист свяжется
             с вами в ближайшее время
           </Typography>
-          <TextField
-            label="Имя"
-            variant="standard"
-            size="medium"
-            required
-            fullWidth
-            id="name"
-            name="name"
-            sx={{ mb: 2, mt: 3 }}
-          />
-          <InputMask mask="+7 (999) 999 99 99">
-            <TextField
-              label="Телефон"
-              variant="standard"
-              size="medium"
-              required
-              fullWidth
-              id="phone"
-              name="phone"
-              sx={{ mb: 2 }}
-            />
-          </InputMask>
-          <TextField
-            label="Email"
-            variant="standard"
-            size="medium"
-            required
-            fullWidth
-            id="email"
-            name="email"
-            sx={{ mb: 2 }}
-          />
+          <Stack direction="column" spacing={2} sx={{ my: 2 }}>
+            {personalInputs.map((input, i) => (
+              <TextInput
+                key={i}
+                label={input.label}
+                name={input.name}
+                defaultValue={input.defaultValue}
+                required={true}
+                multiline={false}
+                readOnly={false}
+              />
+            ))}
+          </Stack>
           <FormControlLabel
-            control={<Checkbox value="policy" />}
+            control={<Checkbox value="policy" required checked />}
             label={
               <Typography display="inline" color="text.secondary">
                 Я соглашаюсь с
@@ -137,6 +145,37 @@ const Trial = () => {
           </Button>
         </Box>
       </Modal>
+      <Popup isPopupOpen={isSuccess}>
+        <IconButton
+          onClick={() => {
+            setIsSuccess(false);
+            // updateFavorites();
+          }}
+          sx={{
+            position: "absolute",
+            right: { xs: 1, md: 2 },
+            top: { xs: 1, md: 2 },
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <Typography variant="h4" mb={2} sx={{ maxWidth: "90%" }}>
+          Ваша заявка принята!
+        </Typography>
+        <Typography mb={3} sx={{ maxWidth: "90%" }}>
+          Мы свяжемся с Вами в ближайшее время
+        </Typography>
+        <Button
+          variant="contained"
+          fullWidth
+          sx={{ mt: 4 }}
+          onClick={() => {
+            setIsSuccess(false);
+          }}
+        >
+          Закрыть
+        </Button>
+      </Popup>
     </>
   );
 };

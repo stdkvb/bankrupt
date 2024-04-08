@@ -299,6 +299,27 @@ class Api {
       }
     ).then(Api.handleResponse);
   }
+
+  getRates() {
+    return fetch(`${this._url}/tariff`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      credentials: "include",
+    }).then(Api.handleResponse);
+  }
+
+  requestDemoAccess(formData) {
+    return fetch(`${this._url}/request-demo-access`, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      credentials: "include",
+      body: formData,
+    }).then(Api.handleResponse);
+  }
 }
 
 const api = new Api({

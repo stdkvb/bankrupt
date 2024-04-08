@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Typography, Stack } from "@mui/material";
+import { Typography, Stack, Grid } from "@mui/material";
 
 import AutocompleteDadata from "./Autocomplete";
 import TextInput from "./TextInput";
@@ -66,43 +66,39 @@ const Requisites = ({ readOnly }) => {
   return (
     <>
       <Typography variant="h5">Реквизиты</Typography>
-      <Stack
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          columnGap: [4],
-          rowGap: [2],
-          flexWrap: "wrap",
-        }}
-      >
+      <Grid container rowGap={2} columnGap={4}>
         {requisitesInputs.map((input, i) => {
           if (input.dadata == true) {
             return (
-              <AutocompleteDadata
-                key={i}
-                label={input.label}
-                name={input.name}
-                required={true}
-                readOnly={readOnly}
-                defaultValue={input.defaultValue}
-                handleDadata={handleDadata}
-              />
+              <Grid item xs={12} md={12} lg={5} xl={3}>
+                <AutocompleteDadata
+                  key={i}
+                  label={input.label}
+                  name={input.name}
+                  required={true}
+                  readOnly={readOnly}
+                  defaultValue={input.defaultValue}
+                  handleDadata={handleDadata}
+                />
+              </Grid>
             );
           } else {
             return (
-              <TextInput
-                key={i}
-                label={input.label}
-                name={input.name}
-                defaultValue={input.defaultValue}
-                required={true}
-                multiline={true}
-                readOnly={readOnly}
-              />
+              <Grid item xs={12} md={12} lg={5} xl={3}>
+                <TextInput
+                  key={i}
+                  label={input.label}
+                  name={input.name}
+                  defaultValue={input.defaultValue}
+                  required={true}
+                  multiline={true}
+                  readOnly={readOnly}
+                />
+              </Grid>
             );
           }
         })}
-      </Stack>
+      </Grid>
     </>
   );
 };

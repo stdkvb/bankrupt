@@ -84,7 +84,6 @@ const TextInput = ({
           helperText={error}
           multiline={multiline}
           InputLabelProps={{ shrink: true }}
-          sx={{ width: { xs: "100%", md: "300px" } }}
         />
       </InputMask>
     );
@@ -105,7 +104,7 @@ const TextInput = ({
         multiline={multiline}
         minRows={1}
         InputLabelProps={{ shrink: true }}
-        sx={{ width: { xs: "100%", md: "300px" } }}
+        // sx={{ width: { xs: "100%", md: "300px" } }}
       />
     );
 };

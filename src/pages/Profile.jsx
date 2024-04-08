@@ -1,9 +1,9 @@
-import { Typography, Button, Stack, Container } from "@mui/material";
+import { Typography, Button, Stack, Container, Alert } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 
 import Tariff from "../components/Tariff";
 import PersonalData from "../components/PersonalData";
 import Questions from "../components/Questions";
-import Notification from "../components/Notification";
 
 const Profile = () => {
   return (
@@ -20,7 +20,18 @@ const Profile = () => {
       <Typography variant="h4" component="h1">
         Профиль
       </Typography>
-      <Notification />
+
+      <Alert variant="filled" severity="warning">
+        <Typography>Действие вашего тарифа закончилось</Typography>
+        <Typography
+          component={RouterLink}
+          to="/rates"
+          color="text.white"
+          sx={{ fontSize: "14px" }}
+        >
+          Обновите подписку
+        </Typography>
+      </Alert>
       <Tariff>
         <Stack
           sx={{

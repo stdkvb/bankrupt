@@ -8,6 +8,7 @@ import {
   FormControlLabel,
   Checkbox,
   IconButton,
+  Grid,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -70,27 +71,21 @@ const PersonalData = () => {
         onSubmit={handleFormSubmit}
       >
         <Typography variant="h5">Личные данные</Typography>
-        <Stack
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            columnGap: [4],
-            rowGap: [2],
-            flexWrap: "wrap",
-          }}
-        >
+        <Grid container rowGap={2} columnGap={4}>
           {personalInputs.map((input, i) => (
-            <TextInput
-              key={i}
-              label={input.label}
-              name={input.name}
-              defaultValue={input.defaultValue}
-              required={true}
-              multiline={false}
-              readOnly={readOnly}
-            />
+            <Grid item xs={12} md={12} lg={5} xl={3}>
+              <TextInput
+                key={i}
+                label={input.label}
+                name={input.name}
+                defaultValue={input.defaultValue}
+                required={true}
+                multiline={false}
+                readOnly={readOnly}
+              />
+            </Grid>
           ))}
-        </Stack>
+        </Grid>
         <FormControlLabel
           sx={{ width: "fit-content" }}
           control={

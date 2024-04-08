@@ -171,7 +171,7 @@ const DocumentsList = ({
         }}
       >
         <Typography variant="h5">
-          Найденых документов: {data.documentsList.length}
+          Найденных документов: {data.documentsList.length}
         </Typography>
 
         {data.documentsList.map((document, i) => {
