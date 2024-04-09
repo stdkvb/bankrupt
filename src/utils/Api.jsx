@@ -329,6 +329,16 @@ class Api {
       credentials: "include",
     }).then(Api.handleResponse);
   }
+
+  getQA() {
+    return fetch(`${this._url}/qa`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      credentials: "include",
+    }).then(Api.handleResponse);
+  }
 }
 
 const api = new Api({
