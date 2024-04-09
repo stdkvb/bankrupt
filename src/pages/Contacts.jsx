@@ -1,10 +1,43 @@
-import React from "react";
-import { Paper, Typography, Stack, Link } from "@mui/material";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
+import { useState, useEffect } from "react";
+import {
+  Paper,
+  Typography,
+  Stack,
+  Link,
+  CircularProgress,
+  Container,
+  Grid,
+} from "@mui/material";
+
+import api from "../utils/Api";
 import Questions from "../components/Questions";
 
 const Contacts = () => {
+  const defaultContacts = {
+    phone: "8 (000) 000-00-00",
+    email: "info@example.com",
+    address: "344047, г. Ростов-на-Дону, ул. Еременко, 108, стр. 2, кв. 73",
+  };
+
+  const [contacts, setContacts] = useState(defaultContacts);
+  const [loading, setLoading] = useState(true);
+
+  const getContacts = () => {
+    api
+      .getContacts()
+      .then((data) => {
+        if (data.status === "success") {
+          setContacts(data.data);
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(getContacts, []);
+
   return (
     <Container
       maxWidth="false"
@@ -26,34 +59,49 @@ const Contacts = () => {
           display: "flex",
           flexDirection: "column",
           gap: { xs: [3], md: [4] },
+          position: "relative",
+          minHeight: "216px",
         }}
       >
-        <Grid container rowSpacing={{ xs: 3, md: 2 }} columnSpacing={8}>
-          <Grid
-            item
-            sx={{ display: "flex", flexDirection: "column", gap: [1] }}
-          >
-            <Typography variant="p">Телефон:</Typography>
-            <Link href="telto:88000000000" variant="h5">
-              8 (000) 000-00-00
-            </Link>
-          </Grid>
-          <Grid
-            item
-            sx={{ display: "flex", flexDirection: "column", gap: [1] }}
-          >
-            <Typography variant="p">Электронная почта:</Typography>
-            <Link href="mailto:info@example.com" variant="h5">
-              info@example.com
-            </Link>
-          </Grid>
-        </Grid>
-        <Stack>
-          <Typography variant="p">Почтовый адрес:</Typography>
-          <Typography variant="h5">
-            344047, г. Ростов-на-Дону, ул. Еременко, 108, стр. 2, кв. 73
-          </Typography>
-        </Stack>
+        {loading ? (
+          <CircularProgress
+            sx={{
+              position: "absolute",
+              top: "0",
+              bottom: "0",
+              left: "0",
+              right: "0",
+              margin: "auto",
+            }}
+          />
+        ) : (
+          <>
+            <Grid container rowSpacing={{ xs: 3, md: 2 }} columnSpacing={8}>
+              <Grid
+                item
+                sx={{ display: "flex", flexDirection: "column", gap: [1] }}
+              >
+                <Typography variant="p">Телефон:</Typography>
+                <Link href={`telto:${contacts.phone}`} variant="h5">
+                  {contacts.phone}
+                </Link>
+              </Grid>
+              <Grid
+                item
+                sx={{ display: "flex", flexDirection: "column", gap: [1] }}
+              >
+                <Typography variant="p">Электронная почта:</Typography>
+                <Link href={`mailto:${contacts.email}`} variant="h5">
+                  {contacts.email}
+                </Link>
+              </Grid>
+            </Grid>
+            <Stack>
+              <Typography variant="p">Почтовый адрес:</Typography>
+              <Typography variant="h5">{contacts.address}</Typography>
+            </Stack>
+          </>
+        )}
       </Paper>
       <Questions />
     </Container>

@@ -210,7 +210,6 @@ class Api {
 
   sendFolders(foldersList) {
     const body = new FormData();
-    // console.log(foldersList);
     foldersList.forEach((item) => body.append("folders[]", item.id));
     return fetch(`${this._url}/favourites/folders/order`, {
       method: "POST",
@@ -318,6 +317,16 @@ class Api {
       },
       credentials: "include",
       body: formData,
+    }).then(Api.handleResponse);
+  }
+
+  getContacts() {
+    return fetch(`${this._url}/contacts`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      credentials: "include",
     }).then(Api.handleResponse);
   }
 }
