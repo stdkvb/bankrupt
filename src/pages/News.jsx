@@ -43,6 +43,7 @@ const News = () => {
   const [news, setNews] = useState(data.news);
   const [loading, setLoading] = useState(true);
 
+  //get data
   const getNews = () => {
     api
       .getNews(page)
@@ -95,7 +96,7 @@ const News = () => {
           }}
         >
           <Typography variant="h5">
-            Найдено {data.newsCount} новостей
+            Найдено {data && data.newsCount} новостей
           </Typography>
           {news.map((item, i) => {
             return (

@@ -7,7 +7,7 @@ let theme = createTheme({
     values: {
       xs: 0,
       sm: 600,
-      md: 900,
+      md: 901,
       lg: 1200,
       xl: 1536,
       sxl: 1700,

@@ -359,6 +359,19 @@ class Api {
       credentials: "include",
     }).then(Api.handleResponse);
   }
+
+  getWiki(page, params) {
+    return fetch(
+      `${this._url}/wiki?page=` + `${page}` + `${new URLSearchParams(params)}`,
+      {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        credentials: "include",
+      }
+    ).then(Api.handleResponse);
+  }
 }
 
 const api = new Api({
