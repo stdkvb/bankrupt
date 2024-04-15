@@ -362,7 +362,7 @@ class Api {
 
   getWiki(page, params) {
     return fetch(
-      `${this._url}/wiki?page=` + `${page}` + `${new URLSearchParams(params)}`,
+      `${this._url}/wiki?page=` + `${page}&` + `${new URLSearchParams(params)}`,
       {
         method: "GET",
         headers: {

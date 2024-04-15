@@ -75,7 +75,7 @@ const Wiki = () => {
       event.preventDefault();
       const filters = Array.from(new FormData(event.currentTarget));
       api
-        .getWiki(filters)
+        .getWiki(page, filters)
         .then((data) => {
           if (data.status === "success") {
             setWiki(data.data);
@@ -88,7 +88,7 @@ const Wiki = () => {
     } else {
       //if filters form reset
       api
-        .getWiki()
+        .getWiki(page)
         .then((data) => {
           if (data.status === "success") {
             setWiki(data.data);
