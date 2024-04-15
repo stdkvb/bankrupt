@@ -349,6 +349,16 @@ class Api {
       credentials: "include",
     }).then(Api.handleResponse);
   }
+
+  getNewsDetail(id) {
+    return fetch(`${this._url}/news-detail?id=` + `${id}`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      credentials: "include",
+    }).then(Api.handleResponse);
+  }
 }
 
 const api = new Api({
