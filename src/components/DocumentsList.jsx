@@ -443,7 +443,7 @@ const DocumentsList = ({
             >
               {currentDocument.subtitle}
             </Typography>
-            <Stack
+            {/* <Stack
               direction={{ xs: "column", md: "row" }}
               spacing={1}
               sx={{
@@ -455,7 +455,7 @@ const DocumentsList = ({
               <Typography color="text.secondary">
                 {currentDocument.previewText}
               </Typography>
-            </Stack>
+            </Stack> */}
             <Typography
               color="text.secondary"
               sx={{ mb: 4, textIndent: "20px", textAlign: "justify" }}
@@ -488,14 +488,18 @@ const DocumentsList = ({
                     href={act.url}
                     sx={{
                       display: "flex",
-                      maxWidth: "430px",
+                      maxWidth: "100%",
                       alignItems: "center",
                       gap: "12px",
                     }}
                     target="_blank"
                   >
                     <DescriptionOutlinedIcon />
-                    <Typography>{act.title}</Typography>
+                    <Typography
+                      sx={{ whiteSpace: "break-spaces", overflow: "hidden" }}
+                    >
+                      {act.title}
+                    </Typography>
                   </Link>
                 );
               })}
@@ -504,13 +508,18 @@ const DocumentsList = ({
                   href={currentDocument.kadarbitr.url}
                   sx={{
                     display: "flex",
+                    maxWidth: "100%",
                     alignItems: "center",
                     gap: "12px",
                   }}
                   target="_blank"
                 >
                   <LanguageIcon />
-                  <Typography>{currentDocument.kadarbitr.title}</Typography>
+                  <Typography
+                    sx={{ whiteSpace: "break-spaces", overflow: "hidden" }}
+                  >
+                    {currentDocument.kadarbitr.title}
+                  </Typography>
                 </Link>
               )}
             </Stack>
