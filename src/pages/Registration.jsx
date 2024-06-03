@@ -18,6 +18,9 @@ import api from "../utils/Api";
 import Popup from "../components/Popup";
 
 const Registration = () => {
+  //query
+  const [errors, setErrors] = useState(null);
+  const [userId, setUserId] = useState(null);
   //reg confirmation
   const [isRegistered, setIsRegistered] = useState(false);
 
@@ -142,12 +145,16 @@ const Registration = () => {
     event.preventDefault();
     const { lastName, firstName, secondName, phone, email, password } =
       formValue;
-    console.log({ lastName, firstName, secondName, phone, email, password });
     api
       .createUser(lastName, firstName, secondName, phone, email, password)
       .then((data) => {
         if (data.status === "success") {
+          setErrors(null);
+          setUserId(data.data.userId);
           setIsRegistered(true);
+        }
+        if (data.status === "error") {
+          setErrors(data.errors);
         }
       })
       .catch((error) => {
@@ -160,7 +167,7 @@ const Registration = () => {
 
   const resendCode = () => {
     api
-      .resendCode()
+      .resendCode(userId)
       .then((data) => {
         if (data.status === "success") {
           setIsResent(true);
@@ -393,6 +400,14 @@ const Registration = () => {
               </Typography>
             }
           />
+          {errors &&
+            errors.map((error, i) => {
+              return (
+                <Typography color="error.main" sx={{ my: 2 }} key={i}>
+                  {error.message}
+                </Typography>
+              );
+            })}
           <Button
             type="submit"
             fullWidth

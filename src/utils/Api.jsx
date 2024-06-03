@@ -1,5 +1,5 @@
-const BASE_URL = "https://bankrotvestnik.ru/api";
-// const BASE_URL = "http://beta.bankrotvestnik.ru/api";
+// const BASE_URL = "https://bankrotvestnik.ru/api";
+const BASE_URL = "http://beta.bankrotvestnik.ru/api";
 const dadataToken = "3c767e62c4d512110cb8e064f16a6d9c30c47974";
 
 class Api {
@@ -27,11 +27,11 @@ class Api {
     }).then(Api.handleResponse);
   }
 
-  confirmUser(userId, registrationCode) {
+  confirmUser(userId, confirmCode) {
     const body = new FormData();
-    body.set("userID", userId);
-    body.set("registrationCode", registrationCode);
-    return fetch(`${this._url}/auth/reg-check-code`, {
+    body.set("userId", userId);
+    body.set("confirmCode", confirmCode);
+    return fetch(`${this._url}/auth/reg-finish`, {
       method: "POST",
       credentials: "include",
       body,
@@ -40,8 +40,8 @@ class Api {
 
   resendCode(userId) {
     const body = new FormData();
-    body.set("userID", userId);
-    return fetch(`${this._url}/auth/reg-check-code`, {
+    body.set("userId", userId);
+    return fetch(`${this._url}/auth/reg-repeat-code`, {
       method: "POST",
       credentials: "include",
       body,
@@ -89,6 +89,19 @@ class Api {
       },
       credentials: "include",
     }).then(Api.handleResponse);
+  }
+
+  getFilters(params) {
+    return fetch(
+      `${this._url}/catalog/filter?` + `${new URLSearchParams(params)}`,
+      {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        credentials: "include",
+      }
+    ).then(Api.handleResponse);
   }
 
   getFavorites(params) {
@@ -222,16 +235,14 @@ class Api {
     }).then(Api.handleResponse);
   }
 
-  sendQuestion(name, phone, email, question) {
-    const body = new FormData();
-    body.set("name", name);
-    body.set("phone", phone);
-    body.set("email", email);
-    body.set("question", question);
-    return fetch(`${this._url}/question`, {
+  sendQuestion(formData) {
+    return fetch(`${this._url}/ask-question`, {
       method: "POST",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
       credentials: "include",
-      body,
+      body: formData,
     }).then(Api.handleResponse);
   }
 

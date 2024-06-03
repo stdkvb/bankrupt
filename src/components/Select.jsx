@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useEffect, useState } from "react";
 import Input from "@mui/material/Input";
 import FormControl from "@mui/material/FormControl";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
@@ -6,12 +6,12 @@ import { matchSorter } from "match-sorter";
 import TextField from "@mui/material/TextField";
 
 export default function Select({ name, title, tags, onReset }) {
-  const [filter, setFilter] = React.useState([]);
+  const [filter, setFilter] = useState([]);
 
   const resetFilters = () => {
     setFilter([]);
   };
-  React.useEffect(resetFilters, [onReset]);
+  useEffect(resetFilters, [onReset]);
 
   return (
     <FormControl sx={{ width: "100%" }}>

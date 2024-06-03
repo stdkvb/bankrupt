@@ -1,26 +1,71 @@
-import React from "react";
-import { Paper, Typography, Button, Link } from "@mui/material";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import InputMask from "react-input-mask";
-import IconButton from "@mui/material/IconButton";
-
+import { useState, useContext } from "react";
+import { Link as RouterLink } from "react-router-dom";
+import {
+  Paper,
+  Typography,
+  Button,
+  Link,
+  Stack,
+  Box,
+  Modal,
+  FormControlLabel,
+  Checkbox,
+  IconButton,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
+import { UserContext } from "../utils/context";
+import TextInput from "./TextInput";
+import Popup from "./Popup";
+import api from "../utils/Api";
+
 const Questions = () => {
+  //current user
+  const user = useContext(UserContext).user.personal;
+
+  const fields = [
+    {
+      label: "Имя",
+      name: "name",
+      defaultValue: `${user.lastName} ${user.firstName} ${user.secondName}`,
+    },
+    { label: "Телефон", name: "phone", defaultValue: `${user.phone}` },
+    { label: "Email", name: "email", defaultValue: `${user.email}` },
+    { label: "Ващ вопрос", name: "question", defaultValue: "" },
+  ];
+
+  const [policyError, setPolicyError] = useState(false);
+  const policyValidator = (e) => {
+    if (e.target.validity.valid) {
+      setPolicyError(false);
+    } else {
+      setPolicyError(true);
+    }
+  };
+
   // modal controller
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+    //success popup
+    const [isSuccess, setIsSuccess] = useState(false);
+
   //form submit
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log(data);
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    api
+      .sendQuestion(formData)
+      .then((data) => {
+        if (data.status === "success") {
+          handleClose();
+          setIsSuccess(true);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -54,8 +99,7 @@ const Questions = () => {
       >
         <Box
           component="form"
-          onSubmit={handleSubmit}
-          noValidate
+          onSubmit={handleFormSubmit}
           sx={{
             position: "absolute",
             top: "50%",
@@ -82,65 +126,79 @@ const Questions = () => {
           <Typography variant="p" color="text.secondary">
             Укажите свой вопрос, и наш специалист свяжется с вами
           </Typography>
-          <TextField
-            label="Имя"
-            variant="standard"
-            size="medium"
-            required
-            fullWidth
-            id="name"
-            name="name"
-            sx={{ mb: 2, mt: 3 }}
-          />
-          <InputMask mask="+7 (999) 999 99 99">
-            <TextField
-              label="Телефон"
-              variant="standard"
-              size="medium"
-              required
-              fullWidth
-              id="phone"
-              name="phone"
-              sx={{ mb: 2 }}
-            />
-          </InputMask>
-          <TextField
-            label="Email"
-            variant="standard"
-            size="medium"
-            required
-            fullWidth
-            id="email"
-            name="email"
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            label="Ваш вопрос"
-            variant="standard"
-            size="medium"
-            required
-            fullWidth
-            id="question"
-            name="question"
-            sx={{ mb: 4 }}
-          />
+          <Stack direction="column" spacing={2} my={3}>
+            {fields.map((input, i) => (
+              <TextInput
+                key={i}
+                label={input.label}
+                name={input.name}
+                defaultValue={input.defaultValue}
+                required={true}
+                multiline={false}
+                readOnly={false}
+              />
+            ))}
+          </Stack>
           <FormControlLabel
-            control={<Checkbox value="policy" />}
+            control={
+              <Checkbox
+                value="policy"
+                defaultChecked
+                required
+                onChange={policyValidator}
+              />
+            }
             label={
-              <Typography display="inline" color="text.secondary">
-                Я соглашаюсь с
-                <Link href="#" target="_blank" color="primary.main">
-                  {" "}
+              <Typography
+                display="inline"
+                color="text.secondary"
+                fontSize={"15px"}
+              >
+                Я соглашаюсь с&nbsp;
+                <Link
+                  component={RouterLink}
+                  to="/policy"
+                  target="_blank"
+                  color="primary.main"
+                >
                   политикой конфиденциальности
                 </Link>
               </Typography>
             }
           />
-          <Button type="submit" fullWidth variant="contained" sx={{ mt: 2 }}>
+          <Button type="submit" fullWidth variant="contained" sx={{ mt: 2 }} disabled={policyError}>
             Отправить
           </Button>
         </Box>
       </Modal>
+      <Popup isPopupOpen={isSuccess}>
+        <IconButton
+          onClick={() => {
+            setIsSuccess(false);
+          }}
+          sx={{
+            position: "absolute",
+            right: { xs: 1, md: 2 },
+            top: { xs: 1, md: 2 },
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <Typography variant="h4" mb={3} sx={{ maxWidth: "90%" }}>
+          Ваш вопрос успешно отправлен
+        </Typography>
+        <Typography mb={3}>Наш специалист свяжется с вами в ближайшее время </Typography>
+        <Button
+          variant="contained"
+          fullWidth
+          sx={{ mt: 4 }}
+          onClick={() => {
+            setIsSuccess(false);
+          }}
+        >
+          Закрыть
+        </Button>
+      </Popup>
     </>
   );
 };

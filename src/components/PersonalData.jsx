@@ -21,11 +21,11 @@ import Popup from "../components/Popup";
 
 const PersonalData = () => {
   //current user
-  const user = useContext(UserContext).user;
+  const user = useContext(UserContext).user.personal;
   const [isLegalEntity, setIsLegalEntity] = useState(user.legalEntity);
   const [readOnly, setIsReadOnly] = useState(true);
 
-  const personalInputs = [
+  const fields = [
     { label: "Фамилия", name: "lastName", defaultValue: `${user.lastName}` },
     { label: "Имя", name: "firstName", defaultValue: `${user.firstName}` },
     {
@@ -72,7 +72,7 @@ const PersonalData = () => {
       >
         <Typography variant="h5">Личные данные</Typography>
         <Grid container rowGap={2} columnGap={4}>
-          {personalInputs.map((input, i) => (
+          {fields.map((input, i) => (
             <Grid item xs={12} md={12} lg={5} xl={3}>
               <TextInput
                 key={i}

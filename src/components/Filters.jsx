@@ -8,8 +8,27 @@ import "dayjs/locale/ru";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import Select from "./Select";
+import api from "../utils/Api";
 
 const Filters = ({ onFilterSubmit, data, short }) => {
+  //select filters
+  const [filterParamsList, setFilterParamsList] = useState(
+    data.filterParamsList
+  );
+
+  // const onFilterChange = () => {
+  //   api
+  //     .getFilters()
+  //     .then((data) => {
+  //       if (data.status === "success") {
+  //         setFilterParamsList(data.data);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+
   //tags filters clear
   const [filtersClear, setFiltersClear] = useState(false);
 
@@ -84,7 +103,7 @@ const Filters = ({ onFilterSubmit, data, short }) => {
             gap: [4],
           }}
         >
-          {data.filterParamsList.map((filter, i) => {
+          {filterParamsList.map((filter, i) => {
             return (
               <Select
                 key={i}

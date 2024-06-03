@@ -8,8 +8,8 @@ const NewPassword = () => {
   const navigate = useNavigate();
   //get params from url
   const [urlParams, setUrlParams] = useSearchParams();
-  let userId = urlParams.get("user_id");
-  let checkword = urlParams.get("checkword");
+  let userId = urlParams.get("userId");
+  let checkword = urlParams.get("confirmCode");
   //query errors
   const [errors, setErrors] = useState([]);
 

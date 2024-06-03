@@ -116,7 +116,7 @@ export default function MainLayout({
   }
 
   //current user
-  const user = useContext(UserContext).user;
+  const user = useContext(UserContext).user.personal;
 
   //drawer control
   const mobile = useMediaQuery("(max-width:900px)");
@@ -434,7 +434,6 @@ export default function MainLayout({
                 onClick={handleProfileMenuClose}
                 component={RouterLink}
                 to={"/profile"}
-                disabled
               >
                 <ListItemIcon>
                   <PersonIcon />

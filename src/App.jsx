@@ -125,7 +125,7 @@ export default function App() {
       //if filters form submit
       event.preventDefault();
       const filters = Array.from(new FormData(event.currentTarget));
-      console.log(filters);
+      // console.log(filters);
       api
         .getCatalog(filters)
         .then((data) => {
@@ -238,10 +238,7 @@ export default function App() {
             }
           />
           <Route path="sign-up" element={<Registration />} />
-          <Route
-            path="confirm/:userId/:registrationCode"
-            element={<Confirm />}
-          />
+          <Route path="reg-finish" element={<Confirm />} />
           <Route path="password-recovery" element={<PasswordRecovery />} />
           <Route path="recovery" element={<NewPassword />} />
           <Route path="*" element={<PageNotFound loggedIn={loggedIn} />} />

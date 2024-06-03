@@ -8,7 +8,7 @@ import { UserContext } from "../utils/context";
 
 const Requisites = ({ readOnly }) => {
   //current user
-  const user = useContext(UserContext).user;
+  const user = useContext(UserContext).user.personal;
 
   const defaultRequisitesInputs = [
     {

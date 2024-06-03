@@ -1,17 +1,19 @@
 import React from "react";
 import { useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import api from "../utils/Api";
 
 const Confirm = () => {
   const navigate = useNavigate();
-  let { userId, registrationCode } = useParams();
+  const [searchParams] = useSearchParams();
+  const userId = searchParams.get("userId");
+  const confirmCode = searchParams.get("confirmCode");
 
   const confirmUser = () => {
     api
-      .confirmUser(userId, registrationCode)
+      .confirmUser(userId, confirmCode)
       .then((data) => {
         if (data.status === "success") {
           navigate("/");
