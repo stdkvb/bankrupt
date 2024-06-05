@@ -125,7 +125,6 @@ export default function App() {
       //if filters form submit
       event.preventDefault();
       const filters = Array.from(new FormData(event.currentTarget));
-      // console.log(filters);
       api
         .getCatalog(filters)
         .then((data) => {

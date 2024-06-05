@@ -81,16 +81,17 @@ const Rates = () => {
         }}
       >
         {loading ? (
-          <CircularProgress
-            sx={{
-              position: "absolute",
-              top: "0",
-              bottom: "0",
-              left: "0",
-              right: "0",
-              margin: "auto",
-            }}
-          />
+          // <CircularProgress
+          //   sx={{
+          //     position: "absolute",
+          //     top: "0",
+          //     bottom: "0",
+          //     left: "0",
+          //     right: "0",
+          //     margin: "auto",
+          //   }}
+          // />
+          <></>
         ) : (
           rates.map((rate, i) => {
             return (
@@ -178,7 +179,23 @@ const Rates = () => {
           })
         )}
       </Stack>
-      <Trial />
+      <Paper
+        elevation={0}
+        sx={{
+          p: { xs: [2], md: [4] },
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <Typography variant="h5" sx={{ mb: 1 }}>
+          Демо-доступ
+        </Typography>
+        <Typography variant="p" color="text.secondary" sx={{ mb: 2 }}>
+          Активируйте бесплатный демо-доступ, чтобы протестировать возможности
+          сервиса в течении 3-х дней
+        </Typography>
+        <Trial />
+      </Paper>
     </Container>
   );
 };

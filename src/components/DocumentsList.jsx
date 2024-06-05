@@ -1,16 +1,21 @@
-import React from "react";
 import { useState } from "react";
-import { Paper, Typography, Stack, Link, Button } from "@mui/material";
-import Chip from "@mui/material/Chip";
-import IconButton from "@mui/material/IconButton";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Divider from "@mui/material/Divider";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-
+import {
+  Paper,
+  Typography,
+  Stack,
+  Link,
+  Button,
+  Chip,
+  IconButton,
+  Menu,
+  MenuItem,
+  Divider,
+  Modal,
+  Box,
+  FormControlLabel,
+  Checkbox,
+  Pagination,
+} from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CloseIcon from "@mui/icons-material/Close";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
@@ -171,7 +176,7 @@ const DocumentsList = ({
         }}
       >
         <Typography variant="h5">
-          Найденных документов: {data.documentsList.length}
+          Найденных документов: {data.allCount}
         </Typography>
 
         {data.documentsList.map((document, i) => {
@@ -293,6 +298,7 @@ const DocumentsList = ({
             </Box>
           );
         })}
+        <Pagination count={data.pagesCount} showFirstButton showLastButton />
       </Paper>
       <Menu
         anchorEl={isDocumentMenuOpen}

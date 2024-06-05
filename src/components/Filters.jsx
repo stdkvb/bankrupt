@@ -1,33 +1,18 @@
 import React from "react";
 import { useState } from "react";
-import { Paper, Stack, Button } from "@mui/material";
-import TextField from "@mui/material/TextField";
+import { Paper, Stack, Button, TextField } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import "dayjs/locale/ru";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import Select from "./Select";
-import api from "../utils/Api";
 
 const Filters = ({ onFilterSubmit, data, short }) => {
   //select filters
   const [filterParamsList, setFilterParamsList] = useState(
     data.filterParamsList
   );
-
-  // const onFilterChange = () => {
-  //   api
-  //     .getFilters()
-  //     .then((data) => {
-  //       if (data.status === "success") {
-  //         setFilterParamsList(data.data);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
 
   //tags filters clear
   const [filtersClear, setFiltersClear] = useState(false);

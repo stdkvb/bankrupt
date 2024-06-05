@@ -3,6 +3,7 @@ import { Typography, Button, Stack, Container, Alert } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
 import { UserContext } from "../utils/context";
+import Trial from "../components/Trial";
 import Tariff from "../components/Tariff";
 import PersonalData from "../components/PersonalData";
 import Questions from "../components/Questions";
@@ -38,7 +39,6 @@ const Profile = () => {
           </Typography>
         </Alert>
       )}
-
       <Tariff>
         <Stack
           sx={{
@@ -56,13 +56,7 @@ const Profile = () => {
           >
             Оплатить тариф
           </Button>
-          <Button
-            type="submit"
-            variant="outlined"
-            sx={{ minWidth: { xs: "100%", md: "300px" } }}
-          >
-            Активировать демо-доступ
-          </Button>
+          <Trial />
         </Stack>
       </Tariff>
       <PersonalData />

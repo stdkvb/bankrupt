@@ -15,8 +15,8 @@ import Popup from "../components/Popup";
 import api from "../utils/Api";
 
 const changePasswordInputs = [
-  { label: "Текущий пароль", name: "password" },
-  { label: "Новый пароль", name: "newPassword" },
+  { label: "Текущий пароль", name: "oldPwd" },
+  { label: "Новый пароль", name: "newPwd" },
   { label: "Повторите пароль", name: "confirmPassword" },
 ];
 
@@ -122,8 +122,8 @@ const ChangePassword = () => {
               size="medium"
               required
               fullWidth
-              id="password"
-              name="password"
+              id="oldPwd"
+              name="oldPwd"
               error={passwordError}
               helperText={passwordError ? "Введите текущий пароль" : ""}
               value={password}
@@ -136,8 +136,8 @@ const ChangePassword = () => {
               size="medium"
               required
               fullWidth
-              id="newPassword"
-              name="newPassword"
+              id="newPwd"
+              name="newPwd"
               error={newPasswordError}
               helperText={
                 newPasswordError

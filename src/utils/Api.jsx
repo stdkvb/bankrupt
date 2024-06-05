@@ -246,11 +246,10 @@ class Api {
     }).then(Api.handleResponse);
   }
 
-  changePassword(userId, password, newPassword) {
+  changePassword(password, newPassword) {
     const body = new FormData();
-    body.set("userId", userId);
-    body.set("password", password);
-    body.set("newPassword", newPassword);
+    body.set("oldPwd", password);
+    body.set("newPwd", newPassword);
     return fetch(`${this._url}/change-password`, {
       method: "POST",
       credentials: "include",

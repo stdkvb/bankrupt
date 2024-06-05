@@ -1,6 +1,4 @@
-import React from "react";
-import { Typography } from "@mui/material";
-import Container from "@mui/material/Container";
+import { Typography, Container } from "@mui/material";
 
 import Filters from "../components/Filters";
 import DocumentsList from "../components/DocumentsList";

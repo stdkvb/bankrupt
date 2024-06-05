@@ -20,7 +20,7 @@ const Trial = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
   //current user
-  const user = useContext(UserContext).user;
+  const user = useContext(UserContext).user.personal;
 
   const personalInputs = [
     {
@@ -55,29 +55,14 @@ const Trial = () => {
 
   return (
     <>
-      <Paper
-        elevation={0}
-        sx={{
-          p: { xs: [2], md: [4] },
-          display: "flex",
-          flexDirection: "column",
-        }}
+      <Button
+        type="submit"
+        variant="outlined"
+        sx={{ maxWidth: { xs: "100%", md: "300px" } }}
+        onClick={() => setModalOpen(true)}
       >
-        <Typography variant="h5" sx={{ mb: 1 }}>
-          Демо-доступ
-        </Typography>
-        <Typography variant="p" color="text.secondary">
-          Активируйте бесплатный демо-доступ, чтобы протестировать возможности
-          сервиса в течении 3-х дней
-        </Typography>
-        <Button
-          variant="contained"
-          sx={{ width: { xs: "100%", md: "200px" }, mt: 2 }}
-          onClick={() => setModalOpen(true)}
-        >
-          Активировать
-        </Button>
-      </Paper>
+        Активировать демо-доступ
+      </Button>
       <Modal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
