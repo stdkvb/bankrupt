@@ -1,6 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
+import { TextField, Autocomplete } from "@mui/material";
 import { debounce } from "@mui/material/utils";
 
 import api from "../utils/Api";

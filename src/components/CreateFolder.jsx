@@ -1,8 +1,5 @@
-import React, { useState } from "react";
-import { Typography, Button } from "@mui/material";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
+import { useState } from "react";
+import { Typography, Button, TextField, Box, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 import api from "../utils/Api";

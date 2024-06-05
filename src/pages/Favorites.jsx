@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Typography } from "@mui/material";
-import Container from "@mui/material/Container";
-import CircularProgress from "@mui/material/CircularProgress";
-import Box from "@mui/material/Box";
+import { Typography, Container, CircularProgress, Box } from "@mui/material";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 
 import Filters from "../components/Filters";

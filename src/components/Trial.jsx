@@ -1,15 +1,16 @@
 import { useContext, useState } from "react";
-import { Paper, Typography, Button, Link, Stack } from "@mui/material";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import InputMask from "react-input-mask";
-import IconButton from "@mui/material/IconButton";
-
+import {
+  Typography,
+  Button,
+  Link,
+  Stack,
+  Box,
+  Modal,
+  FormControlLabel,
+  Checkbox,
+  IconButton,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-
 import { UserContext } from "../utils/context";
 import TextInput from "./TextInput";
 import api from "../utils/Api";
