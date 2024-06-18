@@ -2,9 +2,9 @@ import { useContext } from "react";
 import { Typography, Button, Stack, Container, Alert } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
-import { UserContext } from "../utils/context";
+import { UserContext } from "../utils/UserContext";
 import Trial from "../components/Trial";
-import Tariff from "../components/Tariff";
+import Rate from "../components/Rate";
 import PersonalData from "../components/PersonalData";
 import Questions from "../components/Questions";
 
@@ -39,7 +39,7 @@ const Profile = () => {
           </Typography>
         </Alert>
       )}
-      <Tariff>
+      <Rate>
         <Stack
           sx={{
             display: "flex",
@@ -53,12 +53,13 @@ const Profile = () => {
             type="submit"
             variant="contained"
             sx={{ minWidth: { xs: "100%", md: "300px" } }}
+            disabled
           >
             Оплатить тариф
           </Button>
           <Trial />
         </Stack>
-      </Tariff>
+      </Rate>
       <PersonalData />
       <Questions />
     </Container>

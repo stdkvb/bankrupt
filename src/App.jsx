@@ -14,7 +14,6 @@ import Profile from "./pages/Profile";
 import ChangePassword from "./pages/ChangePassword";
 import Catalog from "./pages/Catalog";
 import Favorites from "./pages/Favorites";
-import Folder from "./pages/Folder";
 import QA from "./pages/QA";
 import Contacts from "./pages/Contacts";
 import PageNotFound from "./pages/PageNotFound";
@@ -23,17 +22,26 @@ import Article from "./pages/Article";
 import Wiki from "./pages/Wiki";
 
 import api from "./utils/Api";
-import { UserContext } from "./utils/context";
+import { UserContext } from "./utils/UserContext";
 
 export default function App() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
   const { user, setUser } = useContext(UserContext);
-  const [catalog, setCatalog] = useState([]);
   const [errors, setErrors] = useState([]);
   const [folders, setFolders] = useState([]);
   const [mainFolder, setMainFolder] = useState({});
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setLoggedIn(true);
+      getAccess();
+    } else {
+      setLoading(false);
+    }
+  }, []);
 
   //load catalog
   const getAccess = () => {
@@ -57,23 +65,11 @@ export default function App() {
       })
       .catch((error) => {
         console.log(error);
-      });
-    api
-      .getCatalog()
-      .then((data) => {
-        if (data.status === "success") {
-          setLoggedIn(true);
-          setCatalog(data.data);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
       })
       .finally(() => {
         setLoading(false);
       });
   };
-  useEffect(getAccess, []);
 
   //update folders
   const updateFolders = () => {
@@ -101,7 +97,6 @@ export default function App() {
           setLoading(true);
           setErrors([]);
           getAccess();
-          getFolders();
           navigate("/");
         } else {
           setErrors(data.errors);
@@ -115,60 +110,27 @@ export default function App() {
   //logout
   const handleLogout = () => {
     setLoggedIn(false);
-    localStorage.clear();
+    localStorage.removeItem("token");
     navigate("/");
   };
 
-  //filter catalog
-  const handleFilterSubmit = (event) => {
-    if (event) {
-      //if filters form submit
-      event.preventDefault();
-      const filters = Array.from(new FormData(event.currentTarget));
-      api
-        .getCatalog(filters)
-        .then((data) => {
-          if (data.status === "success") {
-            setCatalog(data.data);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      //if filters form reset
-      api
-        .getCatalog()
-        .then((data) => {
-          if (data.status === "success") {
-            setCatalog(data.data);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  };
+  if (loading)
+    return (
+      <CircularProgress
+        sx={{
+          position: "absolute",
+          top: "0",
+          bottom: "0",
+          left: "0",
+          right: "0",
+          margin: "auto",
+        }}
+      />
+    );
 
   return (
     <Routes>
-      {loading ? (
-        <Route
-          path="/"
-          element={
-            <CircularProgress
-              sx={{
-                position: "absolute",
-                top: "0",
-                bottom: "0",
-                left: "0",
-                right: "0",
-                margin: "auto",
-              }}
-            />
-          }
-        />
-      ) : loggedIn ? (
+      {loggedIn ? (
         <Route
           path="/"
           element={
@@ -186,8 +148,6 @@ export default function App() {
             element={
               <Catalog
                 title={"Каталог"}
-                data={catalog}
-                onFilterSubmit={handleFilterSubmit}
                 loading={loading}
                 folders={folders}
                 updateFolders={updateFolders}
@@ -210,8 +170,10 @@ export default function App() {
           <Route
             path="favorites/:id"
             element={
-              <Folder
+              <Favorites
+                loading={loading}
                 folders={folders}
+                mainFolder={mainFolder}
                 updateFolders={updateFolders}
                 updateCatalog={getAccess}
               />
@@ -225,7 +187,6 @@ export default function App() {
           <Route path="news/:id" element={<Article />} />
           <Route path="contacts" element={<Contacts />} />
           <Route path="qa" element={<QA />} />
-          <Route path="*" element={<PageNotFound loggedIn={loggedIn} />} />
         </Route>
       ) : (
         <Route path="/" element={<AuthLayout />}>
@@ -240,9 +201,9 @@ export default function App() {
           <Route path="reg-finish" element={<Confirm />} />
           <Route path="password-recovery" element={<PasswordRecovery />} />
           <Route path="recovery" element={<NewPassword />} />
-          <Route path="*" element={<PageNotFound loggedIn={loggedIn} />} />
         </Route>
       )}
+      <Route path="*" element={<PageNotFound loggedIn={loggedIn} />} />
     </Routes>
   );
 }

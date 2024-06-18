@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
 import { Typography, Container, CircularProgress, Box } from "@mui/material";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 
@@ -6,15 +7,21 @@ import Filters from "../components/Filters";
 import DocumentsList from "../components/DocumentsList";
 
 import api from "../utils/Api";
+import { PaginationContext } from "../utils/PaginationContext";
+import { FiltersContext } from "../utils/FiltersContext";
 
 const Favorites = ({ folders, mainFolder, updateFolders, updateCatalog }) => {
+  let { id } = useParams();
+  const folder = folders.find((folder) => folder.id == id);
+  const { page, setPage } = useContext(PaginationContext);
+  const { filters, setFilters } = useContext(FiltersContext);
   const [favorites, setFavorites] = useState([]);
   const [isFiltered, setIsFiltered] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const getFavorites = () => {
     api
-      .getFavorites([["folderId", mainFolder.id]])
+      .getFavorites([["folderId", id ? id : mainFolder.id]], page, filters)
       .then((data) => {
         if (data.status === "success") {
           setFavorites(data.data);
@@ -25,40 +32,8 @@ const Favorites = ({ folders, mainFolder, updateFolders, updateCatalog }) => {
         console.log(error);
       });
   };
-  useEffect(getFavorites, []);
 
-  const handleFilterSubmit = (event) => {
-    if (event) {
-      //if filters form submit
-      event.preventDefault();
-      const filters = Array.from(new FormData(event.currentTarget));
-      // console.log(filters);
-      api
-        .getFavorites(filters)
-        .then((data) => {
-          if (data.status === "success") {
-            setFavorites(data.data);
-            setIsFiltered(true);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      //if filters form reset
-      api
-        .getFavorites()
-        .then((data) => {
-          if (data.status === "success") {
-            setFavorites(data.data);
-            setIsFiltered(true);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  };
+  useEffect(getFavorites, [folder, page, filters]);
 
   return (
     <Container
@@ -74,7 +49,7 @@ const Favorites = ({ folders, mainFolder, updateFolders, updateCatalog }) => {
       }}
     >
       <Typography variant="h4" component="h1">
-        Избранное
+        {folder ? folder.name : "Избранное"}
       </Typography>
       {loading ? (
         <CircularProgress
@@ -112,17 +87,14 @@ const Favorites = ({ folders, mainFolder, updateFolders, updateCatalog }) => {
         </Box>
       ) : (
         <>
-          {favorites.filterParamsList && (
-            <Filters data={favorites} onFilterSubmit={handleFilterSubmit} />
-          )}
+          {favorites.filterParamsList && <Filters data={favorites} />}
           <DocumentsList
             data={favorites}
             inFavorites={true}
             folders={folders}
-            folderId={mainFolder.id}
+            folderId={id ? id : mainFolder.id}
             updateFolders={updateFolders}
             updateFavorites={getFavorites}
-            updateCatalog={updateCatalog}
           />
         </>
       )}

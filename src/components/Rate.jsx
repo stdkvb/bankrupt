@@ -2,7 +2,7 @@ import React from "react";
 import { Paper, Typography, Button, Stack } from "@mui/material";
 import Grid from "@mui/material/Grid";
 
-const Tariff = ({ children }) => {
+const Rate = ({ children }) => {
   return (
     <Paper
       elevation={0}
@@ -34,4 +34,4 @@ const Tariff = ({ children }) => {
   );
 };
 
-export default Tariff;
+export default Rate;

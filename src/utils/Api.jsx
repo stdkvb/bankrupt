@@ -81,14 +81,19 @@ class Api {
     }).then(Api.handleResponse);
   }
 
-  getCatalog(params) {
-    return fetch(`${this._url}/catalog?` + `${new URLSearchParams(params)}`, {
-      method: "GET",
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      credentials: "include",
-    }).then(Api.handleResponse);
+  getCatalog(page, filters) {
+    return fetch(
+      `${this._url}/catalog?` +
+        `${new URLSearchParams(filters)}` +
+        `&count=10&page=${page}`,
+      {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        credentials: "include",
+      }
+    ).then(Api.handleResponse);
   }
 
   getFilters(params) {
@@ -104,9 +109,12 @@ class Api {
     ).then(Api.handleResponse);
   }
 
-  getFavorites(params) {
+  getFavorites(folderId, page, filters) {
     return fetch(
-      `${this._url}/favourites?` + `${new URLSearchParams(params)}`,
+      `${this._url}/favourites?` +
+        `${new URLSearchParams(folderId)}` +
+        `${new URLSearchParams(filters)}` +
+        `&count=10&page=${page}`,
       {
         method: "GET",
         headers: {

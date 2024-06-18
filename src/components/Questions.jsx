@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-import { UserContext } from "../utils/context";
+import { UserContext } from "../utils/UserContext";
 import TextInput from "./TextInput";
 import Popup from "./Popup";
 import api from "../utils/Api";
@@ -48,8 +48,8 @@ const Questions = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-    //success popup
-    const [isSuccess, setIsSuccess] = useState(false);
+  //success popup
+  const [isSuccess, setIsSuccess] = useState(false);
 
   //form submit
   const handleFormSubmit = (e) => {
@@ -166,7 +166,13 @@ const Questions = () => {
               </Typography>
             }
           />
-          <Button type="submit" fullWidth variant="contained" sx={{ mt: 2 }} disabled={policyError}>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 2 }}
+            disabled={policyError}
+          >
             Отправить
           </Button>
         </Box>
@@ -187,7 +193,9 @@ const Questions = () => {
         <Typography variant="h4" mb={3} sx={{ maxWidth: "90%" }}>
           Ваш вопрос успешно отправлен
         </Typography>
-        <Typography mb={3}>Наш специалист свяжется с вами в ближайшее время </Typography>
+        <Typography mb={3}>
+          Наш специалист свяжется с вами в ближайшее время{" "}
+        </Typography>
         <Button
           variant="contained"
           fullWidth

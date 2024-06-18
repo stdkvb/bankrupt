@@ -13,9 +13,9 @@ import {
   FormControl,
   CircularProgress,
 } from "@mui/material";
-import Tariff from "../components/Tariff";
+import Rate from "../components/Rate";
 import Trial from "../components/Trial";
-import { UserContext } from "../utils/context";
+import { UserContext } from "../utils/UserContext";
 import api from "../utils/Api";
 
 const Rates = () => {
@@ -67,7 +67,7 @@ const Rates = () => {
           </Typography>
         </Alert>
       )}
-      <Tariff />
+      <Rate />
       <Stack
         sx={{
           display: "grid",

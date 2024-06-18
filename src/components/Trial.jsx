@@ -11,7 +11,7 @@ import {
   IconButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { UserContext } from "../utils/context";
+import { UserContext } from "../utils/UserContext";
 import TextInput from "./TextInput";
 import api from "../utils/Api";
 import Popup from "../components/Popup";

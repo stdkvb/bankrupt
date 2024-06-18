@@ -239,7 +239,6 @@ const Wiki = () => {
                   <Box
                     sx={{
                       display: "flex",
-                      justifyContent: "space-between",
                       gap: { xs: 1, md: 4 },
                       flexDirection: { xs: "column", md: "row" },
                       justifyContent: "flex-end",

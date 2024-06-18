@@ -55,7 +55,7 @@ import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
 import api from "../utils/Api";
 import Popup from "../components/Popup";
 import CreateFolder from "../components/CreateFolder";
-import { UserContext } from "../utils/context";
+import { UserContext } from "../utils/UserContext";
 
 import logo from "../assets/images/logo.svg";
 
@@ -361,6 +361,7 @@ export default function MainLayout({
               component={RouterLink}
               to={"/qa"}
               sx={{ display: { xs: "none", md: "flex", height: "40px" } }}
+              disabled
             >
               <HelpOutlineOutlinedIcon />
             </IconButton>
@@ -372,9 +373,11 @@ export default function MainLayout({
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
             >
-              <Avatar
-                {...stringAvatar(`${user.firstName}`, `${user.lastName}`)}
-              />
+              {user && (
+                <Avatar
+                  {...stringAvatar(`${user.firstName}`, `${user.lastName}`)}
+                />
+              )}
             </IconButton>
             <Menu
               anchorEl={isProfileMenuOpen}
@@ -413,21 +416,23 @@ export default function MainLayout({
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
               <MenuItem sx={{ pointerEvents: "none", cursor: "default" }}>
-                <Stack>
-                  <ListItemText primary={user.firstName} sx={{ m: 0 }} />
-                  <ListItemText primary={user.lastName} sx={{ m: 0 }} />
-                  {user.companyName && (
+                {user && (
+                  <Stack>
+                    <ListItemText primary={user.firstName} sx={{ m: 0 }} />
+                    <ListItemText primary={user.lastName} sx={{ m: 0 }} />
+                    {user.companyName && (
+                      <ListItemText
+                        primary={user.companyName}
+                        sx={{ m: 0, color: "text.secondary" }}
+                      />
+                    )}
+
                     <ListItemText
-                      primary={user.companyName}
+                      primary={user.email}
                       sx={{ m: 0, color: "text.secondary" }}
                     />
-                  )}
-
-                  <ListItemText
-                    primary={user.email}
-                    sx={{ m: 0, color: "text.secondary" }}
-                  />
-                </Stack>
+                  </Stack>
+                )}
               </MenuItem>
               <Divider />
               <MenuItem
@@ -474,9 +479,11 @@ export default function MainLayout({
               onClick={mobile ? toggleDrawer : () => {}}
             >
               <ListItemIcon>
-                <Avatar
-                  {...stringAvatar(`${user.firstName}`, `${user.lastName}`)}
-                />
+                {user && (
+                  <Avatar
+                    {...stringAvatar(`${user.firstName}`, `${user.lastName}`)}
+                  />
+                )}
               </ListItemIcon>
               <Stack>
                 <ListItemText primary="Name" sx={{ m: 0 }} />
@@ -740,7 +747,6 @@ export default function MainLayout({
               component={RouterLink}
               to={"/rates"}
               onClick={mobile ? toggleDrawer : () => {}}
-              disabled
             >
               <ListItemIcon>
                 <DashboardIcon />

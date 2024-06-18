@@ -6,7 +6,9 @@ import "./assets/styles/index.scss";
 import { ThemeProvider } from "@mui/material/styles";
 import App from "./App";
 import theme from "./theme";
-import UserProvider from "./utils/context";
+import UserProvider from "./utils/UserContext";
+import PaginationProvider from "./utils/PaginationContext";
+import FiltersProvider from "./utils/FiltersContext";
 
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
@@ -16,7 +18,11 @@ root.render(
     <CssBaseline />
     <BrowserRouter>
       <UserProvider>
-        <App />
+        <PaginationProvider>
+          <FiltersProvider>
+            <App />
+          </FiltersProvider>
+        </PaginationProvider>
       </UserProvider>
     </BrowserRouter>
   </ThemeProvider>

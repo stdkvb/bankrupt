@@ -14,7 +14,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import Requisites from "../components/Requisites";
 import TextInput from "./TextInput";
-import { UserContext } from "../utils/context";
+import { UserContext } from "../utils/UserContext";
 
 import api from "../utils/Api";
 import Popup from "../components/Popup";

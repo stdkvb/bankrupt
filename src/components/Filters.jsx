@@ -1,14 +1,18 @@
-import React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Paper, Stack, Button, TextField } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import "dayjs/locale/ru";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
+import { FiltersContext } from "../utils/FiltersContext";
+import { PaginationContext } from "../utils/PaginationContext";
 import Select from "./Select";
 
-const Filters = ({ onFilterSubmit, data, short }) => {
+const Filters = ({ data, short }) => {
+  const { filters, setFilters } = useContext(FiltersContext);
+  const { page, setPage } = useContext(PaginationContext);
+
   //select filters
   const [filterParamsList, setFilterParamsList] = useState(
     data.filterParamsList
@@ -25,13 +29,21 @@ const Filters = ({ onFilterSubmit, data, short }) => {
     setFiltersClear(!filtersClear);
     setDateFromValue(null);
     setDateToValue(null);
-    onFilterSubmit();
+    setPage(1);
+    setFilters([]);
+  };
+
+  const handleFilterSubmit = (event) => {
+    event.preventDefault();
+    const formData = Array.from(new FormData(event.currentTarget));
+    setPage(1);
+    setFilters(formData);
   };
 
   return (
     <Paper
       component="form"
-      onSubmit={onFilterSubmit}
+      onSubmit={handleFilterSubmit}
       elevation={0}
       sx={{
         p: { xs: [2], md: [4] },

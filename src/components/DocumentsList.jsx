@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import {
   Paper,
   Typography,
@@ -25,6 +25,7 @@ import LanguageIcon from "@mui/icons-material/Language";
 import Popup from "./Popup";
 import CreateFolder from "./CreateFolder";
 import api from "../utils/Api";
+import { PaginationContext } from "../utils/PaginationContext";
 
 const DocumentsList = ({
   data,
@@ -164,6 +165,14 @@ const DocumentsList = ({
     return array;
   }
 
+  //pagination
+  const refScrollUp = useRef();
+  const { page, setPage } = useContext(PaginationContext);
+  const handleChange = (event, value) => {
+    setPage(value);
+    refScrollUp.current.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
     <>
       <Paper
@@ -173,10 +182,15 @@ const DocumentsList = ({
           display: "flex",
           flexDirection: "column",
           gap: { xs: [3], md: [4] },
+          position: "relative",
         }}
       >
+        <div
+          ref={refScrollUp}
+          style={{ position: "absolute", top: "-100px" }}
+        ></div>
         <Typography variant="h5">
-          Найденных документов: {data.allCount}
+          Найденных документов: {data.allCount !== "" ? data.allCount : 0}
         </Typography>
 
         {data.documentsList.map((document, i) => {
@@ -298,7 +312,15 @@ const DocumentsList = ({
             </Box>
           );
         })}
-        <Pagination count={data.pagesCount} showFirstButton showLastButton />
+        {data.allCount > 10 && (
+          <Pagination
+            count={data.pagesCount}
+            showFirstButton
+            showLastButton
+            page={page}
+            onChange={handleChange}
+          />
+        )}
       </Paper>
       <Menu
         anchorEl={isDocumentMenuOpen}
@@ -398,7 +420,6 @@ const DocumentsList = ({
           </div>
         )}
       </Menu>
-
       {currentDocument && (
         <Modal open={open} onClose={handleClose}>
           <Box
