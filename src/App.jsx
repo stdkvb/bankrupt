@@ -23,6 +23,7 @@ import Wiki from "./pages/Wiki";
 
 import api from "./utils/Api";
 import { UserContext } from "./utils/UserContext";
+import getToken from "./utils/GetToken";
 
 export default function App() {
   const navigate = useNavigate();
@@ -33,14 +34,14 @@ export default function App() {
   const [folders, setFolders] = useState([]);
   const [mainFolder, setMainFolder] = useState({});
 
+  //token check
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = getToken();
     if (token) {
       setLoggedIn(true);
       getAccess();
-    } else {
-      setLoading(false);
     }
+    setLoading(false);
   }, []);
 
   //load catalog
@@ -59,8 +60,10 @@ export default function App() {
       .getFolders()
       .then((data) => {
         if (data.status === "success") {
-          setFolders(data.data);
-          setMainFolder(data.data.filter((folder) => folder.main == true)[0]);
+          setFolders(data.data.list);
+          setMainFolder(
+            data.data.list.filter((folder) => folder.main == true)[0]
+          );
         }
       })
       .catch((error) => {
@@ -92,7 +95,12 @@ export default function App() {
       .loginUser(login, password)
       .then((data) => {
         if (data.status === "success") {
-          localStorage.setItem("token", data.data.token);
+          const now = new Date();
+          const token = {
+            value: data.data.token,
+            expiry: now.getTime() + 24 * 60 * 60 * 1000,
+          };
+          localStorage.setItem("token", JSON.stringify(token));
           setLoggedIn(true);
           setLoading(true);
           setErrors([]);

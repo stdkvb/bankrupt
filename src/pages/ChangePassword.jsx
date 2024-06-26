@@ -70,6 +70,7 @@ const ChangePassword = () => {
       .changePassword(password, newPassword)
       .then((data) => {
         if (data.status === "success") {
+          setErrors([]);
           setIsSuccess(true);
         } else {
           setErrors(data.errors);

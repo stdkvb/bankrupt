@@ -1,5 +1,4 @@
 import { useEffect, useState, useContext } from "react";
-import { Link as RouterLink } from "react-router-dom";
 import {
   Paper,
   Typography,
@@ -19,18 +18,16 @@ import { UserContext } from "../utils/UserContext";
 import api from "../utils/Api";
 
 const Rates = () => {
-  //current user
   const user = useContext(UserContext).user;
-  const [rates, setRates] = useState([]);
+  const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
 
-  //get rates
   const getRates = () => {
     api
       .getRates()
       .then((data) => {
         if (data.status === "success") {
-          setRates(data.data);
+          setData(data.data);
           setLoading(false);
         }
       })
@@ -54,20 +51,12 @@ const Rates = () => {
       <Typography variant="h4" component="h1">
         Тарифы
       </Typography>
-      {user.notification && (
-        <Alert variant="filled" severity={user.notification.type}>
-          <Typography>{user.notification.message}</Typography>
-          <Typography
-            component={RouterLink}
-            to="/rates"
-            color="text.white"
-            sx={{ fontSize: "14px" }}
-          >
-            Обновите подписку
-          </Typography>
+      {data && data.notification.message && (
+        <Alert variant="filled" severity={data.notification.type}>
+          <Typography>{data.notification.message}</Typography>
         </Alert>
       )}
-      <Rate />
+      <Rate data={data && data.currentTarif} />
       <Stack
         sx={{
           display: "grid",
@@ -80,20 +69,8 @@ const Rates = () => {
           justifyContent: "start",
         }}
       >
-        {loading ? (
-          // <CircularProgress
-          //   sx={{
-          //     position: "absolute",
-          //     top: "0",
-          //     bottom: "0",
-          //     left: "0",
-          //     right: "0",
-          //     margin: "auto",
-          //   }}
-          // />
-          <></>
-        ) : (
-          rates.map((rate, i) => {
+        {!loading &&
+          data.list.map((rate, i) => {
             return (
               <Paper
                 key={i}
@@ -170,14 +147,13 @@ const Rates = () => {
                       })}
                     </RadioGroup>
                   </FormControl>
-                  <Button variant="contained" sx={{ mt: "auto" }}>
+                  <Button variant="contained" sx={{ mt: "auto" }} disabled>
                     Оплатить
                   </Button>
                 </Stack>
               </Paper>
             );
-          })
-        )}
+          })}
       </Stack>
       <Paper
         elevation={0}

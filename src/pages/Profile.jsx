@@ -26,7 +26,7 @@ const Profile = () => {
       <Typography variant="h4" component="h1">
         Профиль
       </Typography>
-      {user.notification && (
+      {user.notification.message && (
         <Alert variant="filled" severity={user.notification.type}>
           <Typography>{user.notification.message}</Typography>
           <Typography
@@ -39,7 +39,7 @@ const Profile = () => {
           </Typography>
         </Alert>
       )}
-      <Rate>
+      <Rate data={user.currentTarif}>
         <Stack
           sx={{
             display: "flex",

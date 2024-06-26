@@ -1,6 +1,7 @@
 // const BASE_URL = "https://bankrotvestnik.ru/api";
 const BASE_URL = "http://beta.bankrotvestnik.ru/api";
 const dadataToken = "3c767e62c4d512110cb8e064f16a6d9c30c47974";
+import getToken from "./GetToken";
 
 class Api {
   constructor(configuration) {
@@ -89,7 +90,7 @@ class Api {
       {
         method: "GET",
         headers: {
-          authorization: `Bearer ${localStorage.getItem("token")}`,
+          authorization: `Bearer ${getToken()}`,
         },
         credentials: "include",
       }
@@ -102,7 +103,7 @@ class Api {
       {
         method: "GET",
         headers: {
-          authorization: `Bearer ${localStorage.getItem("token")}`,
+          authorization: `Bearer ${getToken()}`,
         },
         credentials: "include",
       }
@@ -118,7 +119,7 @@ class Api {
       {
         method: "GET",
         headers: {
-          authorization: `Bearer ${localStorage.getItem("token")}`,
+          authorization: `Bearer ${getToken()}`,
         },
         credentials: "include",
       }
@@ -132,7 +133,7 @@ class Api {
     return fetch(`${this._url}/favourites/add`, {
       method: "POST",
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`,
+        authorization: `Bearer ${getToken()}`,
       },
       credentials: "include",
       body,
@@ -148,7 +149,7 @@ class Api {
     return fetch(`${this._url}/favourites/delete`, {
       method: "POST",
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`,
+        authorization: `Bearer ${getToken()}`,
       },
       credentials: "include",
       body,
@@ -163,7 +164,7 @@ class Api {
     return fetch(`${this._url}/favourites/replace`, {
       method: "POST",
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`,
+        authorization: `Bearer ${getToken()}`,
       },
       credentials: "include",
       body,
@@ -174,7 +175,7 @@ class Api {
     return fetch(`${this._url}/send?` + `${"id=" + params}`, {
       method: "GET",
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`,
+        authorization: `Bearer ${getToken()}`,
       },
       credentials: "include",
     }).then(Api.handleResponse);
@@ -184,7 +185,7 @@ class Api {
     return fetch(`${this._url}/favourites/menu`, {
       method: "GET",
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`,
+        authorization: `Bearer ${getToken()}`,
       },
       credentials: "include",
     }).then(Api.handleResponse);
@@ -196,7 +197,7 @@ class Api {
     return fetch(`${this._url}/favourites/folder`, {
       method: "POST",
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`,
+        authorization: `Bearer ${getToken()}`,
       },
       credentials: "include",
       body,
@@ -210,7 +211,7 @@ class Api {
     return fetch(`${this._url}/favourites/folder/rename`, {
       method: "POST",
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`,
+        authorization: `Bearer ${getToken()}`,
       },
       credentials: "include",
       body,
@@ -223,7 +224,7 @@ class Api {
     return fetch(`${this._url}/favourites/folder/delete`, {
       method: "POST",
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`,
+        authorization: `Bearer ${getToken()}`,
       },
       credentials: "include",
       body,
@@ -236,7 +237,7 @@ class Api {
     return fetch(`${this._url}/favourites/folders/order`, {
       method: "POST",
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`,
+        authorization: `Bearer ${getToken()}`,
       },
       credentials: "include",
       body,
@@ -247,7 +248,7 @@ class Api {
     return fetch(`${this._url}/ask-question`, {
       method: "POST",
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`,
+        authorization: `Bearer ${getToken()}`,
       },
       credentials: "include",
       body: formData,
@@ -258,8 +259,11 @@ class Api {
     const body = new FormData();
     body.set("oldPwd", password);
     body.set("newPwd", newPassword);
-    return fetch(`${this._url}/change-password`, {
+    return fetch(`${this._url}/change-pwd`, {
       method: "POST",
+      headers: {
+        authorization: `Bearer ${getToken()}`,
+      },
       credentials: "include",
       body,
     }).then(Api.handleResponse);
@@ -269,7 +273,7 @@ class Api {
     return fetch(`${this._url}/user`, {
       method: "GET",
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`,
+        authorization: `Bearer ${getToken()}`,
       },
       credentials: "include",
     }).then(Api.handleResponse);
@@ -279,7 +283,7 @@ class Api {
     return fetch(`${this._url}/change-user`, {
       method: "POST",
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`,
+        authorization: `Bearer ${getToken()}`,
       },
       credentials: "include",
       body: formData,
@@ -322,7 +326,7 @@ class Api {
     return fetch(`${this._url}/tariff`, {
       method: "GET",
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`,
+        authorization: `Bearer ${getToken()}`,
       },
       credentials: "include",
     }).then(Api.handleResponse);
@@ -332,7 +336,7 @@ class Api {
     return fetch(`${this._url}/request-demo-access`, {
       method: "POST",
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`,
+        authorization: `Bearer ${getToken()}`,
       },
       credentials: "include",
       body: formData,
@@ -343,7 +347,7 @@ class Api {
     return fetch(`${this._url}/contacts`, {
       method: "GET",
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`,
+        authorization: `Bearer ${getToken()}`,
       },
       credentials: "include",
     }).then(Api.handleResponse);
@@ -353,7 +357,7 @@ class Api {
     return fetch(`${this._url}/qa`, {
       method: "GET",
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`,
+        authorization: `Bearer ${getToken()}`,
       },
       credentials: "include",
     }).then(Api.handleResponse);
@@ -363,7 +367,7 @@ class Api {
     return fetch(`${this._url}/news?page=` + `${page}`, {
       method: "GET",
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`,
+        authorization: `Bearer ${getToken()}`,
       },
       credentials: "include",
     }).then(Api.handleResponse);
@@ -373,7 +377,7 @@ class Api {
     return fetch(`${this._url}/news-detail?id=` + `${id}`, {
       method: "GET",
       headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`,
+        authorization: `Bearer ${getToken()}`,
       },
       credentials: "include",
     }).then(Api.handleResponse);
@@ -385,7 +389,7 @@ class Api {
       {
         method: "GET",
         headers: {
-          authorization: `Bearer ${localStorage.getItem("token")}`,
+          authorization: `Bearer ${getToken()}`,
         },
         credentials: "include",
       }

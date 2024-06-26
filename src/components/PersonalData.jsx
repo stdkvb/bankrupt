@@ -73,9 +73,8 @@ const PersonalData = () => {
         <Typography variant="h5">Личные данные</Typography>
         <Grid container rowGap={2} columnGap={4}>
           {fields.map((input, i) => (
-            <Grid item xs={12} md={12} lg={5} xl={3}>
+            <Grid item xs={12} md={12} lg={5} xl={3} key={i}>
               <TextInput
-                key={i}
                 label={input.label}
                 name={input.name}
                 defaultValue={input.defaultValue}
@@ -86,16 +85,19 @@ const PersonalData = () => {
             </Grid>
           ))}
         </Grid>
+        <input type="hidden" name="legalEntity" value="false" />
         <FormControlLabel
           sx={{ width: "fit-content" }}
           control={
             <Checkbox
-              value="corporate"
+              name="legalEntity"
+              value="true"
               onChange={() => {
                 setIsLegalEntity(!isLegalEntity);
               }}
               disabled={readOnly}
               checked={isLegalEntity}
+              inputProps={{ "aria-label": "controlled" }}
             />
           }
           label={

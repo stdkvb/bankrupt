@@ -31,7 +31,7 @@ const Questions = () => {
     },
     { label: "Телефон", name: "phone", defaultValue: `${user.phone}` },
     { label: "Email", name: "email", defaultValue: `${user.email}` },
-    { label: "Ващ вопрос", name: "question", defaultValue: "" },
+    { label: "Ваш вопрос", name: "question", defaultValue: "" },
   ];
 
   const [policyError, setPolicyError] = useState(false);

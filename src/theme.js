@@ -98,6 +98,15 @@ let theme = createTheme({
           ".MuiPagination-ul": {
             justifyContent: "flex-end",
           },
+          ".Mui-selected": {
+            borderRadius: "5px",
+            backgroundColor: "#009B00 !important",
+            color: "#FFFFFF !important",
+            cursor: "default !important",
+          },
+          ".MuiButtonBase-root": {
+            borderRadius: "5px !important",
+          },
         },
       },
     },

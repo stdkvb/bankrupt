@@ -319,6 +319,7 @@ const DocumentsList = ({
             showLastButton
             page={page}
             onChange={handleChange}
+            size="small"
           />
         )}
       </Paper>
