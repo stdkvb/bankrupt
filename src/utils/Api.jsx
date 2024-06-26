@@ -332,6 +332,26 @@ class Api {
     }).then(Api.handleResponse);
   }
 
+  payTariff(id, period) {
+    return fetch(`${this._url}/payment-tariff?id=${id}&period=${period}`, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${getToken()}`,
+      },
+      credentials: "include",
+    }).then(Api.handleResponse);
+  }
+
+  confirmPayment(paymentId) {
+    return fetch(`${this._url}/payment-tariff-status?paymentId=${paymentId}`, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${getToken()}`,
+      },
+      credentials: "include",
+    }).then(Api.handleResponse);
+  }
+
   requestDemoAccess(formData) {
     return fetch(`${this._url}/request-demo-access`, {
       method: "POST",
