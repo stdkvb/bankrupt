@@ -595,7 +595,7 @@ export default function MainLayout({
                 <Stack
                   sx={{
                     maxHeight: "265px",
-                    overflowY: folders.length > 4 ? "scroll" : "unset",
+                    overflowY:  folders.length > 4 ? "scroll" : "unset",
                   }}
                 >
                   {folders
