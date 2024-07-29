@@ -56,6 +56,7 @@ import api from "../utils/Api";
 import Popup from "../components/Popup";
 import CreateFolder from "../components/CreateFolder";
 import { UserContext } from "../utils/UserContext";
+import useCheckTarrifActive from "../hooks/useCheckTarrifActive";
 
 import logo from "../assets/images/logo.svg";
 
@@ -117,6 +118,8 @@ export default function MainLayout({
 
   //current user
   const user = useContext(UserContext).user.personal;
+
+  const isTarriffActive = useCheckTarrifActive();
 
   //drawer control
   const mobile = useMediaQuery("(max-width:900px)");
@@ -205,8 +208,13 @@ export default function MainLayout({
   //folders list
   const [foldersList, setFoldersList] = useState(folders);
 
+  useEffect(() => {
+    setFoldersList(folders);
+  }, [folders]);
+
   //moving folders up and down in list
   const handleFolderUp = (id) => {
+
     setFoldersList(folders);
     for (let i = 1; i < foldersList.length; i++) {
       if (foldersList[i].id === id) {
@@ -354,6 +362,7 @@ export default function MainLayout({
               component={RouterLink}
               to={"/"}
               sx={{ display: { xs: "none", md: "flex", height: "40px" } }}
+              disabled={!isTarriffActive}
             >
               <SearchOutlinedIcon />
             </IconButton>
@@ -499,6 +508,7 @@ export default function MainLayout({
               component={RouterLink}
               to={"/"}
               onClick={mobile ? toggleDrawer : () => {}}
+              disabled={!isTarriffActive}
             >
               <ListItemIcon>
                 <LayersIcon />
@@ -562,6 +572,7 @@ export default function MainLayout({
                 component={RouterLink}
                 to="/favorites"
                 onClick={mobile ? toggleDrawer : () => {}}
+                disabled={!isTarriffActive}
               >
                 <ListItemIcon sx={{ height: "24px" }}>
                   <BookmarkIcon />

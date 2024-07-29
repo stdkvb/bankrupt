@@ -52,6 +52,9 @@ export default function App() {
         if (data.status === "success") {
           setUser(data.data);
         }
+        if (data.status === "error") {
+          handleLogout();
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -60,10 +63,25 @@ export default function App() {
       .getFolders()
       .then((data) => {
         if (data.status === "success") {
-          setFolders(data.data.list);
-          setMainFolder(
-            data.data.list.filter((folder) => folder.main == true)[0]
-          );
+            // костыль для того чтоб бой не падал, когда "https://bankrotvestnik.ru/api" и "http://beta.bankrotvestnik.ru/api" 
+            // будут одинаковые удалить условие и оставить
+            // setFolders(data.data.list);
+            // setMainFolder(
+            //   data.data.list.filter((folder) => folder.main == true)[0]
+            // );
+          if (data.data.list) {
+            setFolders(data.data.list);
+            setMainFolder(
+              data.data.list.filter((folder) => folder.main == true)[0]
+            );
+          } else {
+
+            setFolders(data.data);
+            setMainFolder(
+              data.data.filter((folder) => folder.main == true)[0]
+            );
+          }
+
         }
       })
       .catch((error) => {
@@ -80,8 +98,8 @@ export default function App() {
       .getFolders()
       .then((data) => {
         if (data.status === "success") {
-          setFolders(data.data);
-          setMainFolder(data.data.filter((folder) => folder.main == true)[0]);
+          setFolders(data.data.list);
+          setMainFolder(data.data.list.filter((folder) => folder.main == true)[0]);
         }
       })
       .catch((error) => {

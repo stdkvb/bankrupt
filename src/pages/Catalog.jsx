@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { Typography, Container, CircularProgress } from "@mui/material";
 import Filters from "../components/Filters";
 import DocumentsList from "../components/DocumentsList";
@@ -6,6 +7,7 @@ import DocumentsList from "../components/DocumentsList";
 import api from "../utils/Api";
 import { PaginationContext } from "../utils/PaginationContext";
 import { FiltersContext } from "../utils/FiltersContext";
+import useCheckTarrifActive from "../hooks/useCheckTarrifActive";
 
 const Catalog = ({ title, folders, updateFolders, updateCatalog }) => {
   const { page, setPage } = useContext(PaginationContext);
@@ -13,6 +15,10 @@ const Catalog = ({ title, folders, updateFolders, updateCatalog }) => {
   const [catalog, setCatalog] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  const isTariffActive = useCheckTarrifActive();
+  console.log(isTariffActive)
 
   const getCatalog = () => {
     api
@@ -20,7 +26,7 @@ const Catalog = ({ title, folders, updateFolders, updateCatalog }) => {
       .then((data) => {
         if (data.status === "success") {
           setCatalog(data.data);
-          console.log("Catalog data fetched successfully:", data.data);
+          // console.log("Catalog data fetched successfully:", data.data);
         } else {
           console.log("Failed to fetch catalog data:", data);
         }
@@ -49,6 +55,10 @@ const Catalog = ({ title, folders, updateFolders, updateCatalog }) => {
         }}
       />
     );
+  }
+
+  if (!isTariffActive) {
+    navigate("/rates");
   }
 
   if (error) {

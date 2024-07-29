@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Typography, Container, CircularProgress, Box } from "@mui/material";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 
@@ -9,6 +9,7 @@ import DocumentsList from "../components/DocumentsList";
 import api from "../utils/Api";
 import { PaginationContext } from "../utils/PaginationContext";
 import { FiltersContext } from "../utils/FiltersContext";
+import useCheckTarrifActive from "../hooks/useCheckTarrifActive";
 
 const Favorites = ({ folders, mainFolder, updateFolders, updateCatalog }) => {
   let { id } = useParams();
@@ -18,6 +19,9 @@ const Favorites = ({ folders, mainFolder, updateFolders, updateCatalog }) => {
   const [favorites, setFavorites] = useState([]);
   const [isFiltered, setIsFiltered] = useState(false);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  const isTariffActive = useCheckTarrifActive();
 
   const getFavorites = () => {
     api
@@ -34,6 +38,10 @@ const Favorites = ({ folders, mainFolder, updateFolders, updateCatalog }) => {
   };
 
   useEffect(getFavorites, [folder, page, filters]);
+
+  if (!isTariffActive) {
+    navigate("/rates");
+  }
 
   return (
     <Container

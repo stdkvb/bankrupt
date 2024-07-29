@@ -90,7 +90,8 @@ const Rates = () => {
         </Typography>
         {data && data.notification.message && (
           <Alert variant="filled" severity={data.notification.type}>
-            <Typography>{data.notification.message}</Typography>
+            {/* удаляет html тэги */}
+            <Typography>{data.notification.message.replace(/(<([^>]+)>)/gi, " ")}</Typography>
           </Alert>
         )}
         <Rate data={data && data.currentTarif} />
