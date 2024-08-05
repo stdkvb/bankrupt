@@ -80,8 +80,10 @@ export default function App() {
       .getFolders()
       .then((data) => {
         if (data.status === "success") {
-          setFolders(data.data);
-          setMainFolder(data.data.filter((folder) => folder.main == true)[0]);
+          setFolders(data.data.list);
+          setMainFolder(
+            data.data.list.filter((folder) => folder.main == true)[0]
+          );
         }
       })
       .catch((error) => {

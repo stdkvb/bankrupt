@@ -557,7 +557,12 @@ const DocumentsList = ({
           </Box>
         </Modal>
       )}
-      <Popup isPopupOpen={addToFavorites}>
+      <Popup
+        isPopupOpen={addToFavorites}
+        onClose={() => {
+          setAddToFavorites(false);
+        }}
+      >
         <IconButton
           onClick={() => {
             setAddToFavorites(false);
@@ -676,7 +681,12 @@ const DocumentsList = ({
           </Button>
         </Stack>
       </Popup>
-      <Popup isPopupOpen={isInFavorites}>
+      <Popup
+        isPopupOpen={isInFavorites}
+        onClose={() => {
+          setIsInFavorites(false);
+        }}
+      >
         <IconButton
           onClick={() => {
             setIsInFavorites(false);
@@ -706,7 +716,12 @@ const DocumentsList = ({
           Закрыть
         </Button>
       </Popup>
-      <Popup isPopupOpen={moveToFolder}>
+      <Popup
+        isPopupOpen={moveToFolder}
+        onClose={() => {
+          setMoveToFolder(false);
+        }}
+      >
         <IconButton
           onClick={() => {
             setMoveToFolder(false);
@@ -825,7 +840,13 @@ const DocumentsList = ({
           </Button>
         </Stack>
       </Popup>
-      <Popup isPopupOpen={isMoved}>
+      <Popup
+        isPopupOpen={isMoved}
+        onClose={() => {
+          setIsMoved(false);
+          updateFavorites();
+        }}
+      >
         <IconButton
           onClick={() => {
             setIsMoved(false);
@@ -854,7 +875,12 @@ const DocumentsList = ({
           Закрыть
         </Button>
       </Popup>
-      <Popup isPopupOpen={sendToMail}>
+      <Popup
+        isPopupOpen={sendToMail}
+        onClose={() => {
+          setSendToMail(false);
+        }}
+      >
         <IconButton
           onClick={() => {
             setSendToMail(false);
@@ -896,7 +922,12 @@ const DocumentsList = ({
           </Button>
         </Stack>
       </Popup>
-      <Popup isPopupOpen={isSentToMail}>
+      <Popup
+        isPopupOpen={isSentToMail}
+        onClose={() => {
+          setIsSentToMail(false);
+        }}
+      >
         <IconButton
           onClick={() => {
             setIsSentToMail(false);
@@ -927,7 +958,13 @@ const DocumentsList = ({
           Закрыть
         </Button>
       </Popup>
-      <Popup isPopupOpen={isRemoved}>
+      <Popup
+        isPopupOpen={isRemoved}
+        onClose={() => {
+          setIsRemoved(false);
+          updateFavorites();
+        }}
+      >
         <IconButton
           onClick={() => {
             setIsRemoved(false);

@@ -140,7 +140,13 @@ const PersonalData = () => {
           </Button>
         </Stack>
       </Paper>
-      <Popup isPopupOpen={isSuccess}>
+      <Popup
+        isPopupOpen={isSuccess}
+        onClose={() => {
+          setIsSuccess(false);
+          // updateFavorites();
+        }}
+      >
         <IconButton
           onClick={() => {
             setIsSuccess(false);

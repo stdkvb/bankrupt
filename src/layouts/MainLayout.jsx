@@ -845,7 +845,13 @@ export default function MainLayout({
         onClose={handleCloseCreateFolders}
         updateFolders={updateFolders}
       />
-      <Popup isPopupOpen={renameFolder} component="form">
+      <Popup
+        isPopupOpen={renameFolder}
+        onClose={() => {
+          setRenameFolder(false);
+        }}
+        component="form"
+      >
         <IconButton
           onClick={() => {
             setRenameFolder(false);
@@ -885,7 +891,13 @@ export default function MainLayout({
           </Button>
         </Box>
       </Popup>
-      <Popup isPopupOpen={deleteFolder} component="form">
+      <Popup
+        isPopupOpen={deleteFolder}
+        onClose={() => {
+          setDeleteFolder(false);
+        }}
+        component="form"
+      >
         <IconButton
           onClick={() => {
             setDeleteFolder(false);
