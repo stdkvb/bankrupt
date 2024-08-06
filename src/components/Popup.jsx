@@ -1,8 +1,8 @@
 import { Modal, Box } from "@mui/material";
 
-const Popup = ({ isPopupOpen, children }) => {
+const Popup = ({ isPopupOpen, onClose, children }) => {
   return (
-    <Modal open={isPopupOpen}>
+    <Modal open={isPopupOpen} onClose={onClose}>
       <Box
         sx={{
           position: "absolute",

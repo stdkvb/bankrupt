@@ -63,25 +63,21 @@ export default function App() {
       .getFolders()
       .then((data) => {
         if (data.status === "success") {
-            // костыль для того чтоб бой не падал, когда "https://bankrotvestnik.ru/api" и "http://beta.bankrotvestnik.ru/api" 
-            // будут одинаковые удалить условие и оставить
-            // setFolders(data.data.list);
-            // setMainFolder(
-            //   data.data.list.filter((folder) => folder.main == true)[0]
-            // );
+          // костыль для того чтоб бой не падал, когда "https://bankrotvestnik.ru/api" и "http://beta.bankrotvestnik.ru/api"
+          // будут одинаковые удалить условие и оставить
+          // setFolders(data.data.list);
+          // setMainFolder(
+          //   data.data.list.filter((folder) => folder.main == true)[0]
+          // );
           if (data.data.list) {
             setFolders(data.data.list);
             setMainFolder(
               data.data.list.filter((folder) => folder.main == true)[0]
             );
           } else {
-
             setFolders(data.data);
-            setMainFolder(
-              data.data.filter((folder) => folder.main == true)[0]
-            );
+            setMainFolder(data.data.filter((folder) => folder.main == true)[0]);
           }
-
         }
       })
       .catch((error) => {
@@ -99,7 +95,9 @@ export default function App() {
       .then((data) => {
         if (data.status === "success") {
           setFolders(data.data.list);
-          setMainFolder(data.data.list.filter((folder) => folder.main == true)[0]);
+          setMainFolder(
+            data.data.list.filter((folder) => folder.main == true)[0]
+          );
         }
       })
       .catch((error) => {

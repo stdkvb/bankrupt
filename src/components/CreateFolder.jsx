@@ -28,7 +28,7 @@ const CreateFolder = ({ isPopupOpen, onClose, updateFolders }) => {
   };
 
   return (
-    <Popup isPopupOpen={isPopupOpen} component="form">
+    <Popup isPopupOpen={isPopupOpen} onClose={onClose} component="form">
       <IconButton
         onClick={onClose}
         sx={{

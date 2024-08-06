@@ -57,6 +57,7 @@ export default function AutocompleteDadata({
     <Autocomplete
       disabled={readOnly}
       freeSolo
+      noOptionsText={"Результаты не найдены"}
       disableClearable
       options={options}
       value={value}

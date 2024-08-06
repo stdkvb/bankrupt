@@ -226,7 +226,12 @@ const Rates = () => {
           <Trial />
         </Paper>
       </Container>
-      <Popup isPopupOpen={isSuccess}>
+      <Popup
+        isPopupOpen={isSuccess}
+        onClose={() => {
+          setIsSuccess(false);
+        }}
+      >
         <IconButton
           onClick={() => {
             setIsSuccess(false);

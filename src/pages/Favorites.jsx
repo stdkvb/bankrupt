@@ -37,7 +37,7 @@ const Favorites = ({ folders, mainFolder, updateFolders, updateCatalog }) => {
       });
   };
 
-  useEffect(getFavorites, [folder, page, filters]);
+  useEffect(getFavorites, [folder, page, filters, mainFolder]);
 
   if (!isTariffActive) {
     navigate("/rates");

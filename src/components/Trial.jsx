@@ -133,7 +133,13 @@ const Trial = () => {
           </Button>
         </Box>
       </Modal>
-      <Popup isPopupOpen={isSuccess}>
+      <Popup
+        isPopupOpen={isSuccess}
+        onClose={() => {
+          setIsSuccess(false);
+          // updateFavorites();
+        }}
+      >
         <IconButton
           onClick={() => {
             setIsSuccess(false);

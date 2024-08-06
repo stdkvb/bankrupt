@@ -177,7 +177,12 @@ const Questions = () => {
           </Button>
         </Box>
       </Modal>
-      <Popup isPopupOpen={isSuccess}>
+      <Popup
+        isPopupOpen={isSuccess}
+        onClose={() => {
+          setIsSuccess(false);
+        }}
+      >
         <IconButton
           onClick={() => {
             setIsSuccess(false);

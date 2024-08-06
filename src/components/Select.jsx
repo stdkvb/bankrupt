@@ -15,6 +15,7 @@ export default function Select({ name, title, tags, onReset }) {
         key={onReset}
         onChange={(event, value) => setFilter(value)}
         multiple
+        noOptionsText={"Результаты не найдены"}
         limitTags={1}
         size="small"
         options={tags.sort()}

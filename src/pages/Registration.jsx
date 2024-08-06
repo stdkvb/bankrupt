@@ -211,7 +211,12 @@ const Registration = () => {
               </Link>
             </Stack>
           </Box>
-          <Popup isPopupOpen={isResent}>
+          <Popup
+            isPopupOpen={isResent}
+            onClose={() => {
+              setIsResent(false);
+            }}
+          >
             <IconButton
               onClick={() => {
                 setIsResent(false);
