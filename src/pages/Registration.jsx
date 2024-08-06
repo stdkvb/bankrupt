@@ -154,7 +154,8 @@ const Registration = () => {
           setIsRegistered(true);
         }
         if (data.status === "error") {
-          setErrors(data.errors);
+          const clearHtmlTags = data.errors.map(error => error.message.replace(/(<([^>]+)>)/gi, " "));
+          setErrors(clearHtmlTags);
         }
       })
       .catch((error) => {
@@ -409,7 +410,7 @@ const Registration = () => {
             errors.map((error, i) => {
               return (
                 <Typography color="error.main" sx={{ my: 2 }} key={i}>
-                  {error.message}
+                  {error}
                 </Typography>
               );
             })}
