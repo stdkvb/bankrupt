@@ -54,7 +54,7 @@ const Confirm = () => {
         ) : (
           <>
             <Typography variant="p" color="text.secondary">
-              Произошла ошибка, попробуйте позднее.
+              Произошла ошибка, попробуйте позже.
             </Typography>
             <Button
               onClick={() => navigate("/")}
