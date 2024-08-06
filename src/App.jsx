@@ -205,7 +205,7 @@ export default function App() {
           />
           <Route path="profile" element={<Profile />} />
           <Route path="change-password" element={<ChangePassword />} />
-          <Route path="rates" element={<Rates />} />
+          <Route path="rates" element={<Rates updateUser={getAccess} />} />
           <Route path="wiki" element={<Wiki />} />
           <Route path="news" element={<News />} />
           <Route path="news/:id" element={<Article />} />

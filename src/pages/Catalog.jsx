@@ -18,7 +18,7 @@ const Catalog = ({ title, folders, updateFolders, updateCatalog }) => {
   const navigate = useNavigate();
 
   const isTariffActive = useCheckTarrifActive();
-  console.log(isTariffActive)
+  // console.log(isTariffActive)
 
   const getCatalog = () => {
     api

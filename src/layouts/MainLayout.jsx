@@ -120,6 +120,7 @@ export default function MainLayout({
   const user = useContext(UserContext).user.personal;
 
   const isTarriffActive = useCheckTarrifActive();
+  // console.log(isTarriffActive);
 
   //drawer control
   const mobile = useMediaQuery("(max-width:900px)");
@@ -214,15 +215,13 @@ export default function MainLayout({
 
   //moving folders up and down in list
   const handleFolderUp = (id) => {
-
     setFoldersList(folders);
     for (let i = 1; i < foldersList.length; i++) {
       if (foldersList[i].id === id) {
-        // Swap objects
         let temp = foldersList[i - 1];
         foldersList[i - 1] = foldersList[i];
         foldersList[i] = temp;
-        break; // Stop loop after swapping
+        break;
       }
     }
 
@@ -244,11 +243,10 @@ export default function MainLayout({
     setFoldersList(folders);
     for (let i = 0; i < foldersList.length - 1; i++) {
       if (foldersList[i].id === id) {
-        // Swap objects
         let temp = foldersList[i + 1];
         foldersList[i + 1] = foldersList[i];
         foldersList[i] = temp;
-        break; // Stop loop after swapping
+        break;
       }
     }
 
@@ -606,7 +604,7 @@ export default function MainLayout({
                 <Stack
                   sx={{
                     maxHeight: "265px",
-                    overflowY:  folders.length > 4 ? "scroll" : "unset",
+                    overflowY: folders.length > 4 ? "scroll" : "unset",
                   }}
                 >
                   {folders

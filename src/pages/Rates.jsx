@@ -18,8 +18,9 @@ import Rate from "../components/Rate";
 import Trial from "../components/Trial";
 import api from "../utils/Api";
 import Popup from "../components/Popup";
+import useCheckTarrifActive from "../hooks/useCheckTarrifActive";
 
-const Rates = () => {
+const Rates = ({ updateUser }) => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
   const [period, setPeriod] = useState();
@@ -59,19 +60,24 @@ const Rates = () => {
   };
 
   //confirm payment
-  useEffect(() => {
-    api
-      .confirmPayment(paymentId)
-      .then((data) => {
-        if (data.status === "success") {
-          setIsSuccess(true);
-          setPaymentStatus(data.data.status);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [paymentId]);
+  if (paymentId) {
+    useEffect(() => {
+      api
+        .confirmPayment(paymentId)
+        .then((data) => {
+          if (data.status === "success") {
+            updateUser();
+            setIsSuccess(true);
+            setPaymentStatus(data.data.status);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }, [paymentId]);
+  }
+
+  const isTariffActive = useCheckTarrifActive();
 
   return (
     <>
@@ -91,7 +97,9 @@ const Rates = () => {
         {data && data.notification.message && (
           <Alert variant="filled" severity={data.notification.type}>
             {/* удаляет html тэги */}
-            <Typography>{data.notification.message.replace(/(<([^>]+)>)/gi, " ")}</Typography>
+            <Typography>
+              {data.notification.message.replace(/(<([^>]+)>)/gi, " ")}
+            </Typography>
           </Alert>
         )}
         <Rate data={data && data.currentTarif} />
@@ -143,7 +151,7 @@ const Rates = () => {
                       </Typography>
                       <RadioGroup
                         onChange={(event) => {
-                          console.log(event.target.value);
+                          // console.log(event.target.value);
                           setPeriod(event.target.value);
                         }}
                       >
