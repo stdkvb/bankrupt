@@ -50,10 +50,10 @@ const Profile = () => {
           }}
         >
           <Button
-            type="submit"
+            component={RouterLink}
+            to="/rates"
             variant="contained"
             sx={{ minWidth: { xs: "100%", md: "300px" } }}
-            disabled
           >
             Оплатить тариф
           </Button>

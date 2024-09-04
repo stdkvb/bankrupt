@@ -82,6 +82,7 @@ const Filters = ({ data, short }) => {
                   InputLabelProps: { shrink: true },
                   size: "medium",
                 },
+                field: { clearable: true },
               }}
             />
           </LocalizationProvider>
@@ -126,6 +127,7 @@ const Filters = ({ data, short }) => {
                   InputLabelProps: { shrink: true },
                   size: "small",
                 },
+                field: { clearable: true },
               }}
             />
             <DatePicker
@@ -142,6 +144,7 @@ const Filters = ({ data, short }) => {
                   InputLabelProps: { shrink: true },
                   size: "small",
                 },
+                field: { clearable: true },
               }}
             />
           </LocalizationProvider>

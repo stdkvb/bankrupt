@@ -16,8 +16,9 @@ const CreateFolder = ({ isPopupOpen, onClose, updateFolders }) => {
       .then((data) => {
         if (data.status === "success") {
           updateFolders();
-        } else {
-          alert("Ошибка сервера, попробуйте позже");
+        }
+        if (data.status === "error") {
+          alert(data.errors.map((error) => error.message));
         }
       })
       .catch((error) => {
@@ -27,10 +28,15 @@ const CreateFolder = ({ isPopupOpen, onClose, updateFolders }) => {
     setFolderName("");
   };
 
+  const closePopup = () => {
+    setFolderName("");
+    onClose();
+  };
+
   return (
-    <Popup isPopupOpen={isPopupOpen} onClose={onClose} component="form">
+    <Popup isPopupOpen={isPopupOpen} onClose={closePopup} component="form">
       <IconButton
-        onClick={onClose}
+        onClick={closePopup}
         sx={{
           position: "absolute",
           right: { xs: 1, md: 2 },

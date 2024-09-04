@@ -55,6 +55,7 @@ const WikiFilters = () => {
                 InputLabelProps: { shrink: true },
                 size: "medium",
               },
+              field: { clearable: true },
             }}
           />
         </LocalizationProvider>

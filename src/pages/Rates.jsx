@@ -61,14 +61,19 @@ const Rates = ({ updateUser }) => {
 
   //confirm payment
   if (paymentId) {
+    const url = new URL(window.location.href);
+    url.search = "";
+
     useEffect(() => {
       api
         .confirmPayment(paymentId)
         .then((data) => {
           if (data.status === "success") {
             updateUser();
+            getRates();
             setIsSuccess(true);
             setPaymentStatus(data.data.status);
+            window.history.replaceState(null, "", url);
           }
         })
         .catch((error) => {

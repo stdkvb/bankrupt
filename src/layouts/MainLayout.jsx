@@ -176,8 +176,9 @@ export default function MainLayout({
       .then((data) => {
         if (data.status === "success") {
           updateFolders();
-        } else {
-          alert("Ошибка сервера, попробуйте позже");
+        }
+        if (data.status === "error") {
+          alert(data.errors.map((error) => error.message));
         }
       })
       .catch((error) => {

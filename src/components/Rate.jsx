@@ -29,7 +29,7 @@ const Rate = ({ data, children }) => {
           <Typography variant="h5">{data && data.endDate}</Typography>
         </Grid>
       </Grid>
-      {children}
+      {data && data.status !== "Активен" && { children }}
     </Paper>
   );
 };
