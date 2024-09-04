@@ -363,6 +363,16 @@ class Api {
     }).then(Api.handleResponse);
   }
 
+  getPolicy() {
+    return fetch(`${this._url}/content/privacy-policy`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${getToken()}`,
+      },
+      credentials: "include",
+    }).then(Api.handleResponse);
+  }
+
   getContacts() {
     return fetch(`${this._url}/contacts`, {
       method: "GET",

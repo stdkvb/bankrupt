@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import {
   Button,
@@ -154,7 +154,9 @@ const Registration = () => {
           setIsRegistered(true);
         }
         if (data.status === "error") {
-          const clearHtmlTags = data.errors.map(error => error.message.replace(/(<([^>]+)>)/gi, " "));
+          const clearHtmlTags = data.errors.map((error) =>
+            error.message.replace(/(<([^>]+)>)/gi, " ")
+          );
           setErrors(clearHtmlTags);
         }
       })
@@ -178,6 +180,24 @@ const Registration = () => {
         console.log(error);
       });
   };
+
+  //get policy url
+  const [policyUrl, setPolicyUrl] = useState("");
+  const getPolicyUrl = () => {
+    api
+      .getPolicy()
+      .then((data) => {
+        if (data.status === "success") {
+          setPolicyUrl(data.data.url);
+        } else {
+          console.log("Failed to fetch data:", data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching catalog data:", error);
+      });
+  };
+  useEffect(getPolicyUrl, []);
 
   return (
     <>
@@ -397,7 +417,7 @@ const Registration = () => {
                 Я соглашаюсь с&nbsp;
                 <Link
                   component={RouterLink}
-                  to="/policy"
+                  to={policyUrl}
                   target="_blank"
                   color="primary.main"
                 >

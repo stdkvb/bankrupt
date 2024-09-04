@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import {
   Paper,
@@ -67,6 +67,24 @@ const Questions = () => {
         console.log(error);
       });
   };
+
+  //get policy url
+  const [policyUrl, setPolicyUrl] = useState("");
+  const getPolicyUrl = () => {
+    api
+      .getPolicy()
+      .then((data) => {
+        if (data.status === "success") {
+          setPolicyUrl(data.data.url);
+        } else {
+          console.log("Failed to fetch data:", data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching catalog data:", error);
+      });
+  };
+  useEffect(getPolicyUrl, []);
 
   return (
     <>
@@ -157,7 +175,7 @@ const Questions = () => {
                 Я соглашаюсь с&nbsp;
                 <Link
                   component={RouterLink}
-                  to="/policy"
+                  to={policyUrl}
                   target="_blank"
                   color="primary.main"
                 >

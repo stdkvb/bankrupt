@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import {
   Typography,
   Button,
@@ -55,6 +55,24 @@ const Trial = () => {
       });
     setIsReadOnly(true);
   };
+
+  //get policy url
+  const [policyUrl, setPolicyUrl] = useState("");
+  const getPolicyUrl = () => {
+    api
+      .getPolicy()
+      .then((data) => {
+        if (data.status === "success") {
+          setPolicyUrl(data.data.url);
+        } else {
+          console.log("Failed to fetch data:", data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching catalog data:", error);
+      });
+  };
+  useEffect(getPolicyUrl, []);
 
   return (
     <>
@@ -121,7 +139,7 @@ const Trial = () => {
             label={
               <Typography display="inline" color="text.secondary">
                 Я соглашаюсь с
-                <Link href="#" target="_blank" color="primary.main">
+                <Link href={policyUrl} target="_blank" color="primary.main">
                   {" "}
                   политикой конфиденциальности
                 </Link>
