@@ -214,7 +214,7 @@ const Rates = ({ updateUser }) => {
               );
             })}
         </Stack>
-        {user && user.currentTarif && user.demoAccess && (
+        {user && user.currentTarif && user.currentTarif.demoAccess && (
           <Paper
             elevation={0}
             sx={{
