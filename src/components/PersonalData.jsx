@@ -22,19 +22,28 @@ import Popup from "../components/Popup";
 const PersonalData = () => {
   //current user
   const user = useContext(UserContext).user.personal;
-  const [isLegalEntity, setIsLegalEntity] = useState(user.legalEntity);
+
+  const [isLegalEntity, setIsLegalEntity] = useState(user && user.legalEntity);
   const [readOnly, setIsReadOnly] = useState(true);
 
   const fields = [
-    { label: "Фамилия", name: "lastName", defaultValue: `${user.lastName}` },
-    { label: "Имя", name: "firstName", defaultValue: `${user.firstName}` },
+    {
+      label: "Фамилия",
+      name: "lastName",
+      defaultValue: `${user && user.lastName}`,
+    },
+    {
+      label: "Имя",
+      name: "firstName",
+      defaultValue: `${user && user.firstName}`,
+    },
     {
       label: "Отчество",
       name: "secondName",
-      defaultValue: `${user.secondName}`,
+      defaultValue: `${user && user.secondName}`,
     },
-    { label: "Телефон", name: "phone", defaultValue: `${user.phone}` },
-    { label: "Email", name: "email", defaultValue: `${user.email}` },
+    { label: "Телефон", name: "phone", defaultValue: `${user && user.phone}` },
+    { label: "Email", name: "email", defaultValue: `${user && user.email}` },
   ];
 
   //success popup
@@ -77,7 +86,7 @@ const PersonalData = () => {
               <TextInput
                 label={input.label}
                 name={input.name}
-                defaultValue={input.defaultValue}
+                defaultValue={user && input.defaultValue}
                 required={true}
                 multiline={false}
                 readOnly={readOnly}

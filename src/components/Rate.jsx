@@ -18,18 +18,28 @@ const Rate = ({ data, children }) => {
           <Typography variant="p">Тариф</Typography>
           <Typography variant="h5">{data && data.name}</Typography>
         </Grid>
-        <Grid item sx={{ display: "flex", flexDirection: "column", gap: [1] }}>
-          <Typography variant="p">Статус</Typography>
-          <Typography variant="h5" color="primary.main">
-            {data && data.status}
-          </Typography>
-        </Grid>
-        <Grid item sx={{ display: "flex", flexDirection: "column", gap: [1] }}>
-          <Typography variant="p">Дата окончания</Typography>
-          <Typography variant="h5">{data && data.endDate}</Typography>
-        </Grid>
+        {data && data.status && (
+          <Grid
+            item
+            sx={{ display: "flex", flexDirection: "column", gap: [1] }}
+          >
+            <Typography variant="p">Статус</Typography>
+            <Typography variant="h5" color="primary.main">
+              {data.status}
+            </Typography>
+          </Grid>
+        )}
+        {data && data.endDate && (
+          <Grid
+            item
+            sx={{ display: "flex", flexDirection: "column", gap: [1] }}
+          >
+            <Typography variant="p">Дата окончания</Typography>
+            <Typography variant="h5">{data.endDate}</Typography>
+          </Grid>
+        )}
       </Grid>
-      {data && data.status !== "Активен" && { children }}
+      {children}
     </Paper>
   );
 };

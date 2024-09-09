@@ -27,10 +27,12 @@ const Questions = () => {
     {
       label: "Имя",
       name: "name",
-      defaultValue: `${user.lastName} ${user.firstName} ${user.secondName}`,
+      defaultValue: `${user && user.lastName} ${user && user.firstName} ${
+        user && user.secondName
+      }`,
     },
-    { label: "Телефон", name: "phone", defaultValue: `${user.phone}` },
-    { label: "Email", name: "email", defaultValue: `${user.email}` },
+    { label: "Телефон", name: "phone", defaultValue: `${user && user.phone}` },
+    { label: "Email", name: "email", defaultValue: `${user && user.email}` },
     { label: "Ваш вопрос", name: "question", defaultValue: "" },
   ];
 

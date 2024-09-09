@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Typography, Button, Stack, Container, Alert } from "@mui/material";
+import { Typography, Button, Stack, Container } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
 import { UserContext } from "../utils/UserContext";
@@ -26,39 +26,34 @@ const Profile = () => {
       <Typography variant="h4" component="h1">
         Профиль
       </Typography>
-      {user.notification.message && (
-        <Alert variant="filled" severity={user.notification.type}>
-          <Typography>{user.notification.message}</Typography>
-          <Typography
-            component={RouterLink}
-            to="/rates"
-            color="text.white"
-            sx={{ fontSize: "14px" }}
-          >
-            Обновите подписку
-          </Typography>
-        </Alert>
-      )}
-      <Rate data={user.currentTarif}>
-        <Stack
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            columnGap: [4],
-            rowGap: { xs: [1], md: [2] },
-            flexWrap: "wrap",
-          }}
-        >
-          <Button
-            component={RouterLink}
-            to="/rates"
-            variant="contained"
-            sx={{ minWidth: { xs: "100%", md: "300px" } }}
-          >
-            Оплатить тариф
-          </Button>
-          <Trial />
-        </Stack>
+      <Rate data={user && user.currentTarif}>
+        {user &&
+          user.currentTarif &&
+          (user.currentTarif.id == 121 || user.currentTarif.demoAccess) && (
+            <Stack
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                columnGap: [4],
+                rowGap: { xs: [1], md: [2] },
+                flexWrap: "wrap",
+              }}
+            >
+              {user && user.currentTarif && user.currentTarif.id == 121 && (
+                <Button
+                  component={RouterLink}
+                  to="/rates"
+                  variant="contained"
+                  sx={{ minWidth: { xs: "100%", md: "300px" } }}
+                >
+                  Оплатить тариф
+                </Button>
+              )}
+              {user && user.currentTarif && user.currentTarif.demoAccess && (
+                <Trial />
+              )}
+            </Stack>
+          )}
       </Rate>
       <PersonalData />
       <Questions />

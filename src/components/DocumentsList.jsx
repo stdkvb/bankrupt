@@ -61,6 +61,7 @@ const DocumentsList = ({
   const [addToFavorites, setAddToFavorites] = useState(false);
   const [isInFavorites, setIsInFavorites] = useState(false);
   const [checkedFolders, setCheckedFolders] = useState([]);
+  const [checkedFoldersNames, setCheckedFoldersNames] = useState([]);
 
   const handleAddToFavorites = () => {
     api
@@ -79,6 +80,7 @@ const DocumentsList = ({
       });
     setAddToFavorites(false);
     setCheckedFolders([]);
+    setFolderChecked(false);
   };
 
   //remove from favorites
@@ -123,6 +125,7 @@ const DocumentsList = ({
       });
     setMoveToFolder(false);
     setCheckedFolders([]);
+    setFolderChecked(false);
   };
 
   //send to mail
@@ -594,18 +597,21 @@ const DocumentsList = ({
                 }}
                 control={
                   <Checkbox
+                    inputProps={{ "data-folderName": `${folder.name}` }}
                     value={folder.id}
                     onChange={(e) => {
-                      // Check if the element exists in the array
+                      const folderName =
+                        e.target.getAttribute("data-folderName");
                       let index = checkedFolders.indexOf(e.target.value);
                       if (index !== -1) {
-                        // If element exists, remove it from the array
                         checkedFolders.splice(index, 1);
+                        checkedFoldersNames.splice(index, 1);
                       } else {
-                        // If element doesn't exist, add it to the array
                         checkedFolders.push(e.target.value);
+                        checkedFoldersNames.push(folderName);
                       }
                       setCheckedFolders(checkedFolders);
+                      setCheckedFoldersNames(checkedFoldersNames);
                       if (checkedFolders.length !== 0) {
                         setFolderChecked(true);
                       } else {
@@ -685,11 +691,13 @@ const DocumentsList = ({
         isPopupOpen={isInFavorites}
         onClose={() => {
           setIsInFavorites(false);
+          setCheckedFoldersNames([]);
         }}
       >
         <IconButton
           onClick={() => {
             setIsInFavorites(false);
+            setCheckedFoldersNames([]);
           }}
           sx={{
             position: "absolute",
@@ -700,10 +708,10 @@ const DocumentsList = ({
           <CloseIcon />
         </IconButton>
         <Typography variant="h4" mb={3} sx={{ maxWidth: "90%" }}>
-          Документ добавлен в избранное
+          Документ добавлен в Избранное
         </Typography>
         <Typography color="text.secondary">
-          Документ добавлен в папку Избранное
+          Документ добавлен в папку {checkedFoldersNames.join(", ")}.
         </Typography>
         <Button
           variant="contained"
@@ -711,6 +719,7 @@ const DocumentsList = ({
           sx={{ mt: 4 }}
           onClick={() => {
             setIsInFavorites(false);
+            setCheckedFoldersNames([]);
           }}
         >
           Закрыть
@@ -755,13 +764,10 @@ const DocumentsList = ({
                   <Checkbox
                     value={folder.id}
                     onChange={(e) => {
-                      // Check if the element exists in the array
                       let index = checkedFolders.indexOf(e.target.value);
                       if (index !== -1) {
-                        // If element exists, remove it from the array
                         checkedFolders.splice(index, 1);
                       } else {
-                        // If element doesn't exist, add it to the array
                         checkedFolders.push(e.target.value);
                       }
                       setCheckedFolders(checkedFolders);

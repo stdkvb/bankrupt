@@ -30,6 +30,7 @@ import {
   AccordionSummary,
   AccordionDetails,
   CircularProgress,
+  Alert,
 } from "@mui/material";
 
 import MenuIcon from "@mui/icons-material/Menu";
@@ -117,7 +118,7 @@ export default function MainLayout({
   }
 
   //current user
-  const user = useContext(UserContext).user.personal;
+  const user = useContext(UserContext).user;
 
   const isTarriffActive = useCheckTarrifActive();
   // console.log(isTarriffActive);
@@ -381,9 +382,12 @@ export default function MainLayout({
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
             >
-              {user && (
+              {user && user.personal && (
                 <Avatar
-                  {...stringAvatar(`${user.firstName}`, `${user.lastName}`)}
+                  {...stringAvatar(
+                    `${user.personal.firstName}`,
+                    `${user.personal.lastName}`
+                  )}
                 />
               )}
             </IconButton>
@@ -424,19 +428,25 @@ export default function MainLayout({
               anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
               <MenuItem sx={{ pointerEvents: "none", cursor: "default" }}>
-                {user && (
+                {user && user.personal && (
                   <Stack>
-                    <ListItemText primary={user.firstName} sx={{ m: 0 }} />
-                    <ListItemText primary={user.lastName} sx={{ m: 0 }} />
-                    {user.companyName && (
+                    <ListItemText
+                      primary={user.personal.firstName}
+                      sx={{ m: 0 }}
+                    />
+                    <ListItemText
+                      primary={user.personal.lastName}
+                      sx={{ m: 0 }}
+                    />
+                    {user.personal.companyName && (
                       <ListItemText
-                        primary={user.companyName}
+                        primary={user.personal.companyName}
                         sx={{ m: 0, color: "text.secondary" }}
                       />
                     )}
 
                     <ListItemText
-                      primary={user.email}
+                      primary={user.personal.email}
                       sx={{ m: 0, color: "text.secondary" }}
                     />
                   </Stack>
@@ -487,9 +497,12 @@ export default function MainLayout({
               onClick={mobile ? toggleDrawer : () => {}}
             >
               <ListItemIcon>
-                {user && (
+                {user && user.personal && (
                   <Avatar
-                    {...stringAvatar(`${user.firstName}`, `${user.lastName}`)}
+                    {...stringAvatar(
+                      `${user.personal.firstName}`,
+                      `${user.personal.lastName}`
+                    )}
                   />
                 )}
               </ListItemIcon>
@@ -828,6 +841,32 @@ export default function MainLayout({
                 ref={refScrollUp}
                 style={{ position: "absolute", top: "-100px" }}
               ></div>
+              {user && user.notification && user.notification.message && (
+                <Alert
+                  variant="filled"
+                  severity={user.notification.type}
+                  sx={{
+                    m: { xs: 2, md: 4 },
+                    mb: { xs: 0, md: 0 },
+                  }}
+                >
+                  <Typography
+                    dangerouslySetInnerHTML={{
+                      __html: user.notification.message,
+                    }}
+                  ></Typography>
+                  {pathName !== "/rates" && (
+                    <Typography
+                      component={RouterLink}
+                      to="/rates"
+                      color="text.white"
+                      sx={{ fontSize: "14px" }}
+                    >
+                      Обновите подписку
+                    </Typography>
+                  )}
+                </Alert>
+              )}
               <Outlet />
             </>
           )}

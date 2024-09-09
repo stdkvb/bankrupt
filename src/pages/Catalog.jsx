@@ -9,7 +9,7 @@ import { PaginationContext } from "../utils/PaginationContext";
 import { FiltersContext } from "../utils/FiltersContext";
 import useCheckTarrifActive from "../hooks/useCheckTarrifActive";
 
-const Catalog = ({ title, folders, updateFolders, updateCatalog }) => {
+const Catalog = ({ title, folders, updateFolders }) => {
   const { page, setPage } = useContext(PaginationContext);
   const { filters, setFilters } = useContext(FiltersContext);
   const [catalog, setCatalog] = useState([]);

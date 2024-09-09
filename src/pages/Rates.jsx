@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
   Paper,
   Typography,
   Stack,
   Button,
-  Alert,
   Container,
   Radio,
   RadioGroup,
@@ -19,6 +18,7 @@ import Trial from "../components/Trial";
 import api from "../utils/Api";
 import Popup from "../components/Popup";
 import useCheckTarrifActive from "../hooks/useCheckTarrifActive";
+import { UserContext } from "../utils/UserContext";
 
 const Rates = ({ updateUser }) => {
   const [data, setData] = useState();
@@ -28,6 +28,7 @@ const Rates = ({ updateUser }) => {
   const paymentId = searchParams.get("paymentId");
   const [isSuccess, setIsSuccess] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState();
+  const user = useContext(UserContext).user;
 
   //get available rates
   const getRates = () => {
@@ -99,15 +100,7 @@ const Rates = ({ updateUser }) => {
         <Typography variant="h4" component="h1">
           Тарифы
         </Typography>
-        {data && data.notification.message && (
-          <Alert variant="filled" severity={data.notification.type}>
-            {/* удаляет html тэги */}
-            <Typography>
-              {data.notification.message.replace(/(<([^>]+)>)/gi, " ")}
-            </Typography>
-          </Alert>
-        )}
-        <Rate data={data && data.currentTarif} />
+        <Rate data={user && user.currentTarif} />
         <Stack
           sx={{
             display: "grid",
@@ -221,23 +214,25 @@ const Rates = ({ updateUser }) => {
               );
             })}
         </Stack>
-        <Paper
-          elevation={0}
-          sx={{
-            p: { xs: [2], md: [4] },
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <Typography variant="h5" sx={{ mb: 1 }}>
-            Демо-доступ
-          </Typography>
-          <Typography variant="p" color="text.secondary" sx={{ mb: 2 }}>
-            Активируйте бесплатный демо-доступ, чтобы протестировать возможности
-            сервиса в течении 3-х дней
-          </Typography>
-          <Trial />
-        </Paper>
+        {user && user.currentTarif && user.demoAccess && (
+          <Paper
+            elevation={0}
+            sx={{
+              p: { xs: [2], md: [4] },
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <Typography variant="h5" sx={{ mb: 1 }}>
+              Демо-доступ
+            </Typography>
+            <Typography variant="p" color="text.secondary" sx={{ mb: 2 }}>
+              Активируйте бесплатный демо-доступ, чтобы протестировать
+              возможности сервиса в течении 3-х дней
+            </Typography>
+            <Trial />
+          </Paper>
+        )}
       </Container>
       <Popup
         isPopupOpen={isSuccess}
