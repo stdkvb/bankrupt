@@ -342,6 +342,19 @@ class Api {
     }).then(Api.handleResponse);
   }
 
+  requestInvoice(id, period) {
+    return fetch(
+      `${this._url}/request-invoice-tariff?id=${id}&period=${period}`,
+      {
+        method: "POST",
+        headers: {
+          authorization: `Bearer ${getToken()}`,
+        },
+        credentials: "include",
+      }
+    ).then(Api.handleResponse);
+  }
+
   confirmPayment(paymentId) {
     return fetch(`${this._url}/payment-tariff-status?paymentId=${paymentId}`, {
       method: "POST",

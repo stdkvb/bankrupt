@@ -8,7 +8,7 @@ import Rate from "../components/Rate";
 import PersonalData from "../components/PersonalData";
 import Questions from "../components/Questions";
 
-const Profile = () => {
+const Profile = ({ updateUser }) => {
   //current user
   const user = useContext(UserContext).user;
 
@@ -55,7 +55,7 @@ const Profile = () => {
             </Stack>
           )}
       </Rate>
-      <PersonalData />
+      <PersonalData updateUser={updateUser} />
       <Questions />
     </Container>
   );

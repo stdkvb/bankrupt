@@ -60,6 +60,7 @@ const CreateFolder = ({ isPopupOpen, onClose, updateFolders }) => {
           required
           value={folderName}
           onChange={(e) => setFolderName(e.target.value)}
+          inputProps={{ maxLength: 30 }}
         />
         <Button
           variant="contained"

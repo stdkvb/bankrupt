@@ -48,16 +48,29 @@ const Rates = ({ updateUser }) => {
 
   //pay start
   const payTariff = (id, period) => {
-    api
-      .payTariff(id, period)
-      .then((data) => {
-        if (data.status === "success") {
-          window.location.href = data.data.url;
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (user && user.personal.legalEntity) {
+      api
+        .requestInvoice(id, period)
+        .then((data) => {
+          if (data.status === "success") {
+            setIsSuccess(true);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      api
+        .payTariff(id, period)
+        .then((data) => {
+          if (data.status === "success") {
+            window.location.href = data.data.url;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   //confirm payment
@@ -204,10 +217,14 @@ const Rates = ({ updateUser }) => {
                       variant="contained"
                       sx={{ mt: "auto" }}
                       onClick={() => {
-                        payTariff(rate.id, period);
+                        if (period) {
+                          payTariff(rate.id, period);
+                        }
                       }}
                     >
-                      Оплатить
+                      {user && user.personal.legalEntity
+                        ? "Запросить счет"
+                        : "Оплатить"}
                     </Button>
                   </Stack>
                 </Paper>
@@ -253,12 +270,21 @@ const Rates = ({ updateUser }) => {
           <CloseIcon />
         </IconButton>
         <Typography variant="h5" mb={3} sx={{ maxWidth: "90%" }}>
-          {paymentStatus == "succeeded"
+          {!paymentId
+            ? "Успешно"
+            : paymentStatus == "succeeded"
             ? "Спасибо, тариф успешно оплачен!"
             : paymentStatus == "canceled"
             ? "Ошибка, оплата не прошла, попробуйте ещё раз."
             : "Ваш платёж в обработке."}
         </Typography>
+        {!paymentId && (
+          <Typography color="text.secondary">
+            В ближайшее время на вашу электронную почту поступит <br /> счет на
+            оплату
+          </Typography>
+        )}
+
         <Button
           variant="contained"
           fullWidth

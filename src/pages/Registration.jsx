@@ -80,9 +80,7 @@ const Registration = () => {
       ...formValue,
       [name]: value,
     });
-    if (
-      !/^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/.test(e.target.value)
-    ) {
+    if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(e.target.value)) {
       setEmailError(true);
     } else {
       setEmailError(false);

@@ -19,7 +19,7 @@ import { UserContext } from "../utils/UserContext";
 import api from "../utils/Api";
 import Popup from "../components/Popup";
 
-const PersonalData = () => {
+const PersonalData = ({ updateUser }) => {
   //current user
   const user = useContext(UserContext).user.personal;
 
@@ -58,6 +58,7 @@ const PersonalData = () => {
       .then((data) => {
         if (data.status === "success") {
           setIsSuccess(true);
+          updateUser();
         }
       })
       .catch((error) => {

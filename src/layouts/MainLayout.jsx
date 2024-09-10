@@ -173,7 +173,7 @@ export default function MainLayout({
   const handleRenameFolder = (event) => {
     event.preventDefault();
     api
-      .renameFolder(folderName, currentFolder)
+      .renameFolder(folderName, currentFolder.id)
       .then((data) => {
         if (data.status === "success") {
           updateFolders();
@@ -185,6 +185,7 @@ export default function MainLayout({
       .catch((error) => {
         console.log(error);
       });
+
     setRenameFolder(false);
   };
 
@@ -193,7 +194,7 @@ export default function MainLayout({
 
   const handleDeleteFolder = () => {
     api
-      .deleteFolder(currentFolder)
+      .deleteFolder(currentFolder.id)
       .then((data) => {
         if (data.status === "success") {
           navigate("/favorites");
@@ -655,11 +656,10 @@ export default function MainLayout({
                           />
                           <IconButton
                             onClick={(event) => {
-                              setCurrentFolder(folder.id);
+                              setCurrentFolder(folder);
                               setIsFolderMenuOpen(event.currentTarget);
                               //disable buttons up/down for first and last folder
                               if (i == 0) {
-                                console.log(i);
                                 setIsFolderFirst(true);
                               }
                               if (i == folders.length - 2) {
@@ -717,7 +717,7 @@ export default function MainLayout({
                   >
                     <MenuItem
                       onClick={() => {
-                        handleFolderUp(currentFolder);
+                        handleFolderUp(currentFolder.id);
                       }}
                       disabled={isFolderFirst}
                     >
@@ -725,7 +725,7 @@ export default function MainLayout({
                     </MenuItem>
                     <MenuItem
                       onClick={() => {
-                        handleFolderDown(currentFolder);
+                        handleFolderDown(currentFolder.id);
                       }}
                       disabled={isFolderLast}
                     >
@@ -736,6 +736,7 @@ export default function MainLayout({
                       onClick={() => {
                         setRenameFolder(true);
                         setIsFolderMenuOpen(null);
+                        setFolderName(currentFolder.name);
                       }}
                     >
                       Переименовать папку
