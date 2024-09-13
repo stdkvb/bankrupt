@@ -1,5 +1,5 @@
-// const BASE_URL = "https://bankrotvestnik.ru/api";
-const BASE_URL = "http://beta.bankrotvestnik.ru/api";
+const BASE_URL = "https://bankrotvestnik.ru/api";
+// const BASE_URL = "http://beta.bankrotvestnik.ru/api";
 const dadataToken = "3c767e62c4d512110cb8e064f16a6d9c30c47974";
 import getToken from "./GetToken";
 

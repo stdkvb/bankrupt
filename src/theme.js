@@ -119,6 +119,15 @@ let theme = createTheme({
         },
       },
     },
+    MuiPickersLayout: {
+      styleOverrides: {
+        root: {
+          ".MuiPickersLayout-actionBar": {
+            justifyContent: "center",
+          },
+        },
+      },
+    },
   },
 });
 

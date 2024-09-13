@@ -24,10 +24,11 @@ import Wiki from "./pages/Wiki";
 import api from "./utils/Api";
 import { UserContext } from "./utils/UserContext";
 import getToken from "./utils/GetToken";
+import { Paper, Typography } from "@mui/material";
 
 export default function App() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const [errors, setErrors] = useState([]);
@@ -63,21 +64,10 @@ export default function App() {
       .getFolders()
       .then((data) => {
         if (data.status === "success") {
-          // костыль для того чтоб бой не падал, когда "https://bankrotvestnik.ru/api" и "http://beta.bankrotvestnik.ru/api"
-          // будут одинаковые удалить условие и оставить
-          // setFolders(data.data.list);
-          // setMainFolder(
-          //   data.data.list.filter((folder) => folder.main == true)[0]
-          // );
-          if (data.data.list) {
-            setFolders(data.data.list);
-            setMainFolder(
-              data.data.list.filter((folder) => folder.main == true)[0]
-            );
-          } else {
-            setFolders(data.data);
-            setMainFolder(data.data.filter((folder) => folder.main == true)[0]);
-          }
+          setFolders(data.data.list);
+          setMainFolder(
+            data.data.list.filter((folder) => folder.main == true)[0]
+          );
         }
       })
       .catch((error) => {

@@ -2,8 +2,11 @@ import { useState, useContext } from "react";
 import { Paper, Stack, Button, TextField } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { ruRU } from "@mui/x-date-pickers/locales";
 import "dayjs/locale/ru";
+import dayjs from "dayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { MobileDatePicker } from "@mui/x-date-pickers";
 
 import { FiltersContext } from "../utils/FiltersContext";
 import { PaginationContext } from "../utils/PaginationContext";
@@ -112,8 +115,14 @@ const Filters = ({ data, short }) => {
               />
             );
           })}
-          <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
-            <DatePicker
+          <LocalizationProvider
+            dateAdapter={AdapterDayjs}
+            adapterLocale="ru"
+            localeText={
+              ruRU.components.MuiLocalizationProvider.defaultProps.localeText
+            }
+          >
+            <MobileDatePicker
               value={dateFromValue}
               onChange={(newValue) => {
                 setDateFromValue(newValue);
@@ -128,9 +137,12 @@ const Filters = ({ data, short }) => {
                   size: "small",
                 },
                 field: { clearable: true },
+                actionBar: {
+                  actions: ["clear", "cancel", "accept"],
+                },
               }}
             />
-            <DatePicker
+            <MobileDatePicker
               value={dateToValue}
               onChange={(newValue) => {
                 setDateToValue(newValue);
@@ -145,6 +157,9 @@ const Filters = ({ data, short }) => {
                   size: "small",
                 },
                 field: { clearable: true },
+                actionBar: {
+                  actions: ["clear", "cancel", "accept"],
+                },
               }}
             />
           </LocalizationProvider>

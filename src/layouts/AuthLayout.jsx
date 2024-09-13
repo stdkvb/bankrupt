@@ -7,6 +7,8 @@ import {
   Link,
   Box,
   Typography,
+  Paper,
+  Stack,
 } from "@mui/material";
 
 import logo from "../assets/images/logo.svg";
@@ -55,6 +57,20 @@ const AuthLayout = () => {
           }}
         >
           <Outlet />
+          {/* <Stack sx={{ alignItems: "center" }}>
+            <Typography variant="h4" mb={3}>
+              Технические работы
+            </Typography>
+            <Typography
+              color="text.secondary"
+              mb={3}
+              sx={{ textAlign: "center" }}
+            >
+              В настоящее время на сервисе проводятся технические работы,
+              <br />
+              пожалуйста, вернитесь позже.
+            </Typography>
+          </Stack> */}
         </Container>
       </Box>
       <Box
