@@ -34,7 +34,7 @@ const PersonalData = ({ updateUser }) => {
     },
     {
       label: "Имя",
-      name: "firstName",
+      name: "name",
       defaultValue: `${user && user.firstName}`,
     },
     {
@@ -171,7 +171,7 @@ const PersonalData = ({ updateUser }) => {
           <CloseIcon />
         </IconButton>
         <Typography variant="h4" mb={3} sx={{ maxWidth: "90%" }}>
-          Профиль иземенён
+          Профиль изменён
         </Typography>
         <Button
           variant="contained"

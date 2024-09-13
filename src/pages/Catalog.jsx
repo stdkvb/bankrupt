@@ -9,7 +9,7 @@ import { PaginationContext } from "../utils/PaginationContext";
 import { FiltersContext } from "../utils/FiltersContext";
 import useCheckTarrifActive from "../hooks/useCheckTarrifActive";
 
-const Catalog = ({ title, folders, updateFolders }) => {
+const Catalog = ({ title, folders, updateFolders, handleLogout }) => {
   const { page, setPage } = useContext(PaginationContext);
   const { filters, setFilters } = useContext(FiltersContext);
   const [catalog, setCatalog] = useState([]);
@@ -26,9 +26,8 @@ const Catalog = ({ title, folders, updateFolders }) => {
       .then((data) => {
         if (data.status === "success") {
           setCatalog(data.data);
-          // console.log("Catalog data fetched successfully:", data.data);
         } else {
-          console.log("Failed to fetch catalog data:", data);
+          handleLogout();
         }
       })
       .catch((error) => {

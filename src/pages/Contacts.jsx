@@ -14,29 +14,30 @@ import Questions from "../components/Questions";
 
 const Contacts = () => {
   const defaultContacts = {
-    phone: "8 (000) 000-00-00",
-    email: "info@example.com",
-    address: "344047, г. Ростов-на-Дону, ул. Еременко, 108, стр. 2, кв. 73",
+    phone: "+7 (987) 05-55-100",
+    email: "bankrotvestnik@mail.ru",
+    address:
+      "450071, Республика Башкортостан, г Уфа, ул Лесотехникума, д. 49, офис 20",
   };
 
   const [contacts, setContacts] = useState(defaultContacts);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const getContacts = () => {
-    api
-      .getContacts()
-      .then((data) => {
-        if (data.status === "success") {
-          setContacts(data.data);
-        }
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  // const getContacts = () => {
+  //   api
+  //     .getContacts()
+  //     .then((data) => {
+  //       if (data.status === "success") {
+  //         setContacts(data.data);
+  //       }
+  //       setLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 
-  useEffect(getContacts, []);
+  // useEffect(getContacts, []);
 
   return (
     <Container
@@ -82,7 +83,7 @@ const Contacts = () => {
                 sx={{ display: "flex", flexDirection: "column", gap: [1] }}
               >
                 <Typography variant="p">Телефон:</Typography>
-                <Link href={`telto:${contacts.phone}`} variant="h5">
+                <Link href={`tel:${contacts.phone}`} variant="h5">
                   {contacts.phone}
                 </Link>
               </Grid>
@@ -100,6 +101,21 @@ const Contacts = () => {
               <Typography variant="p">Почтовый адрес:</Typography>
               <Typography variant="h5">{contacts.address}</Typography>
             </Stack>
+            <Link
+              href="/Пользовательское соглашение.pdf"
+              download
+              color="primary.main"
+            >
+              Пользовательское соглашение
+            </Link>
+            <Link
+              href="/Карта партнера.pdf"
+              download
+              color="primary.main"
+              sx={{ mt: -3 }}
+            >
+              Карта партнера
+            </Link>
           </>
         )}
       </Paper>

@@ -139,9 +139,12 @@ export default function MainLayout({
 
   //avatar letters
   function stringAvatar(firstName, lastName) {
-    return {
-      children: `${firstName.split(" ")[0][0]}${lastName.split(" ")[0][0]}`,
-    };
+    if (!firstName) {
+      return null;
+    } else
+      return {
+        children: `${firstName.split(" ")[0][0]}${lastName.split(" ")[0][0]}`,
+      };
   }
 
   //profile menu
@@ -288,7 +291,8 @@ export default function MainLayout({
     document
       .querySelector("main")
       .addEventListener("scroll", handleVisibleButton);
-  }, []);
+    handleScrollUp();
+  }, [location]);
 
   const handleScrollUp = () => {
     refScrollUp.current.scrollIntoView({ behavior: "smooth" });
@@ -389,6 +393,7 @@ export default function MainLayout({
                     `${user.personal.firstName}`,
                     `${user.personal.lastName}`
                   )}
+                  src={PersonIcon}
                 />
               )}
             </IconButton>
@@ -497,23 +502,29 @@ export default function MainLayout({
               to={"/profile"}
               onClick={mobile ? toggleDrawer : () => {}}
             >
-              <ListItemIcon>
-                {user && user.personal && (
-                  <Avatar
-                    {...stringAvatar(
-                      `${user.personal.firstName}`,
-                      `${user.personal.lastName}`
-                    )}
-                  />
-                )}
-              </ListItemIcon>
-              <Stack>
-                <ListItemText primary="Name" sx={{ m: 0 }} />
-                <ListItemText
-                  primary="Email"
-                  sx={{ m: 0, color: "text.secondary" }}
-                />
-              </Stack>
+              {user && user.personal && (
+                <>
+                  <ListItemIcon>
+                    <Avatar
+                      {...stringAvatar(
+                        `${user.personal.firstName}`,
+                        `${user.personal.lastName}`
+                      )}
+                      src={PersonIcon}
+                    />
+                  </ListItemIcon>
+                  <Stack>
+                    <ListItemText
+                      primary={`${user.personal.firstName} ${user.personal.lastName}`}
+                      sx={{ m: 0 }}
+                    />
+                    <ListItemText
+                      primary={user.personal.email}
+                      sx={{ m: 0, color: "text.secondary" }}
+                    />
+                  </Stack>
+                </>
+              )}
             </ListItemButton>
             <ListItemButton
               className={activateMenuItem("/")}
@@ -796,7 +807,6 @@ export default function MainLayout({
               component={RouterLink}
               to={"/contacts"}
               onClick={mobile ? toggleDrawer : () => {}}
-              disabled
             >
               <ListItemIcon>
                 <MapIcon />

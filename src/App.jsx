@@ -166,6 +166,7 @@ export default function App() {
                 folders={folders}
                 updateFolders={updateFolders}
                 updateCatalog={getAccess}
+                handleLogout={handleLogout}
               />
             }
           />
@@ -178,6 +179,7 @@ export default function App() {
                 mainFolder={mainFolder}
                 updateFolders={updateFolders}
                 updateCatalog={getAccess}
+                handleLogout={handleLogout}
               />
             }
           />
@@ -190,6 +192,7 @@ export default function App() {
                 mainFolder={mainFolder}
                 updateFolders={updateFolders}
                 updateCatalog={getAccess}
+                handleLogout={handleLogout}
               />
             }
           />

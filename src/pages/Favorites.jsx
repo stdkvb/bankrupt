@@ -11,7 +11,13 @@ import { PaginationContext } from "../utils/PaginationContext";
 import { FiltersContext } from "../utils/FiltersContext";
 import useCheckTarrifActive from "../hooks/useCheckTarrifActive";
 
-const Favorites = ({ folders, mainFolder, updateFolders, updateCatalog }) => {
+const Favorites = ({
+  folders,
+  mainFolder,
+  updateFolders,
+  updateCatalog,
+  handleLogout,
+}) => {
   let { id } = useParams();
   const folder = folders.find((folder) => folder.id == id);
   const { page, setPage } = useContext(PaginationContext);
@@ -30,6 +36,8 @@ const Favorites = ({ folders, mainFolder, updateFolders, updateCatalog }) => {
         if (data.status === "success") {
           setFavorites(data.data);
           setLoading(false);
+        } else {
+          handleLogout();
         }
       })
       .catch((error) => {

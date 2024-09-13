@@ -79,7 +79,7 @@ const Trial = () => {
       <Button
         type="submit"
         variant="outlined"
-        sx={{ minWidth: { xs: "100%", md: "300px" } }}
+        sx={{ minWidth: { xs: "100%", md: "300px" }, maxWidth: "360px" }}
         onClick={() => setModalOpen(true)}
       >
         Активировать демо-доступ
