@@ -3,13 +3,21 @@ const getToken = () => {
   if (!token) {
     return null;
   }
-  const item = JSON.parse(token);
-  const now = new Date();
 
-  if (now.getTime() > item.expiry) {
-    localStorage.removeItem("token");
+  try {
+    const item = JSON.parse(token);
+    const now = new Date();
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem("token");
+      return null;
+    }
+
+    return item.value;
+  } catch (e) {
+    console.error("Ошибка парсинга токена:", e);
     return null;
   }
-  return item.value;
 };
+
 export default getToken;
