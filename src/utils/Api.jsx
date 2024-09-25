@@ -1,5 +1,5 @@
-const BASE_URL = "https://bankrotvestnik.ru/api";
-// const BASE_URL = "http://beta.bankrotvestnik.ru/api";
+// const BASE_URL = "https://bankrotvestnik.ru/api";
+const BASE_URL = "http://beta.bankrotvestnik.ru/api";
 const dadataToken = "3c767e62c4d512110cb8e064f16a6d9c30c47974";
 import getToken from "./GetToken";
 
@@ -387,7 +387,7 @@ class Api {
   }
 
   getContacts() {
-    return fetch(`${this._url}/contacts`, {
+    return fetch(`${this._url}/contact`, {
       method: "GET",
       headers: {
         authorization: `Bearer ${getToken()}`,
@@ -407,7 +407,7 @@ class Api {
   }
 
   getNews(page) {
-    return fetch(`${this._url}/news?page=` + `${page}`, {
+    return fetch(`${this._url}/news?limit=5&page=` + `${page}`, {
       method: "GET",
       headers: {
         authorization: `Bearer ${getToken()}`,
@@ -426,9 +426,12 @@ class Api {
     }).then(Api.handleResponse);
   }
 
-  getWiki(page, params) {
+  getWiki(page, params, paid) {
     return fetch(
-      `${this._url}/wiki?page=` + `${page}&` + `${new URLSearchParams(params)}`,
+      `${this._url}/wiki?limit=8&page=` +
+        `${page}&` +
+        `${new URLSearchParams(params)}` +
+        `&paid=${paid}`,
       {
         method: "GET",
         headers: {

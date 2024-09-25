@@ -13,24 +13,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import api from "../utils/Api";
 
 const QA = () => {
-  const defaultQA = [
-    {
-      question: "На что не распространяется банкротство физического лица?",
-      answer:
-        "Суды не приняли во внимание, что недействительность договора может",
-    },
-    {
-      question: "На что не распространяется банкротство физического лица?",
-      answer: "ния цены на торгах. Однако условие",
-    },
-    {
-      question: "На что не распространяется банкротств?",
-      answer:
-        "Суды не приняли во внимание, что недействительность договора может",
-    },
-  ];
-
-  const [qa, setQA] = useState(defaultQA);
+  const [qa, setQA] = useState();
   const [loading, setLoading] = useState(true);
 
   const getQA = () => {
@@ -101,9 +84,10 @@ const QA = () => {
                     variant="p"
                     color="text.secondary"
                     sx={{ maxWidth: "860px" }}
-                  >
-                    {answer}
-                  </Typography>
+                    dangerouslySetInnerHTML={{
+                      __html: answer,
+                    }}
+                  ></Typography>
                 </AccordionDetails>
               </Accordion>
             );

@@ -13,31 +13,24 @@ import api from "../utils/Api";
 import Questions from "../components/Questions";
 
 const Contacts = () => {
-  const defaultContacts = {
-    phone: "+7 (987) 05-55-100",
-    email: "bankrotvestnik@mail.ru",
-    address:
-      "450071, Республика Башкортостан, г Уфа, ул Лесотехникума, д. 49, офис 20",
+  const [contacts, setContacts] = useState();
+  const [loading, setLoading] = useState(true);
+
+  const getContacts = () => {
+    api
+      .getContacts()
+      .then((data) => {
+        if (data.status === "success") {
+          setContacts(data.data);
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
-  const [contacts, setContacts] = useState(defaultContacts);
-  const [loading, setLoading] = useState(false);
-
-  // const getContacts = () => {
-  //   api
-  //     .getContacts()
-  //     .then((data) => {
-  //       if (data.status === "success") {
-  //         setContacts(data.data);
-  //       }
-  //       setLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-
-  // useEffect(getContacts, []);
+  useEffect(getContacts, []);
 
   return (
     <Container
@@ -101,15 +94,11 @@ const Contacts = () => {
               <Typography variant="p">Почтовый адрес:</Typography>
               <Typography variant="h5">{contacts.address}</Typography>
             </Stack>
-            <Link
-              href="/Пользовательское соглашение.pdf"
-              download
-              color="primary.main"
-            >
+            <Link href={contacts.userAgreement} download color="primary.main">
               Пользовательское соглашение
             </Link>
             <Link
-              href="/Карта партнера.pdf"
+              href={contacts.map}
               download
               color="primary.main"
               sx={{ mt: -3 }}

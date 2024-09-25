@@ -221,7 +221,6 @@ const Rates = ({ updateUser }) => {
                           payTariff(rate.id, period);
                         }
                       }}
-                      disabled
                     >
                       {user && user.personal.legalEntity
                         ? "Запросить счет"

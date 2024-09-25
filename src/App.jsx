@@ -24,7 +24,6 @@ import Wiki from "./pages/Wiki";
 import api from "./utils/Api";
 import { UserContext } from "./utils/UserContext";
 import getToken from "./utils/GetToken";
-import { Paper, Typography } from "@mui/material";
 
 export default function App() {
   const navigate = useNavigate();
@@ -128,7 +127,7 @@ export default function App() {
     navigate("/");
   };
 
-  if (loading)
+  if (loading) {
     return (
       <CircularProgress
         sx={{
@@ -141,6 +140,7 @@ export default function App() {
         }}
       />
     );
+  }
 
   return (
     <Routes>
@@ -199,7 +199,8 @@ export default function App() {
           <Route path="profile" element={<Profile updateUser={getAccess} />} />
           <Route path="change-password" element={<ChangePassword />} />
           <Route path="rates" element={<Rates updateUser={getAccess} />} />
-          <Route path="wiki" element={<Wiki />} />
+          <Route path="wiki" element={<Wiki paid={false} />} />
+          <Route path="documents" element={<Wiki paid={true} />} />
           <Route path="news" element={<News />} />
           <Route path="news/:id" element={<Article />} />
           <Route path="contacts" element={<Contacts />} />

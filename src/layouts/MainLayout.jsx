@@ -57,6 +57,7 @@ import api from "../utils/Api";
 import Popup from "../components/Popup";
 import CreateFolder from "../components/CreateFolder";
 import { UserContext } from "../utils/UserContext";
+import { FiltersContext } from "../utils/FiltersContext";
 import useCheckTarrifActive from "../hooks/useCheckTarrifActive";
 
 import logo from "../assets/images/logo.svg";
@@ -122,6 +123,12 @@ export default function MainLayout({
 
   const isTarriffActive = useCheckTarrifActive();
   // console.log(isTarriffActive);
+
+  //reset filters on url change
+  const { filters, setFilters } = useContext(FiltersContext);
+  useEffect(() => {
+    setFilters([]);
+  }, [pathName]);
 
   //drawer control
   const mobile = useMediaQuery("(max-width:900px)");
@@ -375,7 +382,6 @@ export default function MainLayout({
               component={RouterLink}
               to={"/qa"}
               sx={{ display: { xs: "none", md: "flex", height: "40px" } }}
-              disabled
             >
               <HelpOutlineOutlinedIcon />
             </IconButton>
@@ -552,7 +558,6 @@ export default function MainLayout({
                 component={RouterLink}
                 to="/wiki"
                 onClick={mobile ? toggleDrawer : () => {}}
-                disabled
               >
                 <ListItemIcon sx={{ height: "24px" }}>
                   <FolderIcon />
@@ -573,7 +578,10 @@ export default function MainLayout({
               </ListItemButton>
               <AccordionDetails sx={{ p: 0 }}>
                 <ListItemButton
+                  className={activateMenuItem("/documents")}
                   sx={{ px: [4] }}
+                  component={RouterLink}
+                  to="/documents"
                   onClick={mobile ? toggleDrawer : () => {}}
                 >
                   <ListItemIcon>
@@ -769,7 +777,6 @@ export default function MainLayout({
               component={RouterLink}
               to={"/news"}
               onClick={mobile ? toggleDrawer : () => {}}
-              disabled
             >
               <ListItemIcon>
                 <DescriptionIcon />
@@ -794,7 +801,6 @@ export default function MainLayout({
               component={RouterLink}
               to={"/qa"}
               onClick={mobile ? toggleDrawer : () => {}}
-              disabled
             >
               <ListItemIcon>
                 <HelpIcon />

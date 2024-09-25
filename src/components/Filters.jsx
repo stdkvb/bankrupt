@@ -18,7 +18,7 @@ const Filters = ({ data, short }) => {
 
   //select filters
   const [filterParamsList, setFilterParamsList] = useState(
-    data.filterParamsList
+    !short && data.filterParamsList
   );
 
   //tags filters clear
@@ -75,17 +75,31 @@ const Filters = ({ data, short }) => {
             InputLabelProps={{ shrink: true }}
             sx={{ gridColumn: { xs: "unset", xl: "span 2" } }}
           />
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
+          <LocalizationProvider
+            dateAdapter={AdapterDayjs}
+            adapterLocale="ru"
+            localeText={
+              ruRU.components.MuiLocalizationProvider.defaultProps.localeText
+            }
+          >
+            <MobileDatePicker
+              value={dateFromValue}
+              onChange={(newValue) => {
+                setDateFromValue(newValue);
+              }}
               label="Дата"
+              name="date"
               sx={{ width: "100%" }}
               slotProps={{
                 textField: {
                   variant: "standard",
                   InputLabelProps: { shrink: true },
-                  size: "medium",
+                  size: "small",
                 },
                 field: { clearable: true },
+                actionBar: {
+                  actions: ["clear", "cancel", "accept"],
+                },
               }}
             />
           </LocalizationProvider>
