@@ -14,10 +14,15 @@ const Rate = ({ data, children }) => {
       }}
     >
       <Grid container rowSpacing={{ xs: 3, md: 2 }} columnSpacing={8}>
-        <Grid item sx={{ display: "flex", flexDirection: "column", gap: [1] }}>
-          <Typography variant="p">Тариф</Typography>
-          <Typography variant="h5">{data && data.name}</Typography>
-        </Grid>
+        {data && data.name && (
+          <Grid
+            item
+            sx={{ display: "flex", flexDirection: "column", gap: [1] }}
+          >
+            <Typography variant="p">Тариф</Typography>
+            <Typography variant="h5">{data && data.name}</Typography>
+          </Grid>
+        )}
         {data && data.status && (
           <Grid
             item

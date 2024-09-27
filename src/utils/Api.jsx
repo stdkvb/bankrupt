@@ -441,6 +441,39 @@ class Api {
       }
     ).then(Api.handleResponse);
   }
+
+  payDocument(id) {
+    return fetch(`${this._url}/payment-document?id=${id}`, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${getToken()}`,
+      },
+      credentials: "include",
+    }).then(Api.handleResponse);
+  }
+
+  requestDocumentInvoice(id) {
+    return fetch(`${this._url}/request-invoice-document?id=${id}`, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${getToken()}`,
+      },
+      credentials: "include",
+    }).then(Api.handleResponse);
+  }
+
+  confirmDocumentPayment(paymentId) {
+    return fetch(
+      `${this._url}/payment-document-status?paymentId=${paymentId}`,
+      {
+        method: "POST",
+        headers: {
+          authorization: `Bearer ${getToken()}`,
+        },
+        credentials: "include",
+      }
+    ).then(Api.handleResponse);
+  }
 }
 
 const api = new Api({
