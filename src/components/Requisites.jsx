@@ -16,28 +16,83 @@ const Requisites = ({ readOnly }) => {
       name: "companyName",
       defaultValue: `${user.companyName}`,
       dadata: true,
+      required: true,
     },
-    { label: "ИНН", name: "inn", defaultValue: `${user.inn}`, dadata: true },
+    {
+      label: "ИНН",
+      name: "inn",
+      defaultValue: `${user.inn}`,
+      dadata: true,
+      required: true,
+    },
+    { label: "КПП", name: "kpp", defaultValue: `${user.kpp}`, required: false },
     {
       label: "Юридический адрес",
       name: "companyAddress",
       defaultValue: `${user.companyAddress}`,
+      required: true,
     },
     {
       label: "Почтовый адрес",
       name: "mailingAddress",
       defaultValue: `${user.mailingAddress}`,
+      required: false,
     },
-    { label: "Расчетный счет", name: "rs", defaultValue: `${user.rs}` },
-    { label: "Корреспондентский счет", name: "ks", defaultValue: `${user.ks}` },
-    { label: "БИК", name: "bik", defaultValue: `${user.bik}` },
-    { label: "ОГРНИП", name: "ogrnip", defaultValue: `${user.ogrnip}` },
-    { label: "ОКВЭД", name: "okved", defaultValue: `${user.okved}` },
-    { label: "ОКПО", name: "okpo", defaultValue: `${user.okpo}` },
-    { label: "ОКАТО", name: "okato", defaultValue: `${user.okato}` },
-    { label: "ОКОГУ", name: "okogu", defaultValue: `${user.okogu}` },
-    { label: "ОКФС", name: "okfs", defaultValue: `${user.okfs}` },
-    { label: "ОКОПФ", name: "okopf", defaultValue: `${user.okopf}` },
+    {
+      label: "Расчетный счет",
+      name: "rs",
+      defaultValue: `${user.rs}`,
+      required: false,
+    },
+    {
+      label: "Корреспондентский счет",
+      name: "ks",
+      defaultValue: `${user.ks}`,
+      required: false,
+    },
+    { label: "БИК", name: "bik", defaultValue: `${user.bik}`, required: false },
+    {
+      label: "ОГРН (ОГРНИП)",
+      name: "ogrnip",
+      defaultValue: `${user.ogrnip}`,
+      required: false,
+    },
+    {
+      label: "ОКВЭД",
+      name: "okved",
+      defaultValue: `${user.okved}`,
+      required: false,
+    },
+    {
+      label: "ОКПО",
+      name: "okpo",
+      defaultValue: `${user.okpo}`,
+      required: false,
+    },
+    {
+      label: "ОКАТО",
+      name: "okato",
+      defaultValue: `${user.okato}`,
+      required: false,
+    },
+    {
+      label: "ОКОГУ",
+      name: "okogu",
+      defaultValue: `${user.okogu}`,
+      required: false,
+    },
+    {
+      label: "ОКФС",
+      name: "okfs",
+      defaultValue: `${user.okfs}`,
+      required: false,
+    },
+    {
+      label: "ОКОПФ",
+      name: "okopf",
+      defaultValue: `${user.okopf}`,
+      required: false,
+    },
   ];
 
   const [requisitesInputs, setRequisitesInputs] = useState(
@@ -75,7 +130,7 @@ const Requisites = ({ readOnly }) => {
                   key={i}
                   label={input.label}
                   name={input.name}
-                  required={true}
+                  required={input.required}
                   readOnly={readOnly}
                   defaultValue={input.defaultValue}
                   handleDadata={handleDadata}
@@ -90,7 +145,7 @@ const Requisites = ({ readOnly }) => {
                   label={input.label}
                   name={input.name}
                   defaultValue={input.defaultValue}
-                  required={true}
+                  required={input.required}
                   multiline={true}
                   readOnly={readOnly}
                 />

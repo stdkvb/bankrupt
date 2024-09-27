@@ -15,6 +15,7 @@ const Popup = ({ isPopupOpen, onClose, children }) => {
           height: "fit-content",
           bgcolor: "background.paper",
           p: { xs: 2, md: 4 },
+          outline: "none",
         }}
       >
         {children}

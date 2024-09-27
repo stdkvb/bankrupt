@@ -372,6 +372,7 @@ const Wiki = ({ paid }) => {
                 bgcolor: "background.paper",
                 p: { xs: 2, md: 4 },
                 pr: { xs: 2, md: 13 },
+                outline: "none",
               }}
             >
               <IconButton

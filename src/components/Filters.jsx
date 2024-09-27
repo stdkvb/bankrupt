@@ -75,7 +75,7 @@ const Filters = ({ data, short }) => {
             InputLabelProps={{ shrink: true }}
             sx={{ gridColumn: { xs: "unset", xl: "span 2" } }}
           />
-          <LocalizationProvider
+          {/* <LocalizationProvider
             dateAdapter={AdapterDayjs}
             adapterLocale="ru"
             localeText={
@@ -100,6 +100,31 @@ const Filters = ({ data, short }) => {
                 actionBar: {
                   actions: ["clear", "cancel", "accept"],
                 },
+              }}
+            />
+          </LocalizationProvider> */}
+          <LocalizationProvider
+            dateAdapter={AdapterDayjs}
+            adapterLocale="ru"
+            localeText={
+              ruRU.components.MuiLocalizationProvider.defaultProps.localeText
+            }
+          >
+            <DatePicker
+              value={dateFromValue}
+              onChange={(newValue) => {
+                setDateFromValue(newValue);
+              }}
+              label="Дата"
+              name="date"
+              sx={{ width: "100%" }}
+              slotProps={{
+                textField: {
+                  variant: "standard",
+                  InputLabelProps: { shrink: true },
+                  size: "small",
+                },
+                field: { clearable: true },
               }}
             />
           </LocalizationProvider>
@@ -129,7 +154,7 @@ const Filters = ({ data, short }) => {
               />
             );
           })}
-          <LocalizationProvider
+          {/* <LocalizationProvider
             dateAdapter={AdapterDayjs}
             adapterLocale="ru"
             localeText={
@@ -176,7 +201,50 @@ const Filters = ({ data, short }) => {
                 },
               }}
             />
+          </LocalizationProvider> */}
+          <LocalizationProvider
+            dateAdapter={AdapterDayjs}
+            adapterLocale="ru"
+            localeText={
+              ruRU.components.MuiLocalizationProvider.defaultProps.localeText
+            }
+          >
+            <DatePicker
+              value={dateFromValue}
+              onChange={(newValue) => {
+                setDateFromValue(newValue);
+              }}
+              label="От даты"
+              name="dateFrom"
+              sx={{ width: "100%" }}
+              slotProps={{
+                textField: {
+                  variant: "standard",
+                  InputLabelProps: { shrink: true },
+                  size: "small",
+                },
+                field: { clearable: true },
+              }}
+            />
+            <DatePicker
+              value={dateToValue}
+              onChange={(newValue) => {
+                setDateToValue(newValue);
+              }}
+              label="До даты"
+              name="dateTo"
+              sx={{ width: "100%" }}
+              slotProps={{
+                textField: {
+                  variant: "standard",
+                  InputLabelProps: { shrink: true },
+                  size: "small",
+                },
+                field: { clearable: true },
+              }}
+            />
           </LocalizationProvider>
+
           <TextField
             label="Поиск"
             variant="standard"

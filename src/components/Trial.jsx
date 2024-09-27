@@ -102,6 +102,7 @@ const Trial = () => {
             maxWidth: "580px",
             bgcolor: "background.paper",
             p: { xs: 2, md: 4 },
+            outline: "none",
           }}
         >
           <IconButton
