@@ -55,7 +55,7 @@ const Requisites = ({ readOnly }) => {
       label: "ОГРН (ОГРНИП)",
       name: "ogrnip",
       defaultValue: `${user.ogrnip}`,
-      required: false,
+      required: true,
     },
     {
       label: "ОКВЭД",

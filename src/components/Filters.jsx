@@ -39,8 +39,15 @@ const Filters = ({ data, short }) => {
   const handleFilterSubmit = (event) => {
     event.preventDefault();
     const formData = Array.from(new FormData(event.currentTarget));
+    // меняет запятые на символ "𡬈"
+    const commaTo𡬈 = formData.map((item) => {
+      const [title, value] = item
+      const newStringWith𡬈 = value.replaceAll(",", "𡬈");
+      return [title, newStringWith𡬈]
+    })
+    
     setPage(1);
-    setFilters(formData);
+    setFilters(commaTo𡬈);
   };
 
   return (
