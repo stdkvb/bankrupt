@@ -39,13 +39,12 @@ const Filters = ({ data, short }) => {
   const handleFilterSubmit = (event) => {
     event.preventDefault();
     const formData = Array.from(new FormData(event.currentTarget));
-    // меняет запятые на символ "𡬈"
-
+    // меняет запятую на 鰷. нужно чтобы на бэке строка корректно делилась на массив по запятой 
     const commaTo𡬈 = formData.map((item) => {
-      const [title, value] = item
-      const changeComma = value.replaceAll(", ", "，");
-      const newStringWith𡬈 = changeComma.replaceAll(",", "𡬈");
-      return [title, newStringWith𡬈]
+      const [title, value] = item;
+      const newStringWith𡬈 = value.replaceAll(",", "𡬈");
+      const newStringWith鰷 = newStringWith𡬈.replaceAll("鰷", ",");
+      return [title, newStringWith鰷];
     })
     
     setPage(1);
@@ -160,7 +159,7 @@ const Filters = ({ data, short }) => {
                 title={filter.title}
                 tags={filter.values}
                 onReset={filtersClear}
-                onChange={()=> console.log(23423)}
+                addSpecilaSing
               />
             );
           })}

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Input, FormControl, TextField, Autocomplete } from "@mui/material";
 
-export default function Select({ name, title, tags, onReset }) {
+export default function Select({ name, title, tags, onReset, addSpecilaSing }) {
   const [filter, setFilter] = useState([]);
+
 
   const resetFilters = () => {
     setFilter([]);
@@ -13,7 +14,15 @@ export default function Select({ name, title, tags, onReset }) {
     <FormControl sx={{ width: "100%" }}>
       <Autocomplete
         key={onReset}
-        onChange={(event, value) => setFilter(value)}
+        onChange={(event, value) => {
+          // добавляет 鰷 вместо запятой. нужно чтобы на бэке строка корректно делилась на массив по запятой 
+          if (addSpecilaSing) {
+            const valueWithSpeciaSing = value.map((item) => item.replaceAll(',', '鰷'));
+            setFilter(valueWithSpeciaSing)
+          } else {
+            setFilter(value)
+          }
+        }}
         multiple
         noOptionsText={"Результаты не найдены"}
         limitTags={1}
