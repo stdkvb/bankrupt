@@ -40,9 +40,11 @@ const Filters = ({ data, short }) => {
     event.preventDefault();
     const formData = Array.from(new FormData(event.currentTarget));
     // меняет запятые на символ "𡬈"
+
     const commaTo𡬈 = formData.map((item) => {
       const [title, value] = item
-      const newStringWith𡬈 = value.replaceAll(",", "𡬈");
+      const changeComma = value.replaceAll(", ", "，");
+      const newStringWith𡬈 = changeComma.replaceAll(",", "𡬈");
       return [title, newStringWith𡬈]
     })
     
@@ -158,6 +160,7 @@ const Filters = ({ data, short }) => {
                 title={filter.title}
                 tags={filter.values}
                 onReset={filtersClear}
+                onChange={()=> console.log(23423)}
               />
             );
           })}
