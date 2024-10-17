@@ -19,6 +19,12 @@ const Requisites = ({ readOnly }) => {
       required: true,
     },
     {
+      label: "ОГРН (ОГРНИП)",
+      name: "ogrnip",
+      defaultValue: `${user.ogrnip}`,
+      required: true,
+    },
+    {
       label: "ИНН",
       name: "inn",
       defaultValue: `${user.inn}`,
@@ -51,12 +57,7 @@ const Requisites = ({ readOnly }) => {
       required: false,
     },
     { label: "БИК", name: "bik", defaultValue: `${user.bik}`, required: false },
-    {
-      label: "ОГРН (ОГРНИП)",
-      name: "ogrnip",
-      defaultValue: `${user.ogrnip}`,
-      required: true,
-    },
+
     {
       label: "ОКВЭД",
       name: "okved",

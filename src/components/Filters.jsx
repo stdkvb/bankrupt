@@ -39,14 +39,14 @@ const Filters = ({ data, short }) => {
   const handleFilterSubmit = (event) => {
     event.preventDefault();
     const formData = Array.from(new FormData(event.currentTarget));
-    // меняет запятую на 鰷. нужно чтобы на бэке строка корректно делилась на массив по запятой 
+    // меняет запятую на 鰷. нужно чтобы на бэке строка корректно делилась на массив по запятой
     const commaTo𡬈 = formData.map((item) => {
       const [title, value] = item;
       const newStringWith𡬈 = value.replaceAll(",", "𡬈");
       const newStringWith鰷 = newStringWith𡬈.replaceAll("鰷", ",");
       return [title, newStringWith鰷];
-    })
-    
+    });
+
     setPage(1);
     setFilters(commaTo𡬈);
   };

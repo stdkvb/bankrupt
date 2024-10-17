@@ -144,6 +144,12 @@ export default function MainLayout({
     setOpen(!open);
   };
 
+  useEffect(() => {
+    if (mobile) {
+      toggleDrawer();
+    }
+  }, [pathName]);
+
   //avatar letters
   function stringAvatar(firstName, lastName) {
     if (!firstName) {
@@ -506,7 +512,6 @@ export default function MainLayout({
               sx={{ my: [3], px: [4], py: 0, display: { md: "none" } }}
               component={RouterLink}
               to={"/profile"}
-              onClick={mobile ? toggleDrawer : () => {}}
             >
               {user && user.personal && (
                 <>
@@ -537,7 +542,6 @@ export default function MainLayout({
               sx={{ px: [4] }}
               component={RouterLink}
               to={"/"}
-              onClick={mobile ? toggleDrawer : () => {}}
               disabled={!isTarriffActive}
             >
               <ListItemIcon>
@@ -557,7 +561,13 @@ export default function MainLayout({
                 }}
                 component={RouterLink}
                 to="/wiki"
-                onClick={mobile ? toggleDrawer : () => {}}
+                onClick={(event) => {
+                  const isAccordionClicked =
+                    event.target.closest("#panel1a-header");
+                  if (isAccordionClicked) {
+                    event.preventDefault();
+                  }
+                }}
               >
                 <ListItemIcon sx={{ height: "24px" }}>
                   <FolderIcon />
@@ -573,6 +583,7 @@ export default function MainLayout({
                   id="panel1a-header"
                   sx={{
                     p: 0,
+                    zIndex: 100,
                   }}
                 ></AccordionSummary>
               </ListItemButton>
@@ -582,7 +593,6 @@ export default function MainLayout({
                   sx={{ px: [4] }}
                   component={RouterLink}
                   to="/documents"
-                  onClick={mobile ? toggleDrawer : () => {}}
                 >
                   <ListItemIcon>
                     <DescriptionOutlinedIcon />
@@ -603,7 +613,13 @@ export default function MainLayout({
                 }}
                 component={RouterLink}
                 to="/favorites"
-                onClick={mobile ? toggleDrawer : () => {}}
+                onClick={(event) => {
+                  const isAccordionClicked =
+                    event.target.closest("#panel1a-header");
+                  if (isAccordionClicked) {
+                    event.preventDefault();
+                  }
+                }}
                 disabled={!isTarriffActive}
               >
                 <ListItemIcon sx={{ height: "24px" }}>
@@ -658,7 +674,6 @@ export default function MainLayout({
                           }}
                           component={RouterLink}
                           to={`/favorites/${folder.id}`}
-                          onClick={mobile ? toggleDrawer : () => {}}
                         >
                           <ListItemIcon sx={{ minWidth: "40px" }}>
                             <FolderOutlinedIcon />
@@ -776,7 +791,6 @@ export default function MainLayout({
               sx={{ px: [4] }}
               component={RouterLink}
               to={"/news"}
-              onClick={mobile ? toggleDrawer : () => {}}
             >
               <ListItemIcon>
                 <DescriptionIcon />
@@ -788,7 +802,6 @@ export default function MainLayout({
               sx={{ px: [4] }}
               component={RouterLink}
               to={"/rates"}
-              onClick={mobile ? toggleDrawer : () => {}}
             >
               <ListItemIcon>
                 <DashboardIcon />
@@ -800,7 +813,6 @@ export default function MainLayout({
               sx={{ px: [4] }}
               component={RouterLink}
               to={"/qa"}
-              onClick={mobile ? toggleDrawer : () => {}}
             >
               <ListItemIcon>
                 <HelpIcon />
@@ -812,7 +824,6 @@ export default function MainLayout({
               sx={{ px: [4] }}
               component={RouterLink}
               to={"/contacts"}
-              onClick={mobile ? toggleDrawer : () => {}}
             >
               <ListItemIcon>
                 <MapIcon />

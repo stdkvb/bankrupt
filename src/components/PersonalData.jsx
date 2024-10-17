@@ -31,19 +31,32 @@ const PersonalData = ({ updateUser }) => {
       label: "Фамилия",
       name: "lastName",
       defaultValue: `${user && user.lastName}`,
+      required: true,
     },
     {
       label: "Имя",
       name: "name",
       defaultValue: `${user && user.firstName}`,
+      required: true,
     },
     {
       label: "Отчество",
       name: "secondName",
       defaultValue: `${user && user.secondName}`,
+      required: false,
     },
-    { label: "Телефон", name: "phone", defaultValue: `${user && user.phone}` },
-    { label: "Email", name: "email", defaultValue: `${user && user.email}` },
+    {
+      label: "Телефон",
+      name: "phone",
+      defaultValue: `${user && user.phone}`,
+      required: true,
+    },
+    {
+      label: "Email",
+      name: "email",
+      defaultValue: `${user && user.email}`,
+      required: true,
+    },
   ];
 
   //success popup
@@ -88,7 +101,7 @@ const PersonalData = ({ updateUser }) => {
                 label={input.label}
                 name={input.name}
                 defaultValue={user && input.defaultValue}
-                required={true}
+                required={input.required}
                 multiline={false}
                 readOnly={readOnly}
               />
