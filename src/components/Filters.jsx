@@ -25,6 +25,8 @@ const Filters = ({ data, short }) => {
   const [filtersClear, setFiltersClear] = useState(false);
 
   //date picker clear
+  const [openDateFrom, setOpenDateFrom] = useState(false);
+  const [openDateTo, setOpenDateTo] = useState(false);
   const [dateFromValue, setDateFromValue] = useState(null);
   const [dateToValue, setDateToValue] = useState(null);
 
@@ -83,34 +85,6 @@ const Filters = ({ data, short }) => {
             InputLabelProps={{ shrink: true }}
             sx={{ gridColumn: { xs: "unset", xl: "span 2" } }}
           />
-          {/* <LocalizationProvider
-            dateAdapter={AdapterDayjs}
-            adapterLocale="ru"
-            localeText={
-              ruRU.components.MuiLocalizationProvider.defaultProps.localeText
-            }
-          >
-            <MobileDatePicker
-              value={dateFromValue}
-              onChange={(newValue) => {
-                setDateFromValue(newValue);
-              }}
-              label="Дата"
-              name="date"
-              sx={{ width: "100%" }}
-              slotProps={{
-                textField: {
-                  variant: "standard",
-                  InputLabelProps: { shrink: true },
-                  size: "small",
-                },
-                field: { clearable: true },
-                actionBar: {
-                  actions: ["clear", "cancel", "accept"],
-                },
-              }}
-            />
-          </LocalizationProvider> */}
           <LocalizationProvider
             dateAdapter={AdapterDayjs}
             adapterLocale="ru"
@@ -119,6 +93,9 @@ const Filters = ({ data, short }) => {
             }
           >
             <DatePicker
+              open={openDateFrom}
+              onOpen={() => setOpenDateFrom(true)}
+              onClose={() => setOpenDateFrom(false)}
               value={dateFromValue}
               onChange={(newValue) => {
                 setDateFromValue(newValue);
@@ -131,6 +108,8 @@ const Filters = ({ data, short }) => {
                   variant: "standard",
                   InputLabelProps: { shrink: true },
                   size: "small",
+                  onFocus: (event) => event.target.blur(),
+                  onClick: (e) => setOpenDateFrom(true),
                 },
                 field: { clearable: true },
               }}
@@ -163,54 +142,6 @@ const Filters = ({ data, short }) => {
               />
             );
           })}
-          {/* <LocalizationProvider
-            dateAdapter={AdapterDayjs}
-            adapterLocale="ru"
-            localeText={
-              ruRU.components.MuiLocalizationProvider.defaultProps.localeText
-            }
-          >
-            <MobileDatePicker
-              value={dateFromValue}
-              onChange={(newValue) => {
-                setDateFromValue(newValue);
-              }}
-              label="От даты"
-              name="dateFrom"
-              sx={{ width: "100%" }}
-              slotProps={{
-                textField: {
-                  variant: "standard",
-                  InputLabelProps: { shrink: true },
-                  size: "small",
-                },
-                field: { clearable: true },
-                actionBar: {
-                  actions: ["clear", "cancel", "accept"],
-                },
-              }}
-            />
-            <MobileDatePicker
-              value={dateToValue}
-              onChange={(newValue) => {
-                setDateToValue(newValue);
-              }}
-              label="До даты"
-              name="dateTo"
-              sx={{ width: "100%" }}
-              slotProps={{
-                textField: {
-                  variant: "standard",
-                  InputLabelProps: { shrink: true },
-                  size: "small",
-                },
-                field: { clearable: true },
-                actionBar: {
-                  actions: ["clear", "cancel", "accept"],
-                },
-              }}
-            />
-          </LocalizationProvider> */}
           <LocalizationProvider
             dateAdapter={AdapterDayjs}
             adapterLocale="ru"
@@ -219,6 +150,9 @@ const Filters = ({ data, short }) => {
             }
           >
             <DatePicker
+              open={openDateFrom}
+              onOpen={() => setOpenDateFrom(true)}
+              onClose={() => setOpenDateFrom(false)}
               value={dateFromValue}
               onChange={(newValue) => {
                 setDateFromValue(newValue);
@@ -231,11 +165,17 @@ const Filters = ({ data, short }) => {
                   variant: "standard",
                   InputLabelProps: { shrink: true },
                   size: "small",
+                  inputProps: { readOnly: true, tabIndex: -1 },
+                  onFocus: (event) => event.target.blur(),
+                  onClick: (e) => setOpenDateFrom(true),
                 },
                 field: { clearable: true },
               }}
             />
             <DatePicker
+              open={openDateTo}
+              onOpen={() => setOpenDateTo(true)}
+              onClose={() => setOpenDateTo(false)}
               value={dateToValue}
               onChange={(newValue) => {
                 setDateToValue(newValue);
@@ -248,6 +188,9 @@ const Filters = ({ data, short }) => {
                   variant: "standard",
                   InputLabelProps: { shrink: true },
                   size: "small",
+                  inputProps: { readOnly: true, tabIndex: -1 },
+                  onFocus: (event) => event.target.blur(),
+                  onClick: (e) => setOpenDateTo(true),
                 },
                 field: { clearable: true },
               }}

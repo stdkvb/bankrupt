@@ -568,6 +568,7 @@ export default function MainLayout({
                     event.preventDefault();
                   }
                 }}
+                disabled
               >
                 <ListItemIcon sx={{ height: "24px" }}>
                   <FolderIcon />
@@ -791,6 +792,7 @@ export default function MainLayout({
               sx={{ px: [4] }}
               component={RouterLink}
               to={"/news"}
+              disabled
             >
               <ListItemIcon>
                 <DescriptionIcon />
@@ -813,6 +815,7 @@ export default function MainLayout({
               sx={{ px: [4] }}
               component={RouterLink}
               to={"/qa"}
+              disabled
             >
               <ListItemIcon>
                 <HelpIcon />

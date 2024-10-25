@@ -14,6 +14,8 @@ const WikiFilters = () => {
     });
   };
 
+  const [openDate, setOpenDate] = useState(false);
+
   return (
     <Paper
       component="form"
@@ -47,6 +49,9 @@ const WikiFilters = () => {
         />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
+            open={openDate}
+            onOpen={() => setOpenDate(true)}
+            onClose={() => setOpenDate(false)}
             label="Дата"
             sx={{ width: "100%" }}
             slotProps={{
@@ -54,6 +59,9 @@ const WikiFilters = () => {
                 variant: "standard",
                 InputLabelProps: { shrink: true },
                 size: "medium",
+                inputProps: { readOnly: true, tabIndex: -1 },
+                onFocus: (event) => event.target.blur(),
+                onClick: (e) => setOpenDate(true),
               },
               field: { clearable: true },
             }}

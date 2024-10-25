@@ -94,15 +94,22 @@ const Contacts = () => {
               <Typography variant="p">Почтовый адрес:</Typography>
               <Typography variant="h5">{contacts.address}</Typography>
             </Stack>
-            <Link href={contacts.userAgreement} download color="primary.main">
+            <Link
+              // href={contacts.userAgreement}
+              href="/Пользовательское соглашение+++.pdf"
+              download
+              color="primary.main"
+            >
               Пользовательское соглашение
             </Link>
             <Link
-              href={contacts.map}
+              // href={contacts.map}
+              href="/Карта партнера.pdf"
               download
               color="primary.main"
               sx={{ mt: -3 }}
             >
+              {" "}
               Карта партнера
             </Link>
           </>
