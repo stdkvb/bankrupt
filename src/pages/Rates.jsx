@@ -20,7 +20,7 @@ import Popup from "../components/Popup";
 import useCheckTarrifActive from "../hooks/useCheckTarrifActive";
 import { UserContext } from "../utils/UserContext";
 
-const Rates = ({ updateUser }) => {
+const Rates = ({ updateUser, handleLogout }) => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
   const [period, setPeriod] = useState();
@@ -38,6 +38,8 @@ const Rates = ({ updateUser }) => {
         if (data.status === "success") {
           setData(data.data);
           setLoading(false);
+        } else {
+          handleLogout();
         }
       })
       .catch((error) => {

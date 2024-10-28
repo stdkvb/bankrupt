@@ -10,6 +10,8 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
+import Questions from "../components/Questions";
+
 import api from "../utils/Api";
 
 const QA = () => {
@@ -42,7 +44,7 @@ const QA = () => {
         gap: { xs: [2], md: [4] },
       }}
     >
-      {loading ? (
+      {/* {loading ? (
         <CircularProgress
           sx={{
             position: "absolute",
@@ -93,7 +95,8 @@ const QA = () => {
             );
           })}
         </Paper>
-      )}
+      )} */}
+      <Questions title={"Остались вопросы?"} />
     </Container>
   );
 };

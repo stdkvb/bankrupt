@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Typography, Button, Stack, Container } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
@@ -11,6 +11,10 @@ import Questions from "../components/Questions";
 const Profile = ({ updateUser }) => {
   //current user
   const user = useContext(UserContext).user;
+
+  useEffect(() => {
+    updateUser();
+  }, []);
 
   return (
     <Container

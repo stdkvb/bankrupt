@@ -12,7 +12,7 @@ import {
 import api from "../utils/Api";
 import Questions from "../components/Questions";
 
-const Contacts = () => {
+const Contacts = ({ handleLogout }) => {
   const [contacts, setContacts] = useState();
   const [loading, setLoading] = useState(true);
 
@@ -22,6 +22,8 @@ const Contacts = () => {
       .then((data) => {
         if (data.status === "success") {
           setContacts(data.data);
+        } else {
+          handleLogout();
         }
         setLoading(false);
       })
@@ -69,50 +71,54 @@ const Contacts = () => {
             }}
           />
         ) : (
-          <>
-            <Grid container rowSpacing={{ xs: 3, md: 2 }} columnSpacing={8}>
-              <Grid
-                item
-                sx={{ display: "flex", flexDirection: "column", gap: [1] }}
-              >
-                <Typography variant="p">Телефон:</Typography>
-                <Link href={`tel:${contacts.phone}`} variant="h5">
-                  {contacts.phone}
-                </Link>
+          contacts && (
+            <>
+              <Grid container rowSpacing={{ xs: 3, md: 2 }} columnSpacing={8}>
+                <Grid
+                  item
+                  sx={{ display: "flex", flexDirection: "column", gap: [1] }}
+                >
+                  <Typography variant="p">Телефон:</Typography>
+                  <Link href={`tel:${contacts.phone}`} variant="h5">
+                    {contacts.phone}
+                  </Link>
+                </Grid>
+                <Grid
+                  item
+                  sx={{ display: "flex", flexDirection: "column", gap: [1] }}
+                >
+                  <Typography variant="p">Электронная почта:</Typography>
+                  <Link href={`mailto:${contacts.email}`} variant="h5">
+                    {contacts.email}
+                  </Link>
+                </Grid>
               </Grid>
-              <Grid
-                item
-                sx={{ display: "flex", flexDirection: "column", gap: [1] }}
+              <Stack>
+                <Typography variant="p">Почтовый адрес:</Typography>
+                <Typography variant="h5">{contacts.address}</Typography>
+              </Stack>
+              <Link
+                // href={contacts.userAgreement}
+                href="/Пользовательское соглашение+++.pdf"
+                download
+                target="_blank"
+                color="primary.main"
               >
-                <Typography variant="p">Электронная почта:</Typography>
-                <Link href={`mailto:${contacts.email}`} variant="h5">
-                  {contacts.email}
-                </Link>
-              </Grid>
-            </Grid>
-            <Stack>
-              <Typography variant="p">Почтовый адрес:</Typography>
-              <Typography variant="h5">{contacts.address}</Typography>
-            </Stack>
-            <Link
-              // href={contacts.userAgreement}
-              href="/Пользовательское соглашение+++.pdf"
-              download
-              color="primary.main"
-            >
-              Пользовательское соглашение
-            </Link>
-            <Link
-              // href={contacts.map}
-              href="/Карта партнера.pdf"
-              download
-              color="primary.main"
-              sx={{ mt: -3 }}
-            >
-              {" "}
-              Карта партнера
-            </Link>
-          </>
+                Пользовательское соглашение
+              </Link>
+              <Link
+                // href={contacts.map}
+                href="/Карта партнера.pdf"
+                download
+                target="_blank"
+                color="primary.main"
+                sx={{ mt: -3 }}
+              >
+                {" "}
+                Карта партнера
+              </Link>
+            </>
+          )
         )}
       </Paper>
       <Questions />

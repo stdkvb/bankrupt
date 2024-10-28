@@ -198,13 +198,27 @@ export default function App() {
           />
           <Route path="profile" element={<Profile updateUser={getAccess} />} />
           <Route path="change-password" element={<ChangePassword />} />
-          <Route path="rates" element={<Rates updateUser={getAccess} />} />
-          <Route path="wiki" element={<Wiki paid={false} />} />
-          <Route path="documents" element={<Wiki paid={true} />} />
-          <Route path="news" element={<News />} />
+          <Route
+            path="rates"
+            element={
+              <Rates updateUser={getAccess} handleLogout={handleLogout} />
+            }
+          />
+          <Route
+            path="wiki"
+            element={<Wiki paid={false} handleLogout={handleLogout} />}
+          />
+          <Route
+            path="documents"
+            element={<Wiki paid={true} handleLogout={handleLogout} />}
+          />
+          <Route path="news" element={<News handleLogout={handleLogout} />} />
           <Route path="news/:id" element={<Article />} />
-          <Route path="contacts" element={<Contacts />} />
-          <Route path="qa" element={<QA />} />
+          <Route
+            path="contacts"
+            element={<Contacts handleLogout={handleLogout} />}
+          />
+          <Route path="qa" element={<QA handleLogout={handleLogout} />} />
         </Route>
       ) : (
         <Route path="/" element={<AuthLayout />}>

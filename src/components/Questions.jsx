@@ -19,7 +19,7 @@ import TextInput from "./TextInput";
 import Popup from "./Popup";
 import api from "../utils/Api";
 
-const Questions = () => {
+const Questions = ({ title }) => {
   //current user
   const user = useContext(UserContext).user.personal;
 
@@ -96,11 +96,12 @@ const Questions = () => {
           p: { xs: [2], md: [4] },
           display: "flex",
           flexDirection: "column",
-          gap: { xs: [3], md: [4] },
         }}
       >
-        <Typography variant="h5">Есть вопросы?</Typography>
-        <Typography variant="p">
+        <Typography variant="h5" sx={{ marginBottom: [1] }}>
+          {title ? title : "Есть вопросы?"}
+        </Typography>
+        <Typography variant="p" sx={{ marginBottom: [4] }}>
           Заполните форму и наш менеджер свяжется с вами
         </Typography>
         <Button
@@ -142,7 +143,7 @@ const Questions = () => {
             <CloseIcon />
           </IconButton>
           <Typography variant="h4" sx={{ mb: 2 }}>
-            Есть вопросы?
+            {title ? title : "Есть вопросы?"}
           </Typography>
           <Typography variant="p" color="text.secondary">
             Укажите свой вопрос, и наш специалист свяжется с вами

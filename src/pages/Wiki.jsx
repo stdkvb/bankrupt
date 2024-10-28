@@ -22,7 +22,7 @@ import Filters from "../components/Filters";
 import { FiltersContext } from "../utils/FiltersContext";
 import { UserContext } from "../utils/UserContext";
 
-const Wiki = ({ paid }) => {
+const Wiki = ({ paid, handleLogout }) => {
   const { filters, setFilters } = useContext(FiltersContext);
   const user = useContext(UserContext).user;
   const [isSuccess, setIsSuccess] = useState(false);
@@ -92,6 +92,8 @@ const Wiki = ({ paid }) => {
         if (data.status === "success") {
           setWiki(data.data);
           setPageCount(data.data.pageCount);
+        } else {
+          handleLogout();
         }
         setLoading(false);
       })

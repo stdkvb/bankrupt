@@ -11,7 +11,7 @@ import {
 
 import api from "../utils/Api";
 
-const News = () => {
+const News = ({ handleLogout }) => {
   //pagination
   const [page, setPage] = useState(1);
   const handleChange = (event, value) => {
@@ -30,6 +30,8 @@ const News = () => {
         if (data.status === "success") {
           setData(data.data);
           setPageCount(data.data.pageCount);
+        } else {
+          handleLogout();
         }
         setLoading(false);
       })
