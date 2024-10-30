@@ -568,7 +568,7 @@ export default function MainLayout({
                     event.preventDefault();
                   }
                 }}
-                disabled
+                // disabled
               >
                 <ListItemIcon sx={{ height: "24px" }}>
                   <FolderIcon />
@@ -675,6 +675,13 @@ export default function MainLayout({
                           }}
                           component={RouterLink}
                           to={`/favorites/${folder.id}`}
+                          onClick={(event) => {
+                            const isMoreButtonClicked =
+                              event.target.closest("#more-button");
+                            if (isMoreButtonClicked) {
+                              event.preventDefault();
+                            }
+                          }}
                         >
                           <ListItemIcon sx={{ minWidth: "40px" }}>
                             <FolderOutlinedIcon />
@@ -690,6 +697,7 @@ export default function MainLayout({
                             title={folder.name}
                           />
                           <IconButton
+                            id="more-button"
                             onClick={(event) => {
                               setCurrentFolder(folder);
                               setIsFolderMenuOpen(event.currentTarget);
@@ -792,7 +800,7 @@ export default function MainLayout({
               sx={{ px: [4] }}
               component={RouterLink}
               to={"/news"}
-              disabled
+              // disabled
             >
               <ListItemIcon>
                 <DescriptionIcon />
@@ -815,7 +823,7 @@ export default function MainLayout({
               sx={{ px: [4] }}
               component={RouterLink}
               to={"/qa"}
-              disabled
+              // disabled
             >
               <ListItemIcon>
                 <HelpIcon />

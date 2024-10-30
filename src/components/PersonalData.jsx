@@ -108,7 +108,6 @@ const PersonalData = ({ updateUser }) => {
             </Grid>
           ))}
         </Grid>
-        <input type="hidden" name="legalEntity" value="false" />
         <FormControlLabel
           sx={{ width: "fit-content" }}
           control={
@@ -167,13 +166,13 @@ const PersonalData = ({ updateUser }) => {
         isPopupOpen={isSuccess}
         onClose={() => {
           setIsSuccess(false);
-          // updateFavorites();
+          updateUser();
         }}
       >
         <IconButton
           onClick={() => {
             setIsSuccess(false);
-            // updateFavorites();
+            updateUser();
           }}
           sx={{
             position: "absolute",
@@ -192,7 +191,7 @@ const PersonalData = ({ updateUser }) => {
           sx={{ mt: 4 }}
           onClick={() => {
             setIsSuccess(false);
-            // updateFavorites();
+            updateUser();
           }}
         >
           Закрыть

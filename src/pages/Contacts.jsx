@@ -98,8 +98,8 @@ const Contacts = ({ handleLogout }) => {
                 <Typography variant="h5">{contacts.address}</Typography>
               </Stack>
               <Link
-                // href={contacts.userAgreement}
-                href="/Пользовательское соглашение+++.pdf"
+                href={contacts.userAgreement}
+                // href="/Пользовательское соглашение+++.pdf"
                 download
                 target="_blank"
                 color="primary.main"
@@ -107,8 +107,8 @@ const Contacts = ({ handleLogout }) => {
                 Пользовательское соглашение
               </Link>
               <Link
-                // href={contacts.map}
-                href="/Карта партнера.pdf"
+                href={contacts.map}
+                // href="/Карта партнера.pdf"
                 download
                 target="_blank"
                 color="primary.main"

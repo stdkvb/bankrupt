@@ -44,7 +44,7 @@ const QA = () => {
         gap: { xs: [2], md: [4] },
       }}
     >
-      {/* {loading ? (
+      {loading ? (
         <CircularProgress
           sx={{
             position: "absolute",
@@ -95,7 +95,7 @@ const QA = () => {
             );
           })}
         </Paper>
-      )} */}
+      )}
       <Questions title={"Остались вопросы?"} />
     </Container>
   );
