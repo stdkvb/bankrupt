@@ -7,6 +7,7 @@ import {
   Box,
   Pagination,
   CircularProgress,
+  Link,
 } from "@mui/material";
 
 import api from "../utils/Api";
@@ -30,8 +31,6 @@ const News = ({ handleLogout }) => {
         if (data.status === "success") {
           setData(data.data);
           setPageCount(data.data.pageCount);
-        } else {
-          handleLogout();
         }
         setLoading(false);
       })

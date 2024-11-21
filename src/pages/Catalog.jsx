@@ -26,8 +26,6 @@ const Catalog = ({ title, folders, updateFolders, handleLogout }) => {
       .then((data) => {
         if (data.status === "success") {
           setCatalog(data.data);
-        } else {
-          handleLogout();
         }
       })
       .catch((error) => {
@@ -56,9 +54,9 @@ const Catalog = ({ title, folders, updateFolders, handleLogout }) => {
     );
   }
 
-  if (!isTariffActive) {
-    navigate("/rates");
-  }
+  // if (!isTariffActive) {
+  //   navigate("/rates");
+  // }
 
   if (error) {
     return <div>Error loading catalog: {error.message}</div>;

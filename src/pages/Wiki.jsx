@@ -92,8 +92,6 @@ const Wiki = ({ paid, handleLogout }) => {
         if (data.status === "success") {
           setWiki(data.data);
           setPageCount(data.data.pageCount);
-        } else {
-          handleLogout();
         }
         setLoading(false);
       })
@@ -268,7 +266,7 @@ const Wiki = ({ paid, handleLogout }) => {
                         },
                       }}
                     >
-                      ID
+                      {/* ID */}
                     </Box>
                     <Box>{document.date}</Box>
                     <Box>
@@ -292,12 +290,12 @@ const Wiki = ({ paid, handleLogout }) => {
                     <Box
                       sx={{
                         display: "flex",
-                        justifyContent: "space-between",
+                        justifyContent: "flex-end",
                         gap: { xs: 2, md: 4 },
                         flexDirection: { xs: "column", md: "row" },
                       }}
                     >
-                      {document.id}
+                      {/* {document.id} */}
                       <Box
                         sx={{
                           display: "flex",
@@ -308,7 +306,7 @@ const Wiki = ({ paid, handleLogout }) => {
                         }}
                       >
                         {document.price !== "0" && (
-                          <Typography>{document.price}&nbsp;Р</Typography>
+                          <Typography>{document.price}&nbsp;₽</Typography>
                         )}
                         {document.price == "0" ? (
                           <Typography
@@ -394,13 +392,13 @@ const Wiki = ({ paid, handleLogout }) => {
                   {currentDocument.title}
                 </Typography>
               </Stack>
-              <Typography
+              {/* <Typography
                 variant="h5"
                 color="text.secondary"
                 sx={{ mb: { xs: 2, md: 4 }, pl: { xs: 0, md: 7 } }}
               >
                 от {currentDocument.date}
-              </Typography>
+              </Typography> */}
               <Stack
                 direction={{ xs: "column", md: "row" }}
                 spacing={1}
@@ -413,9 +411,9 @@ const Wiki = ({ paid, handleLogout }) => {
                 <Typography color="text.secondary">
                   {currentDocument.description}
                 </Typography>
-                <Typography color="text.secondary">
+                {/* <Typography color="text.secondary">
                   ID&nbsp;{currentDocument.id}
-                </Typography>
+                </Typography> */}
                 {currentDocument.price == "0" ? (
                   <Button
                     type="button"

@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import AuthLayout from "./layouts/AuthLayout";
@@ -20,6 +20,7 @@ import PageNotFound from "./pages/PageNotFound";
 import News from "./pages/News";
 import Article from "./pages/Article";
 import Wiki from "./pages/Wiki";
+import AccessDenied from "./pages/AccessDenied";
 
 import api from "./utils/Api";
 import { UserContext } from "./utils/UserContext";
@@ -27,8 +28,10 @@ import getToken from "./utils/GetToken";
 
 export default function App() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [loading, setLoading] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const initialLoggedIn = Boolean(getToken());
+  const [loggedIn, setLoggedIn] = useState(initialLoggedIn);
   const { user, setUser } = useContext(UserContext);
   const [errors, setErrors] = useState([]);
   const [folders, setFolders] = useState([]);
@@ -52,8 +55,14 @@ export default function App() {
         if (data.status === "success") {
           setUser(data.data);
         }
-        if (data.status === "error") {
-          handleLogout();
+        if (
+          data.status === "error" &&
+          data.errors[0].message ==
+            "Доступ закрыт, вы зашли с другого устройства"
+        ) {
+          setLoggedIn(false);
+          localStorage.removeItem("token");
+          navigate("/access-denied");
         }
       })
       .catch((error) => {
@@ -76,6 +85,13 @@ export default function App() {
         setLoading(false);
       });
   };
+
+  //check session on pathname change
+  useEffect(() => {
+    if (location.pathname !== "access-denied") {
+      getAccess();
+    }
+  }, [location.pathname]);
 
   //update folders
   const updateFolders = () => {
@@ -153,6 +169,7 @@ export default function App() {
               onLogout={handleLogout}
               folders={folders}
               updateFolders={updateFolders}
+              getAccess={getAccess}
             />
           }
         >
@@ -219,6 +236,7 @@ export default function App() {
             element={<Contacts handleLogout={handleLogout} />}
           />
           <Route path="qa" element={<QA handleLogout={handleLogout} />} />
+          <Route path="*" element={<PageNotFound loggedIn={loggedIn} />} />
         </Route>
       ) : (
         <Route path="/" element={<AuthLayout />}>
@@ -233,9 +251,10 @@ export default function App() {
           <Route path="reg-finish" element={<Confirm />} />
           <Route path="password-recovery" element={<PasswordRecovery />} />
           <Route path="recovery" element={<NewPassword />} />
+          <Route path="access-denied" element={<AccessDenied />} />
+          <Route path="*" element={<PageNotFound loggedIn={loggedIn} />} />
         </Route>
       )}
-      <Route path="*" element={<PageNotFound loggedIn={loggedIn} />} />
     </Routes>
   );
 }

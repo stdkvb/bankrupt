@@ -26,6 +26,7 @@ import Popup from "./Popup";
 import CreateFolder from "./CreateFolder";
 import api from "../utils/Api";
 import { PaginationContext } from "../utils/PaginationContext";
+import useCheckTarrifActive from "../hooks/useCheckTarrifActive";
 
 const DocumentsList = ({
   data,
@@ -176,6 +177,9 @@ const DocumentsList = ({
     refScrollUp.current.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  //check active tariff
+  const isTariffActive = useCheckTarrifActive();
+
   return (
     <>
       <Paper
@@ -196,126 +200,127 @@ const DocumentsList = ({
           Найденных документов: {data.allCount !== "" ? data.allCount : 0}
         </Typography>
 
-        {data.documentsList.map((document, i) => {
-          return (
-            <Box
-              key={i}
-              className="table"
-              display="grid"
-              gridAutoFlow={{ xs: "column", md: "row" }}
-              gridTemplateColumns={{
-                xs: "auto 1fr",
-                md: "minmax(80px, 200px) auto minmax(80px, 200px)",
-              }}
-              gridTemplateRows={{ xs: "repeat(3, auto)", md: "40px auto" }}
-              columnGap={{ xs: 2, md: 0 }}
-              rowGap={3}
-              position="relative"
-              pb={2}
-              borderBottom="solid 1px rgba(101, 108, 101, 0.2)"
-            >
+        {isTariffActive &&
+          data.documentsList.map((document, i) => {
+            return (
               <Box
-                className="table-head"
-                sx={{
-                  borderBottom: {
-                    xs: "none",
-                    md: "solid 1px rgba(101, 108, 101, 0.2)",
-                  },
+                key={i}
+                className="table"
+                display="grid"
+                gridAutoFlow={{ xs: "column", md: "row" }}
+                gridTemplateColumns={{
+                  xs: "auto 1fr",
+                  md: "minmax(80px, 200px) auto minmax(80px, 200px)",
                 }}
+                gridTemplateRows={{ xs: "repeat(3, auto)", md: "40px auto" }}
+                columnGap={{ xs: 2, md: 0 }}
+                rowGap={3}
+                position="relative"
+                pb={2}
+                borderBottom="solid 1px rgba(101, 108, 101, 0.2)"
               >
-                Дата
-              </Box>
-              <Box
-                className="table-head"
-                sx={{
-                  borderBottom: {
-                    xs: "none",
-                    md: "solid 1px rgba(101, 108, 101, 0.2)",
-                  },
-                }}
-              >
-                Документ
-              </Box>
-              <Box
-                className="table-head"
-                sx={{
-                  borderBottom: {
-                    xs: "none",
-                    md: "solid 1px rgba(101, 108, 101, 0.2)",
-                  },
-                }}
-              >
-                ID
-              </Box>
-              <Box>
-                <Typography sx={{ fontSize: { xs: "1rem", md: "14px" } }}>
-                  {document.date}
-                </Typography>
-              </Box>
-              <Box
-                sx={{
-                  overflow: "hidden",
-                }}
-              >
-                <Typography
+                <Box
+                  className="table-head"
                   sx={{
-                    mb: 2,
-                    pr: 2,
-                    "&:hover": {
-                      color: "primary.main",
-                      textDecoration: "underline",
-                      cursor: "pointer",
-                    },
-                  }}
-                  onClick={() => {
-                    handleOpen(document);
-                  }}
-                >
-                  {document.title}
-                </Typography>
-                <Stack
-                  direction="row"
-                  sx={{
-                    flexWrap: "wrap",
-                    justifyContent: "flex-start",
-                    gap: 1,
-                  }}
-                >
-                  {document.tags.map((tag, i) => {
-                    return <Chip key={i} label={tag} />;
-                  })}
-                </Stack>
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Typography sx={{ fontSize: { xs: "1rem", md: "14px" } }}>
-                  {document.id}
-                </Typography>
-                <IconButton
-                  onClick={(event) => {
-                    handleDocumentMenuClick(event, document);
-                  }}
-                  sx={{
-                    mt: "-8px",
-                    position: { xs: "absolute", md: "relative" },
-                    top: 0,
-                    right: 0,
-                    display: {
-                      height: "40px",
+                    borderBottom: {
+                      xs: "none",
+                      md: "solid 1px rgba(101, 108, 101, 0.2)",
                     },
                   }}
                 >
-                  <MoreVertIcon />
-                </IconButton>
+                  Дата
+                </Box>
+                <Box
+                  className="table-head"
+                  sx={{
+                    borderBottom: {
+                      xs: "none",
+                      md: "solid 1px rgba(101, 108, 101, 0.2)",
+                    },
+                  }}
+                >
+                  Документ
+                </Box>
+                <Box
+                  className="table-head"
+                  sx={{
+                    borderBottom: {
+                      xs: "none",
+                      md: "solid 1px rgba(101, 108, 101, 0.2)",
+                    },
+                  }}
+                >
+                  ID
+                </Box>
+                <Box>
+                  <Typography sx={{ fontSize: { xs: "1rem", md: "14px" } }}>
+                    {document.date}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    overflow: "hidden",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      mb: 2,
+                      pr: 2,
+                      "&:hover": {
+                        color: "primary.main",
+                        textDecoration: "underline",
+                        cursor: "pointer",
+                      },
+                    }}
+                    onClick={() => {
+                      handleOpen(document);
+                    }}
+                  >
+                    {document.title}
+                  </Typography>
+                  <Stack
+                    direction="row"
+                    sx={{
+                      flexWrap: "wrap",
+                      justifyContent: "flex-start",
+                      gap: 1,
+                    }}
+                  >
+                    {document.tags.map((tag, i) => {
+                      return <Chip key={i} label={tag} />;
+                    })}
+                  </Stack>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Typography sx={{ fontSize: { xs: "1rem", md: "14px" } }}>
+                    {document.id}
+                  </Typography>
+                  <IconButton
+                    onClick={(event) => {
+                      handleDocumentMenuClick(event, document);
+                    }}
+                    sx={{
+                      mt: "-8px",
+                      position: { xs: "absolute", md: "relative" },
+                      top: 0,
+                      right: 0,
+                      display: {
+                        height: "40px",
+                      },
+                    }}
+                  >
+                    <MoreVertIcon />
+                  </IconButton>
+                </Box>
               </Box>
-            </Box>
-          );
-        })}
-        {data.allCount > 10 && (
+            );
+          })}
+        {isTariffActive && data.allCount > 10 && (
           <Pagination
             count={data.pagesCount}
             showFirstButton

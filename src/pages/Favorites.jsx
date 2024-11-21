@@ -36,8 +36,6 @@ const Favorites = ({
         if (data.status === "success") {
           setFavorites(data.data);
           setLoading(false);
-        } else {
-          handleLogout();
         }
       })
       .catch((error) => {

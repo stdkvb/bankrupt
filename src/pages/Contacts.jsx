@@ -12,6 +12,14 @@ import {
 import api from "../utils/Api";
 import Questions from "../components/Questions";
 
+function formatPhoneNumber(phone) {
+  let digits = phone.replace(/\D/g, "");
+  if (digits.startsWith("8")) {
+    digits = "+7" + digits.slice(1);
+  }
+  return digits;
+}
+
 const Contacts = ({ handleLogout }) => {
   const [contacts, setContacts] = useState();
   const [loading, setLoading] = useState(true);
@@ -22,8 +30,6 @@ const Contacts = ({ handleLogout }) => {
       .then((data) => {
         if (data.status === "success") {
           setContacts(data.data);
-        } else {
-          handleLogout();
         }
         setLoading(false);
       })
@@ -79,7 +85,10 @@ const Contacts = ({ handleLogout }) => {
                   sx={{ display: "flex", flexDirection: "column", gap: [1] }}
                 >
                   <Typography variant="p">Телефон:</Typography>
-                  <Link href={`tel:${contacts.phone}`} variant="h5">
+                  <Link
+                    href={`tel:${formatPhoneNumber(contacts.phone)}`}
+                    variant="h5"
+                  >
                     {contacts.phone}
                   </Link>
                 </Grid>

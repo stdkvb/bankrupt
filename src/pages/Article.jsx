@@ -6,6 +6,7 @@ import {
   Container,
   Box,
   CircularProgress,
+  Link,
 } from "@mui/material";
 
 import api from "../utils/Api";
@@ -51,39 +52,54 @@ const Article = () => {
           }}
         />
       ) : (
-        <Paper
-          elevation={0}
-          sx={{
-            p: { xs: [2], md: [4] },
-          }}
-        >
-          <Typography
-            variant="h4"
-            component="h1"
-            sx={{ mb: { xs: 2, md: 4 }, maxWidth: "864px" }}
-          >
-            {data.title}
-          </Typography>
-          <Typography
-            sx={{ maxWidth: "864px" }}
-            dangerouslySetInnerHTML={{
-              __html: data.text,
+        data && (
+          <Paper
+            elevation={0}
+            sx={{
+              p: { xs: [2], md: [4] },
+              display: "flex",
+              flexDirection: "column",
+              gap: "16px",
             }}
-          ></Typography>
-          {data.imageUrl != "" && (
-            <Box
-              component="img"
-              src={data.imageUrl}
-              alt="photo"
-              loading="lazy"
-              sx={{
-                width: "100%",
-                maxWidth: "864px",
-                my: 2,
+          >
+            <Typography
+              variant="h4"
+              component="h1"
+              sx={{ mb: { xs: 2, md: 4 }, maxWidth: "864px" }}
+            >
+              {data.title}
+            </Typography>
+            <Typography
+              sx={{ maxWidth: "864px" }}
+              dangerouslySetInnerHTML={{
+                __html: data.text,
               }}
-            />
-          )}
-        </Paper>
+            ></Typography>
+            {data.imageUrl != "" && (
+              <Box
+                component="img"
+                src={data.imageUrl}
+                alt="photo"
+                loading="lazy"
+                sx={{
+                  width: "100%",
+                  maxWidth: "864px",
+                  my: 2,
+                }}
+              />
+            )}
+            {data.document && (
+              <Link
+                href={data.document.link}
+                target="_blank"
+                download="true"
+                color="primary.main"
+              >
+                {data.document.title}
+              </Link>
+            )}
+          </Paper>
+        )
       )}
     </Container>
   );

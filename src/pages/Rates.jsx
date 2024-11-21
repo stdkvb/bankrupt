@@ -38,8 +38,6 @@ const Rates = ({ updateUser, handleLogout }) => {
         if (data.status === "success") {
           setData(data.data);
           setLoading(false);
-        } else {
-          handleLogout();
         }
       })
       .catch((error) => {
@@ -50,7 +48,7 @@ const Rates = ({ updateUser, handleLogout }) => {
 
   //pay start
   const payTariff = (id, period) => {
-    if (user && user.personal.legalEntity) {
+    if (user && user.personal && user.personal.legalEntity) {
       api
         .requestInvoice(id, period)
         .then((data) => {
@@ -224,7 +222,7 @@ const Rates = ({ updateUser, handleLogout }) => {
                         }
                       }}
                     >
-                      {user && user.personal.legalEntity
+                      {user && user.personal && user.personal.legalEntity
                         ? "Запросить счет"
                         : "Оплатить"}
                     </Button>

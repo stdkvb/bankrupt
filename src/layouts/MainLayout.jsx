@@ -132,7 +132,7 @@ export default function MainLayout({
 
   //drawer control
   const mobile = useMediaQuery("(max-width:900px)");
-  const [open, setOpen] = useState(!mobile);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     if (mobile) {
       setOpen(false);
@@ -144,11 +144,11 @@ export default function MainLayout({
     setOpen(!open);
   };
 
-  useEffect(() => {
-    if (mobile) {
-      toggleDrawer();
-    }
-  }, [pathName]);
+  // useEffect(() => {
+  //   if (mobile) {
+  //     toggleDrawer();
+  //   }
+  // }, [pathName]);
 
   //avatar letters
   function stringAvatar(firstName, lastName) {
@@ -512,6 +512,7 @@ export default function MainLayout({
               sx={{ my: [3], px: [4], py: 0, display: { md: "none" } }}
               component={RouterLink}
               to={"/profile"}
+              onClick={mobile && toggleDrawer}
             >
               {user && user.personal && (
                 <>
@@ -542,7 +543,7 @@ export default function MainLayout({
               sx={{ px: [4] }}
               component={RouterLink}
               to={"/"}
-              disabled={!isTarriffActive}
+              onClick={mobile && toggleDrawer}
             >
               <ListItemIcon>
                 <LayersIcon />
@@ -566,6 +567,9 @@ export default function MainLayout({
                     event.target.closest("#panel1a-header");
                   if (isAccordionClicked) {
                     event.preventDefault();
+                  }
+                  if (!isAccordionClicked && mobile) {
+                    toggleDrawer();
                   }
                 }}
                 // disabled
@@ -594,6 +598,7 @@ export default function MainLayout({
                   sx={{ px: [4] }}
                   component={RouterLink}
                   to="/documents"
+                  onClick={mobile && toggleDrawer}
                 >
                   <ListItemIcon>
                     <DescriptionOutlinedIcon />
@@ -619,6 +624,9 @@ export default function MainLayout({
                     event.target.closest("#panel1a-header");
                   if (isAccordionClicked) {
                     event.preventDefault();
+                  }
+                  if (!isAccordionClicked && mobile) {
+                    toggleDrawer();
                   }
                 }}
                 disabled={!isTarriffActive}
@@ -680,6 +688,9 @@ export default function MainLayout({
                               event.target.closest("#more-button");
                             if (isMoreButtonClicked) {
                               event.preventDefault();
+                            }
+                            if (!isMoreButtonClicked && mobile) {
+                              toggleDrawer();
                             }
                           }}
                         >
@@ -800,6 +811,7 @@ export default function MainLayout({
               sx={{ px: [4] }}
               component={RouterLink}
               to={"/news"}
+              onClick={mobile && toggleDrawer}
               // disabled
             >
               <ListItemIcon>
@@ -812,6 +824,7 @@ export default function MainLayout({
               sx={{ px: [4] }}
               component={RouterLink}
               to={"/rates"}
+              onClick={mobile && toggleDrawer}
             >
               <ListItemIcon>
                 <DashboardIcon />
@@ -823,6 +836,7 @@ export default function MainLayout({
               sx={{ px: [4] }}
               component={RouterLink}
               to={"/qa"}
+              onClick={mobile && toggleDrawer}
               // disabled
             >
               <ListItemIcon>
@@ -835,6 +849,7 @@ export default function MainLayout({
               sx={{ px: [4] }}
               component={RouterLink}
               to={"/contacts"}
+              onClick={mobile && toggleDrawer}
             >
               <ListItemIcon>
                 <MapIcon />
@@ -859,8 +874,9 @@ export default function MainLayout({
             pt: "76px",
             flexGrow: 1,
             height: "100vh",
-            overflow: "auto",
+            overflow: "overlay",
             position: "relative",
+            scrollbarGutter: "stable",
           }}
         >
           {loading ? (

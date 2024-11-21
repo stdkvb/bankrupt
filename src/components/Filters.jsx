@@ -130,18 +130,19 @@ const Filters = ({ data, short }) => {
             gap: [4],
           }}
         >
-          {filterParamsList.map((filter, i) => {
-            return (
-              <Select
-                key={i}
-                name={filter.name}
-                title={filter.title}
-                tags={filter.values}
-                onReset={filtersClear}
-                addSpecilaSing
-              />
-            );
-          })}
+          {filterParamsList &&
+            filterParamsList.map((filter, i) => {
+              return (
+                <Select
+                  key={i}
+                  name={filter.name}
+                  title={filter.title}
+                  tags={filter.values}
+                  onReset={filtersClear}
+                  addSpecilaSing
+                />
+              );
+            })}
           <LocalizationProvider
             dateAdapter={AdapterDayjs}
             adapterLocale="ru"
